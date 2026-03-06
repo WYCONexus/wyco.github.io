@@ -471,6 +471,25 @@ pre {
   }
 }
 
+.footer-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-pill {
+  font-size: 0.85rem;
+  padding: 7px 12px;
+  color: var(--muted);
+  transition: 0.25s ease;
+}
+
+.footer-pill:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.08);
+}
+
 /* Progress pill stages */
 
 .progress-20 { --progress: 20%; }
