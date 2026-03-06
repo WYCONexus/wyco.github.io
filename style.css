@@ -279,6 +279,10 @@ pre {
   gap: 16px;
 }
 
+.project-card.archived {
+  opacity: 0.88;
+}
+
 .pill {
   padding: 9px 12px;
   border-radius: 999px;
