@@ -279,7 +279,9 @@ pre {
   gap: 16px;
 }
 
-.project-card.archived {
+.project-card.archived p {
+  align-items: center;
+  display: none;
   opacity: 0.50;
 }
 
