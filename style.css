@@ -280,7 +280,7 @@ pre {
 }
 
 .project-card.archived {
-  opacity: 0.88;
+  opacity: 0.50;
 }
 
 .pill {
