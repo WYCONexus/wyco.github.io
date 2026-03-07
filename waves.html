@@ -8,8 +8,286 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#070b14">
+  <meta name="theme-color" content="#070b14">
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .media-section {
+      margin-top: 32px;
+    }
+
+    .media-section + .media-section {
+      margin-top: 28px;
+    }
+
+    .media-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .media-head h2 {
+      margin: 0;
+    }
+
+    .media-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .media-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+    }
+
+    .media-card,
+    .lyrics-card {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(9, 16, 36, 0.05) 0%, rgba(5, 9, 22, 0.9) 100%),
+        rgba(12, 18, 36, 0.9);
+      border: 1px solid rgba(122, 162, 255, 0.18);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      min-height: 360px;
+      cursor: pointer;
+    }
+
+    .media-card:hover,
+    .lyrics-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 26px 56px rgba(0, 0, 0, 0.4);
+      border-color: rgba(69, 230, 216, 0.35);
+    }
+
+    .media-thumb {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      width: 100%;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0c1430 0%, #101b3a 55%, #081224 100%);
+    }
+
+    .media-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .media-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(7, 11, 20, 0.04) 0%,
+        rgba(7, 11, 20, 0.14) 50%,
+        rgba(7, 11, 20, 0.72) 100%
+      );
+      pointer-events: none;
+    }
+
+    .media-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 2;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #eaf6ff;
+      background: rgba(10, 18, 40, 0.76);
+      border: 1px solid rgba(122, 162, 255, 0.22);
+      backdrop-filter: blur(8px);
+    }
+
+    .play-badge {
+      position: absolute;
+      right: 14px;
+      bottom: 74px;
+      z-index: 2;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 1.05rem;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    .media-meta {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      padding: 16px 16px 18px;
+    }
+
+    .media-title {
+      margin: 0 0 6px;
+      font-size: 1.08rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #f5f8ff;
+    }
+
+    .media-subtitle {
+      margin: 0;
+      color: var(--soft);
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+
+    .lyrics-card {
+      border: none;
+      padding: 0;
+      text-align: left;
+      font: inherit;
+    }
+
+    .lyrics-card .play-badge {
+      bottom: 74px;
+    }
+
+    .lyrics-preview-note {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .lyrics-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(3, 6, 16, 0.72);
+      backdrop-filter: blur(10px);
+    }
+
+    .lyrics-modal.active {
+      display: flex;
+    }
+
+    .lyrics-modal-panel {
+      width: min(760px, 100%);
+      max-height: 85vh;
+      overflow: hidden;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(12, 18, 36, 0.98), rgba(8, 12, 24, 0.98));
+      border: 1px solid rgba(122, 162, 255, 0.18);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.46);
+    }
+
+    .lyrics-modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 22px 14px;
+      border-bottom: 1px solid rgba(122, 162, 255, 0.12);
+    }
+
+    .lyrics-modal-head h3 {
+      margin: 0 0 6px;
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    .lyrics-modal-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .lyrics-close {
+      flex: 0 0 auto;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 162, 255, 0.18);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .lyrics-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.04);
+    }
+
+    .lyrics-modal-body {
+      padding: 0 22px 22px;
+      max-height: calc(85vh - 92px);
+      overflow-y: auto;
+    }
+
+    .lyrics-modal-body pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #edf3ff;
+    }
+
+    @media (max-width: 700px) {
+      .media-row {
+        grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+        gap: 14px;
+      }
+
+      .media-card,
+      .lyrics-card {
+        min-height: 290px;
+      }
+
+      .play-badge {
+        width: 46px;
+        height: 46px;
+        bottom: 68px;
+      }
+
+      .media-title {
+        font-size: 1rem;
+      }
+
+      .media-subtitle {
+        font-size: 0.86rem;
+      }
+
+      .lyrics-modal {
+        padding: 12px;
+      }
+
+      .lyrics-modal-head,
+      .lyrics-modal-body {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="orb orb-a"></div>
@@ -41,18 +319,202 @@
       </p>
     </section>
 
-    <section class="cards-3">
-      <article class="glass panel">
-        <h2>Music</h2>
-      </article>
+    <section class="media-section glass panel">
+      <div class="media-head">
+        <div>
+          <h2>Music</h2>
+          <p>Listen to original tracks, hosted wherever each release lives.</p>
+        </div>
+      </div>
 
-      <article class="glass panel">
-        <h2>Lyrics</h2>
-      </article>
+      <div class="media-row">
+        <a
+          class="media-card"
+          href="https://soundcloud.com/your-link-here"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Echo Drift"
+        >
+          <div class="media-thumb">
+            <span class="media-badge">Music</span>
+            <span class="play-badge">▶</span>
+            <img src="images/waves/echo-drift-cover.jpg" alt="Echo Drift cover art" />
+            <div class="media-meta">
+              <h3 class="media-title">Echo Drift</h3>
+              <p class="media-subtitle">Single · WYCO Waves</p>
+            </div>
+          </div>
+        </a>
 
-      <article class="glass panel">
-        <h2>Visual Media</h2>
-      </article>
+        <a
+          class="media-card"
+          href="https://youtube.com/your-link-here"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Neon Hollow"
+        >
+          <div class="media-thumb">
+            <span class="media-badge">Music</span>
+            <span class="play-badge">▶</span>
+            <img src="images/waves/neon-hollow-cover.jpg" alt="Neon Hollow cover art" />
+            <div class="media-meta">
+              <h3 class="media-title">Neon Hollow</h3>
+              <p class="media-subtitle">Single · WYCO Waves</p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="media-card"
+          href="https://bandcamp.com/your-link-here"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Signal Static"
+        >
+          <div class="media-thumb">
+            <span class="media-badge">Music</span>
+            <span class="play-badge">▶</span>
+            <img src="images/waves/signal-static-cover.jpg" alt="Signal Static cover art" />
+            <div class="media-meta">
+              <h3 class="media-title">Signal Static</h3>
+              <p class="media-subtitle">Single · WYCO Waves</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="media-section glass panel">
+      <div class="media-head">
+        <div>
+          <h2>Lyrics</h2>
+          <p>Tap a title card to open the lyrics in a popup.</p>
+        </div>
+      </div>
+
+      <div class="media-row">
+        <button
+          class="lyrics-card"
+          type="button"
+          data-title="Echo Drift"
+          data-subtitle="Lyrics · WYCO Waves"
+          data-lyrics="Verse 1&#10;Your lyrics go here...&#10;&#10;Hook&#10;Your chorus goes here...&#10;&#10;Verse 2&#10;Replace this with the full song text."
+          aria-label="Open Echo Drift lyrics"
+        >
+          <div class="media-thumb">
+            <span class="media-badge">Lyrics</span>
+            <span class="play-badge">✦</span>
+            <img src="images/waves/echo-drift-cover.jpg" alt="Echo Drift lyric card art" />
+            <div class="media-meta">
+              <h3 class="media-title">Echo Drift</h3>
+              <p class="media-subtitle">Tap to read lyrics</p>
+            </div>
+          </div>
+        </button>
+
+        <button
+          class="lyrics-card"
+          type="button"
+          data-title="Neon Hollow"
+          data-subtitle="Lyrics · WYCO Waves"
+          data-lyrics="Intro&#10;Place your intro here...&#10;&#10;Verse 1&#10;Place your verse here...&#10;&#10;Hook&#10;Place your hook here..."
+          aria-label="Open Neon Hollow lyrics"
+        >
+          <div class="media-thumb">
+            <span class="media-badge">Lyrics</span>
+            <span class="play-badge">✦</span>
+            <img src="images/waves/neon-hollow-cover.jpg" alt="Neon Hollow lyric card art" />
+            <div class="media-meta">
+              <h3 class="media-title">Neon Hollow</h3>
+              <p class="media-subtitle">Tap to read lyrics</p>
+            </div>
+          </div>
+        </button>
+
+        <button
+          class="lyrics-card"
+          type="button"
+          data-title="Signal Static"
+          data-subtitle="Lyrics · WYCO Waves"
+          data-lyrics="Verse 1&#10;Replace this placeholder with your actual lyrics.&#10;&#10;Bridge&#10;This popup can hold the full song body."
+          aria-label="Open Signal Static lyrics"
+        >
+          <div class="media-thumb">
+            <span class="media-badge">Lyrics</span>
+            <span class="play-badge">✦</span>
+            <img src="images/waves/signal-static-cover.jpg" alt="Signal Static lyric card art" />
+            <div class="media-meta">
+              <h3 class="media-title">Signal Static</h3>
+              <p class="media-subtitle">Tap to read lyrics</p>
+            </div>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <section class="media-section glass panel">
+      <div class="media-head">
+        <div>
+          <h2>Visual Media</h2>
+          <p>Visualizers, music videos, clips, and production work.</p>
+        </div>
+      </div>
+
+      <div class="media-row">
+        <a
+          class="media-card"
+          href="https://youtube.com/your-video-link-here"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Echo Drift Visualizer"
+        >
+          <div class="media-thumb">
+            <span class="media-badge">Visual</span>
+            <span class="play-badge">▶</span>
+            <img src="images/waves/echo-drift-visual.jpg" alt="Echo Drift visualizer poster" />
+            <div class="media-meta">
+              <h3 class="media-title">Echo Drift Visualizer</h3>
+              <p class="media-subtitle">Watch visual media</p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="media-card"
+          href="https://youtube.com/your-video-link-here"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Neon Hollow Promo"
+        >
+          <div class="media-thumb">
+            <span class="media-badge">Visual</span>
+            <span class="play-badge">▶</span>
+            <img src="images/waves/neon-hollow-visual.jpg" alt="Neon Hollow promo poster" />
+            <div class="media-meta">
+              <h3 class="media-title">Neon Hollow Promo</h3>
+              <p class="media-subtitle">Watch visual media</p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="media-card"
+          href="https://vimeo.com/your-video-link-here"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Signal Static Clip"
+        >
+          <div class="media-thumb">
+            <span class="media-badge">Visual</span>
+            <span class="play-badge">▶</span>
+            <img src="images/waves/signal-static-visual.jpg" alt="Signal Static clip poster" />
+            <div class="media-meta">
+              <h3 class="media-title">Signal Static Clip</h3>
+              <p class="media-subtitle">Watch visual media</p>
+            </div>
+          </div>
+        </a>
+      </div>
     </section>
 
     <section class="section-block glass">
@@ -65,28 +527,91 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-  <div class="wrap footer-grid glass">
-    <div>
-      <p class="footer-brand">WYCO Waves</p>
-      <p class="muted">Music. Visuals. Productions. Lyrics.</p>
-    </div>
-
-    <div class="footer-meta">
-      <p>© 2026 WYCO. All rights reserved.</p>
-      <p class="muted">
-        All original music, lyrics, artwork, code, media, and written content on this site are protected.
-        Unauthorized reproduction or commercial use is prohibited without permission.
-      </p>
-
-      <div class="footer-links">
-        <a href="/privacy.html" class="pill footer-pill">Privacy Policy</a>
-        <a href="/terms.html" class="pill footer-pill">Terms of Use</a>
+  <div class="lyrics-modal" id="lyricsModal" aria-hidden="true">
+    <div class="lyrics-modal-panel">
+      <div class="lyrics-modal-head">
+        <div>
+          <h3 id="lyricsModalTitle">Lyrics Title</h3>
+          <p id="lyricsModalSubtitle">Lyrics subtitle</p>
+        </div>
+        <button class="lyrics-close" id="lyricsClose" type="button" aria-label="Close lyrics modal">✕</button>
+      </div>
+      <div class="lyrics-modal-body">
+        <pre id="lyricsModalText"></pre>
       </div>
     </div>
   </div>
-</footer>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid glass">
+      <div>
+        <p class="footer-brand">WYCO Waves</p>
+        <p class="muted">Music. Visuals. Productions. Lyrics.</p>
+      </div>
+
+      <div class="footer-meta">
+        <p>© 2026 WYCO. All rights reserved.</p>
+        <p class="muted">
+          All original music, lyrics, artwork, code, media, and written content on this site are protected.
+          Unauthorized reproduction or commercial use is prohibited without permission.
+        </p>
+
+        <div class="footer-links">
+          <a href="/privacy.html" class="pill footer-pill">Privacy Policy</a>
+          <a href="/terms.html" class="pill footer-pill">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
+
+  <script>
+    const lyricsCards = document.querySelectorAll('.lyrics-card');
+    const lyricsModal = document.getElementById('lyricsModal');
+    const lyricsModalTitle = document.getElementById('lyricsModalTitle');
+    const lyricsModalSubtitle = document.getElementById('lyricsModalSubtitle');
+    const lyricsModalText = document.getElementById('lyricsModalText');
+    const lyricsClose = document.getElementById('lyricsClose');
+
+    function openLyricsModal(title, subtitle, lyrics) {
+      lyricsModalTitle.textContent = title;
+      lyricsModalSubtitle.textContent = subtitle;
+      lyricsModalText.textContent = lyrics;
+      lyricsModal.classList.add('active');
+      lyricsModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLyricsModal() {
+      lyricsModal.classList.remove('active');
+      lyricsModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    lyricsCards.forEach(card => {
+      card.addEventListener('click', () => {
+        openLyricsModal(
+          card.dataset.title || 'Untitled',
+          card.dataset.subtitle || 'Lyrics',
+          card.dataset.lyrics || 'No lyrics added yet.'
+        );
+      });
+    });
+
+    lyricsClose.addEventListener('click', closeLyricsModal);
+
+    lyricsModal.addEventListener('click', (event) => {
+      if (event.target === lyricsModal) {
+        closeLyricsModal();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lyricsModal.classList.contains('active')) {
+        closeLyricsModal();
+      }
+    });
+  </script>
 </body>
 </html>
