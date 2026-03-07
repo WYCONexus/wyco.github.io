@@ -598,52 +598,5 @@
 
   <script src="script.js"></script>
 
-  <script>
-    const lyricsCards = document.querySelectorAll('.lyrics-card');
-    const lyricsModal = document.getElementById('lyricsModal');
-    const lyricsModalTitle = document.getElementById('lyricsModalTitle');
-    const lyricsModalSubtitle = document.getElementById('lyricsModalSubtitle');
-    const lyricsModalText = document.getElementById('lyricsModalText');
-    const lyricsClose = document.getElementById('lyricsClose');
-
-    function openLyricsModal(title, subtitle, lyrics) {
-      lyricsModalTitle.textContent = title;
-      lyricsModalSubtitle.textContent = subtitle;
-      lyricsModalText.textContent = lyrics;
-      lyricsModal.classList.add('active');
-      lyricsModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLyricsModal() {
-      lyricsModal.classList.remove('active');
-      lyricsModal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
-    lyricsCards.forEach(card => {
-      card.addEventListener('click', () => {
-        openLyricsModal(
-          card.dataset.title || 'Untitled',
-          card.dataset.subtitle || 'Lyrics',
-          card.dataset.lyrics || 'No lyrics added yet.'
-        );
-      });
-    });
-
-    lyricsClose.addEventListener('click', closeLyricsModal);
-
-    lyricsModal.addEventListener('click', (event) => {
-      if (event.target === lyricsModal) {
-        closeLyricsModal();
-      }
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && lyricsModal.classList.contains('active')) {
-        closeLyricsModal();
-      }
-    });
-  </script>
 </body>
 </html>
