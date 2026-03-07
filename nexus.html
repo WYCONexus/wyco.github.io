@@ -8,8 +8,228 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#070b14">
+  <meta name="theme-color" content="#070b14">
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .page-main,
+    .wrap {
+      max-width: 100%;
+    }
+
+    .nexus-carousel-section {
+      margin-top: 32px;
+      overflow: hidden;
+    }
+
+    .nexus-carousel-section + .nexus-carousel-section {
+      margin-top: 28px;
+    }
+
+    .nexus-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .nexus-section-head h2 {
+      margin: 0;
+    }
+
+    .nexus-section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nexus-row {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      padding-bottom: 8px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .nexus-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nexus-row > .nexus-card {
+      flex: 0 0 260px;
+      min-width: 260px;
+      max-width: 260px;
+      scroll-snap-align: start;
+    }
+
+    .nexus-card {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(9, 16, 36, 0.05) 0%, rgba(5, 9, 22, 0.9) 100%),
+        rgba(12, 18, 36, 0.9);
+      border: 1px solid rgba(122, 162, 255, 0.18);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      min-height: 360px;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+
+    .nexus-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 26px 56px rgba(0, 0, 0, 0.4);
+      border-color: rgba(69, 230, 216, 0.35);
+    }
+
+    .nexus-thumb {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0c1430 0%, #101b3a 55%, #081224 100%);
+    }
+
+    .nexus-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .nexus-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(7, 11, 20, 0.05) 0%,
+        rgba(7, 11, 20, 0.25) 55%,
+        rgba(7, 11, 20, 0.88) 100%
+      );
+      pointer-events: none;
+    }
+
+    .nexus-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 2;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #eaf6ff;
+      background: rgba(10, 18, 40, 0.76);
+      border: 1px solid rgba(122, 162, 255, 0.22);
+      backdrop-filter: blur(8px);
+    }
+
+    .nexus-icon {
+      position: absolute;
+      right: 14px;
+      bottom: 74px;
+      z-index: 2;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 1.05rem;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    .nexus-meta {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      padding: 16px 16px 18px;
+    }
+
+    .nexus-title {
+      margin: 0 0 6px;
+      font-size: 1.08rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #f5f8ff;
+    }
+
+    .nexus-subtitle {
+      margin: 0;
+      color: var(--soft);
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+
+    .nexus-lines {
+      margin-top: 10px;
+      color: var(--soft);
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+
+    .nexus-lines span {
+      display: block;
+    }
+
+    @media (max-width: 700px) {
+      .nexus-row {
+        gap: 14px;
+        padding-bottom: 6px;
+      }
+
+      .nexus-row > .nexus-card {
+        flex: 0 0 170px;
+        min-width: 170px;
+        max-width: 170px;
+      }
+
+      .nexus-card {
+        min-height: 290px;
+      }
+
+      .nexus-icon {
+        width: 46px;
+        height: 46px;
+        bottom: 68px;
+      }
+
+      .nexus-title {
+        font-size: 1rem;
+      }
+
+      .nexus-subtitle {
+        font-size: 0.86rem;
+      }
+
+      .nexus-lines {
+        font-size: 0.76rem;
+        line-height: 1.35;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="orb orb-a"></div>
@@ -41,37 +261,188 @@
       </p>
     </section>
 
-    <section class="content-grid">
-      <article class="glass panel">
-        <h2>Project spotlight</h2>
-        <pre><code>Project: ORB
-Status: Hiatus
-Stack: Python / Discord / OpenAI</code></pre>
-      </article>
+    <section class="nexus-carousel-section glass panel">
+      <div class="nexus-section-head">
+        <div>
+          <h2>Project spotlight</h2>
+          <p>Featured projects from the WYCO Nexus side of the ecosystem.</p>
+        </div>
+      </div>
+
+      <div class="nexus-row">
+        <a
+          class="nexus-card"
+          href="https://github.com/YOUR-USERNAME/ORB"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open ORB repository"
+        >
+          <div class="nexus-thumb">
+            <span class="nexus-badge">Spotlight</span>
+            <span class="nexus-icon">⌘</span>
+            <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Nexus default artwork">
+            <div class="nexus-meta">
+              <h3 class="nexus-title">ORB</h3>
+              <p class="nexus-subtitle">Discord bot / AI system</p>
+              <div class="nexus-lines">
+                <span>Status: Hiatus</span>
+                <span>Stack: Python / Discord / OpenAI</span>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="nexus-card"
+          href="https://github.com/YOUR-USERNAME/PROJECT-TWO"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open second spotlight repository"
+        >
+          <div class="nexus-thumb">
+            <span class="nexus-badge">Spotlight</span>
+            <span class="nexus-icon">⌘</span>
+            <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Nexus default artwork">
+            <div class="nexus-meta">
+              <h3 class="nexus-title">Project Two</h3>
+              <p class="nexus-subtitle">Web / tool / platform</p>
+              <div class="nexus-lines">
+                <span>Status: Active</span>
+                <span>Stack: HTML / CSS / JS</span>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="nexus-card"
+          href="https://github.com/YOUR-USERNAME/PROJECT-THREE"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open third spotlight repository"
+        >
+          <div class="nexus-thumb">
+            <span class="nexus-badge">Spotlight</span>
+            <span class="nexus-icon">⌘</span>
+            <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Nexus default artwork">
+            <div class="nexus-meta">
+              <h3 class="nexus-title">Project Three</h3>
+              <p class="nexus-subtitle">Experimental build</p>
+              <div class="nexus-lines">
+                <span>Status: In Progress</span>
+                <span>Stack: Python / API / Automation</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="nexus-carousel-section glass panel">
+      <div class="nexus-section-head">
+        <div>
+          <h2>Repositories</h2>
+          <p>Public GitHub repositories from WYCO Nexus. Tap a card to open the repo.</p>
+        </div>
+      </div>
+
+      <div class="nexus-row">
+        <a
+          class="nexus-card"
+          href="https://github.com/YOUR-USERNAME/ORB"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open ORB repository"
+        >
+          <div class="nexus-thumb">
+            <span class="nexus-badge">Repository</span>
+            <span class="nexus-icon">↗</span>
+            <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Nexus default artwork">
+            <div class="nexus-meta">
+              <h3 class="nexus-title">ORB</h3>
+              <p class="nexus-subtitle">Python / Discord / OpenAI</p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="nexus-card"
+          href="https://github.com/YOUR-USERNAME/REPO-TWO"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Repo Two repository"
+        >
+          <div class="nexus-thumb">
+            <span class="nexus-badge">Repository</span>
+            <span class="nexus-icon">↗</span>
+            <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Nexus default artwork">
+            <div class="nexus-meta">
+              <h3 class="nexus-title">Repo Two</h3>
+              <p class="nexus-subtitle">Website / UI / Frontend</p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="nexus-card"
+          href="https://github.com/YOUR-USERNAME/REPO-THREE"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Repo Three repository"
+        >
+          <div class="nexus-thumb">
+            <span class="nexus-badge">Repository</span>
+            <span class="nexus-icon">↗</span>
+            <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Nexus default artwork">
+            <div class="nexus-meta">
+              <h3 class="nexus-title">Repo Three</h3>
+              <p class="nexus-subtitle">Scripts / Utilities / Tools</p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="nexus-card"
+          href="https://github.com/YOUR-USERNAME/REPO-FOUR"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Repo Four repository"
+        >
+          <div class="nexus-thumb">
+            <span class="nexus-badge">Repository</span>
+            <span class="nexus-icon">↗</span>
+            <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Nexus default artwork">
+            <div class="nexus-meta">
+              <h3 class="nexus-title">Repo Four</h3>
+              <p class="nexus-subtitle">Experiments / Sandbox</p>
+            </div>
+          </div>
+        </a>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-  <div class="wrap footer-grid glass">
-    <div>
-      <p class="footer-brand">WYCO Nexus</p>
-      <p class="muted">Tech Projects & Digital Ecosystems</p>
-    </div>
+    <div class="wrap footer-grid glass">
+      <div>
+        <p class="footer-brand">WYCO Nexus</p>
+        <p class="muted">Tech Projects & Digital Ecosystems</p>
+      </div>
 
-    <div class="footer-meta">
-      <p>© 2026 WYCO. All rights reserved.</p>
-      <p class="muted">
-        All original music, lyrics, artwork, code, media, and written content on this site are protected.
-        Unauthorized reproduction or commercial use is prohibited without permission.
-      </p>
+      <div class="footer-meta">
+        <p>© 2026 WYCO. All rights reserved.</p>
+        <p class="muted">
+          All original music, lyrics, artwork, code, media, and written content on this site are protected.
+          Unauthorized reproduction or commercial use is prohibited without permission.
+        </p>
 
-      <div class="footer-links">
-        <a href="/privacy.html" class="pill footer-pill">Privacy Policy</a>
-        <a href="/terms.html" class="pill footer-pill">Terms of Use</a>
+        <div class="footer-links">
+          <a href="/privacy.html" class="pill footer-pill">Privacy Policy</a>
+          <a href="/terms.html" class="pill footer-pill">Terms of Use</a>
+        </div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
   <script src="script.js"></script>
 </body>
