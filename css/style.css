@@ -404,8 +404,7 @@ pre {
   display: none;
 }
 
-.media-row > .media-card,
-.media-row > .lyrics-card {
+.media-row > * {
   flex: 0 0 220px;
   min-width: 220px;
   max-width: 220px;
@@ -539,13 +538,16 @@ pre {
   display: none;
 }
 
-.nexus-row > .nexus-card {
+.nexus-row > * {
   flex: 0 0 260px;
   min-width: 260px;
   max-width: 260px;
+  scroll-snap-align: start;
+}
+
+.nexus-card {
   z-index: 2;
   padding: 16px 16px 18px;
-  scroll-snap-align: start;
 }
 
 .nexus-title {
@@ -869,8 +871,7 @@ pre {
     padding-bottom: 6px;
   }
 
-  .media-row > .media-card,
-  .media-row > .lyrics-card {
+  .media-row > * {
     flex: 0 0 170px;
     min-width: 170px;
     max-width: 170px;
@@ -914,7 +915,7 @@ pre {
     padding-bottom: 6px;
   }
 
-  .nexus-row > .nexus-card {
+  .nexus-row > * {
     flex: 0 0 170px;
     min-width: 170px;
     max-width: 170px;
