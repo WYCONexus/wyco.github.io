@@ -305,3 +305,28 @@ document.addEventListener('DOMContentLoaded', () => {
   loadGitHubRepos();
 
 });
+
+/* Completed projects endless carousel */
+(function () {
+  function setupCompletedCarousel() {
+    const track = document.querySelector(".completed-track");
+    if (!track || track.dataset.carouselReady === "true") return;
+
+    const cards = Array.from(track.children);
+    if (cards.length === 0) return;
+
+    cards.forEach((card) => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      track.appendChild(clone);
+    });
+
+    track.dataset.carouselReady = "true";
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupCompletedCarousel);
+  } else {
+    setupCompletedCarousel();
+  }
+})();
