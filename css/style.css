@@ -1000,6 +1000,59 @@ pre {
   padding: 22px 24px;
 }
 
+.project-card-copy,
+.completed-card-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  min-width: 0;
+}
+
+.project-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 0 12px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #edf3ff;
+  background: rgba(10, 18, 40, 0.78);
+  border: 1px solid rgba(122, 162, 255, 0.18);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  white-space: nowrap;
+}
+
+.project-tag.tag-core {
+  background: linear-gradient(135deg, rgba(69,230,216,0.20), rgba(111,137,255,0.24));
+  border-color: rgba(122, 162, 255, 0.28);
+  color: #edf3ff;
+}
+
+.project-tag.tag-waves {
+  background: linear-gradient(135deg, rgba(69,230,216,0.16), rgba(199,93,255,0.24));
+  border-color: rgba(199,93,255,0.26);
+  color: #f4ecff;
+}
+
+.project-tag.tag-nexus {
+  background: linear-gradient(135deg, rgba(69,230,216,0.22), rgba(111,137,255,0.18));
+  border-color: rgba(69,230,216,0.28);
+  color: #ecffff;
+}
+
+.project-tag.tag-repairs {
+  background: linear-gradient(135deg, rgba(111,137,255,0.18), rgba(255,255,255,0.08));
+  border-color: rgba(139, 163, 255, 0.24);
+  color: #eef2ff;
+}
+
 .project-card h2 {
   margin: 0 0 8px;
   font-size: 1.2rem;
@@ -1067,7 +1120,7 @@ pre {
 }
 
 .completed-card h3 {
-  margin: 0;
+  margin: 0 0 8px;
   font-size: 1.22rem;
   line-height: 1.2;
   color: var(--text);
