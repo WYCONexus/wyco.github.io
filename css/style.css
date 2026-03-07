@@ -956,3 +956,64 @@ pre {
 .progress-60 { --progress: 60%; }
 .progress-80 { --progress: 80%; }
 .progress-100 { --progress: 100%; }
+
+/* -------------------------------- */
+/* CAROUSEL HOTFIX */
+/* -------------------------------- */
+
+.media-row,
+.nexus-row {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  gap: 18px !important;
+  padding-bottom: 8px !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+}
+
+.media-row::-webkit-scrollbar,
+.nexus-row::-webkit-scrollbar {
+  display: none !important;
+}
+
+.media-row > *,
+.nexus-row > * {
+  flex: 0 0 auto !important;
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+  scroll-snap-align: start !important;
+}
+
+.media-row > .lyrics-card,
+.media-row > .media-card {
+  width: 220px !important;
+  min-width: 220px !important;
+  max-width: 220px !important;
+}
+
+.media-card,
+.lyrics-card,
+.nexus-card {
+  width: 100% !important;
+}
+
+@media (max-width: 700px) {
+  .media-row,
+  .nexus-row {
+    gap: 14px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .media-row > *,
+  .nexus-row > * {
+    width: 170px !important;
+    min-width: 170px !important;
+    max-width: 170px !important;
+  }
+}
