@@ -12,8 +12,20 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .page-main,
+    .wrap {
+      max-width: 100%;
+    }
+
     .media-section {
       margin-top: 32px;
+      overflow: hidden;
     }
 
     .media-section + .media-section {
@@ -39,33 +51,28 @@
     }
 
     .media-row {
-  display: flex;
-  gap: 18px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 10px;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-}
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      padding-bottom: 8px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
 
-.media-row::-webkit-scrollbar {
-  height: 10px;
-}
+    .media-row::-webkit-scrollbar {
+      display: none;
+    }
 
-.media-row::-webkit-scrollbar-thumb {
-  background: rgba(122, 162, 255, 0.28);
-  border-radius: 999px;
-}
-
-.media-row::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.media-row > .media-card,
-.media-row > .lyrics-card {
-  flex: 0 0 240px;
-  scroll-snap-align: start;
-}
+    .media-row > .media-card,
+    .media-row > .lyrics-card {
+      flex: 0 0 240px;
+      min-width: 240px;
+      max-width: 240px;
+      scroll-snap-align: start;
+    }
 
     .media-card,
     .lyrics-card {
@@ -83,6 +90,7 @@
       transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
       min-height: 360px;
       cursor: pointer;
+      box-sizing: border-box;
     }
 
     .media-card:hover,
@@ -96,6 +104,7 @@
       position: relative;
       aspect-ratio: 3 / 4;
       width: 100%;
+      height: 100%;
       overflow: hidden;
       background: linear-gradient(135deg, #0c1430 0%, #101b3a 55%, #081224 100%);
     }
@@ -113,9 +122,9 @@
       inset: 0;
       background: linear-gradient(
         180deg,
-        rgba(7, 11, 20, 0.04) 0%,
-        rgba(7, 11, 20, 0.14) 50%,
-        rgba(7, 11, 20, 0.72) 100%
+        rgba(7, 11, 20, 0.05) 0%,
+        rgba(7, 11, 20, 0.25) 55%,
+        rgba(7, 11, 20, 0.85) 100%
       );
       pointer-events: none;
     }
@@ -178,20 +187,13 @@
     }
 
     .lyrics-card {
-      border: none;
+      border: 1px solid rgba(122, 162, 255, 0.18);
       padding: 0;
       text-align: left;
       font: inherit;
-    }
-
-    .lyrics-card .play-badge {
-      bottom: 74px;
-    }
-
-    .lyrics-preview-note {
-      margin-top: 8px;
-      font-size: 0.82rem;
-      color: var(--muted);
+      background-color: transparent;
+      appearance: none;
+      -webkit-appearance: none;
     }
 
     .lyrics-modal {
@@ -277,8 +279,15 @@
 
     @media (max-width: 700px) {
       .media-row {
-        grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
         gap: 14px;
+        padding-bottom: 6px;
+      }
+
+      .media-row > .media-card,
+      .media-row > .lyrics-card {
+        flex: 0 0 170px;
+        min-width: 170px;
+        max-width: 170px;
       }
 
       .media-card,
