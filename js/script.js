@@ -312,10 +312,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const track = document.querySelector(".completed-track");
     if (!track || track.dataset.carouselReady === "true") return;
 
-    const cards = Array.from(track.children);
-    if (cards.length === 0) return;
+    const originals = Array.from(track.children);
+    if (originals.length <= 1) {
+      track.dataset.carouselReady = "true";
+      return;
+    }
 
-    cards.forEach((card) => {
+    originals.forEach((card) => {
       const clone = card.cloneNode(true);
       clone.setAttribute("aria-hidden", "true");
       track.appendChild(clone);
