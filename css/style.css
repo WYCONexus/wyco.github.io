@@ -1174,6 +1174,8 @@ pre {
   max-width: 100%;
   overflow: hidden;
   padding: 6px 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: pan-y;
 }
 
 .completed-viewport::before,
@@ -1207,11 +1209,25 @@ pre {
   max-width: none;
   will-change: transform;
   animation: completed-scroll 26s linear infinite;
+  animation-play-state: running;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .completed-viewport:hover .completed-track {
     animation-play-state: paused;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .completed-viewport:hover .completed-track,
+  .completed-viewport:active .completed-track,
+  .completed-viewport:focus .completed-track,
+  .completed-viewport:focus-within .completed-track,
+  .completed-track:hover,
+  .completed-track:active,
+  .completed-track:focus,
+  .completed-track:focus-within {
+    animation-play-state: running !important;
   }
 }
 
