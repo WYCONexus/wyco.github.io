@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WYCO Whimsy</title>
+  <meta name="description" content="WYCO Whimsy — writing, imagination, storytelling, and creative expression." />
+  <link rel="icon" href="/images/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#070b14">
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+
+  <header class="site-header">
+    <div class="wrap nav-wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-dot"></span>
+        <span>WYCO</span>
+      </a>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="waves.html">Waves</a>
+        <a href="whimsy.html" class="active">Whimsy</a>
+        <a href="nexus.html">Nexus</a>
+        <a href="repairs.html">Repairs</a>
+        <a href="projects.html">Projects</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <main class="wrap page-main">
+    <section class="page-hero glass">
+      <p class="eyebrow">WYCO Whimsy</p>
+      <h1><span class="gradient-text">Words. Wonder. Worlds.</span></h1>
+      <p class="lead">
+        WYCO Whimsy is the imaginative wing of the WYCO ecosystem — poetry, stories, concepts, and creative writing in all its forms.
+      </p>
+    </section>
+
+    <section class="media-section glass panel">
+      <div class="media-head">
+        <div>
+          <h2>Featured Writing</h2>
+          <p>Read featured pieces, hosted wherever each work lives.</p>
+        </div>
+      </div>
+
+      <div class="media-carousel-shell">
+        <button class="media-arrow media-arrow-left" type="button" aria-label="Scroll featured writing left" data-target="writingRow">‹</button>
+
+        <div class="media-row" id="writingRow">
+          <a
+            class="media-card"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Glass Static"
+          >
+            <div class="media-thumb">
+              <span class="media-badge">Writing</span>
+              <span class="play-badge">✦</span>
+              <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Whimsy default artwork">
+              <div class="media-meta">
+                <h3 class="media-title">Glass Static</h3>
+                <p class="media-subtitle">Short Piece · WYCO Whimsy</p>
+              </div>
+            </div>
+          </a>
+
+          <a
+            class="media-card"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Candle Theory"
+          >
+            <div class="media-thumb">
+              <span class="media-badge">Writing</span>
+              <span class="play-badge">✦</span>
+              <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Whimsy default artwork">
+              <div class="media-meta">
+                <h3 class="media-title">Candle Theory</h3>
+                <p class="media-subtitle">Concept Piece · WYCO Whimsy</p>
+              </div>
+            </div>
+          </a>
+
+          <a
+            class="media-card"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Violet Orbit"
+          >
+            <div class="media-thumb">
+              <span class="media-badge">Writing</span>
+              <span class="play-badge">✦</span>
+              <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Whimsy default artwork">
+              <div class="media-meta">
+                <h3 class="media-title">Violet Orbit</h3>
+                <p class="media-subtitle">Poetic Work · WYCO Whimsy</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll featured writing right" data-target="writingRow">›</button>
+      </div>
+    </section>
+
+    <section class="media-section glass panel">
+      <div class="media-head">
+        <div>
+          <h2>Poetry & Passages</h2>
+          <p>Tap a title card to open the full text in a popup.</p>
+        </div>
+      </div>
+
+      <div class="media-carousel-shell">
+        <button class="media-arrow media-arrow-left" type="button" aria-label="Scroll poetry left" data-target="poetryRow">‹</button>
+
+        <div class="media-row" id="poetryRow">
+          <button
+            class="lyrics-card"
+            type="button"
+            data-title="Glass Static"
+            data-subtitle="Poetry · WYCO Whimsy"
+            data-lyrics="Line 1&#10;Put your poem or passage here...&#10;&#10;Line 2&#10;Continue the text here...&#10;&#10;Line 3&#10;Replace this placeholder with the full writing."
+            aria-label="Open Glass Static text"
+          >
+            <div class="media-thumb">
+              <span class="media-badge">Poetry</span>
+              <span class="play-badge">✦</span>
+              <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Whimsy default artwork">
+              <div class="media-meta">
+                <h3 class="media-title">Glass Static</h3>
+                <p class="media-subtitle">Tap to read</p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            class="lyrics-card"
+            type="button"
+            data-title="Candle Theory"
+            data-subtitle="Passage · WYCO Whimsy"
+            data-lyrics="Paragraph 1&#10;Place your writing here...&#10;&#10;Paragraph 2&#10;This popup can hold poetry, prose, fragments, or story excerpts."
+            aria-label="Open Candle Theory text"
+          >
+            <div class="media-thumb">
+              <span class="media-badge">Passage</span>
+              <span class="play-badge">✦</span>
+              <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Whimsy default artwork">
+              <div class="media-meta">
+                <h3 class="media-title">Candle Theory</h3>
+                <p class="media-subtitle">Tap to read</p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            class="lyrics-card"
+            type="button"
+            data-title="Violet Orbit"
+            data-subtitle="Poetry · WYCO Whimsy"
+            data-lyrics="Opening&#10;Replace this placeholder with the actual text.&#10;&#10;Middle&#10;This format works well for poems, excerpts, journal fragments, or story scenes."
+            aria-label="Open Violet Orbit text"
+          >
+            <div class="media-thumb">
+              <span class="media-badge">Poetry</span>
+              <span class="play-badge">✦</span>
+              <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Whimsy default artwork">
+              <div class="media-meta">
+                <h3 class="media-title">Violet Orbit</h3>
+                <p class="media-subtitle">Tap to read</p>
+              </div>
+            </div>
+          </button>
+        </div>
+
+        <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll poetry right" data-target="poetryRow">›</button>
+      </div>
+    </section>
+
+    <section class="media-section glass panel">
+      <div class="media-head">
+        <div>
+          <h2>Worldbuilding & Concepts</h2>
+          <p>Ideas, story frameworks, visual concepts, and imaginative experiments.</p>
+        </div>
+      </div>
+
+      <div class="media-carousel-shell">
+        <button class="media-arrow media-arrow-left" type="button" aria-label="Scroll concept media left" data-target="conceptRow">‹</button>
+
+        <div class="media-row" id="conceptRow">
+          <a
+            class="media-card"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Dream Map"
+          >
+            <div class="media-thumb">
+              <span class="media-badge">Concept</span>
+              <span class="play-badge">✦</span>
+              <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Whimsy default artwork">
+              <div class="media-meta">
+                <h3 class="media-title">Dream Map</h3>
+                <p class="media-subtitle">View concept work</p>
+              </div>
+            </div>
+          </a>
+
+          <a
+            class="media-card"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Lantern Archive"
+          >
+            <div class="media-thumb">
+              <span class="media-badge">Concept</span>
+              <span class="play-badge">✦</span>
+              <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Whimsy default artwork">
+              <div class="media-meta">
+                <h3 class="media-title">Lantern Archive</h3>
+                <p class="media-subtitle">View concept work</p>
+              </div>
+            </div>
+          </a>
+
+          <a
+            class="media-card"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Midnight Sketchbook"
+          >
+            <div class="media-thumb">
+              <span class="media-badge">Concept</span>
+              <span class="play-badge">✦</span>
+              <img src="images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Whimsy default artwork">
+              <div class="media-meta">
+                <h3 class="media-title">Midnight Sketchbook</h3>
+                <p class="media-subtitle">View concept work</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll concept media right" data-target="conceptRow">›</button>
+      </div>
+    </section>
+
+    <section class="section-block glass">
+      <h2><span class="gradient-text">Writing Usage Notice</span></h2>
+      <p>
+        Writing published on this site is original work by Sean Skipworth unless otherwise noted.
+        Quoting brief excerpts with credit may be allowed, but verbatim reproduction, redistribution,
+        or commercial use of full written works without permission is prohibited.
+      </p>
+    </section>
+  </main>
+
+  <div class="lyrics-modal" id="lyricsModal" aria-hidden="true">
+    <div class="lyrics-modal-panel">
+      <div class="lyrics-modal-head">
+        <div>
+          <h3 id="lyricsModalTitle">Text Title</h3>
+          <p id="lyricsModalSubtitle">Text subtitle</p>
+        </div>
+        <button class="lyrics-close" id="lyricsClose" type="button" aria-label="Close text modal">✕</button>
+      </div>
+      <div class="lyrics-modal-body">
+        <pre id="lyricsModalText"></pre>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid glass">
+      <div>
+        <p class="footer-brand">WYCO Whimsy</p>
+        <p class="muted">Writing. Wonder. Imagination. Expression.</p>
+      </div>
+
+      <div class="footer-meta">
+        <p>© 2026 WYCO. All rights reserved.</p>
+        <p class="muted">
+          All original writing, poetry, artwork, concepts, code, media, and written content on this site are protected.
+          Unauthorized reproduction or commercial use is prohibited without permission.
+        </p>
+
+        <div class="footer-links">
+          <a href="/privacy.html" class="pill footer-pill">Privacy Policy</a>
+          <a href="/terms.html" class="pill footer-pill">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>
