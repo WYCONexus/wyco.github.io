@@ -1209,8 +1209,10 @@ pre {
   animation: completed-scroll 26s linear infinite;
 }
 
-.completed-viewport:hover .completed-track {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .completed-viewport:hover .completed-track {
+    animation-play-state: paused;
+  }
 }
 
 .completed-card {
