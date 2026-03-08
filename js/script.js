@@ -297,39 +297,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ---------------------------
+     Completed Projects Carousel
+  --------------------------- */
+
+  function setupCompletedCarousel() {
+    const track = document.querySelector('.completed-track');
+    if (!track) return;
+
+    if (track.dataset.carouselReady === 'true') return;
+
+    const existingClones = track.querySelectorAll('[data-clone="true"]');
+    existingClones.forEach((clone) => clone.remove());
+
+    const originalCards = Array.from(track.children).filter(
+      (card) => card.dataset.clone !== 'true'
+    );
+
+    if (originalCards.length <= 1) {
+      track.dataset.carouselReady = 'true';
+      return;
+    }
+
+    originalCards.forEach((card) => {
+      const clone = card.cloneNode(true);
+      clone.dataset.clone = 'true';
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+
+    track.dataset.carouselReady = 'true';
+  }
+
+
+  /* ---------------------------
      Initialize
   --------------------------- */
 
   setupNexusCarouselButtons();
   setupMediaCarouselButtons();
+  setupCompletedCarousel();
   loadGitHubRepos();
 
 });
-
-/* Completed projects endless carousel */
-(function () {
-  function setupCompletedCarousel() {
-    const track = document.querySelector(".completed-track");
-    if (!track || track.dataset.carouselReady === "true") return;
-
-    const originals = Array.from(track.children);
-    if (originals.length <= 1) {
-      track.dataset.carouselReady = "true";
-      return;
-    }
-
-    originals.forEach((card) => {
-      const clone = card.cloneNode(true);
-      clone.setAttribute("aria-hidden", "true");
-      track.appendChild(clone);
-    });
-
-    track.dataset.carouselReady = "true";
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupCompletedCarousel);
-  } else {
-    setupCompletedCarousel();
-  }
-})();
