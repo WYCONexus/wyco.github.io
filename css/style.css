@@ -460,21 +460,29 @@ pre {
 /* Timeline branch glows */
 
 .timeline-item.branch-nexus .timeline-marker {
-  background: radial-gradient(circle at 35% 35%, #ffffff, #7df3ea 22%, #45e6d8 45%, #6f89ff 78%, #8ca0ff 100%);
+  background: radial-gradient(
+    circle at 35% 35%,
+    #ffffff,
+    #b7ffe2 18%,
+    #00ff8d 38%,
+    #45e6d8 58%,
+    #6f89ff 82%,
+    #8ca0ff 100%
+  );
   box-shadow:
-    0 0 0 6px rgba(69,230,216,0.10),
-    0 0 20px rgba(69,230,216,0.34),
-    0 0 42px rgba(111,137,255,0.28);
+    0 0 0 6px rgba(0,255,141,0.12),
+    0 0 22px rgba(0,255,141,0.36),
+    0 0 44px rgba(69,230,216,0.28);
 }
 
 .timeline-item.branch-nexus .timeline-marker::before {
-  border-color: rgba(69,230,216,0.20);
-  box-shadow: 0 0 18px rgba(111,137,255,0.18);
+  border-color: rgba(0,255,141,0.24);
+  box-shadow: 0 0 18px rgba(69,230,216,0.18);
 }
 
 .timeline-item.branch-nexus .timeline-branch-badge {
-  border-color: rgba(69,230,216,0.24);
-  box-shadow: 0 0 18px rgba(69,230,216,0.08);
+  border-color: rgba(0,255,141,0.28);
+  box-shadow: 0 0 18px rgba(0,255,141,0.10);
 }
 
 .timeline-item.branch-waves .timeline-marker {
