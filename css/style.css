@@ -1736,7 +1736,7 @@ pre {
    Responsive
 --------------------------- */
 
-@media (max-width: 980px) {
+@media (max-width: 900px) {
   .hero,
   .content-grid,
   .cards-3,
