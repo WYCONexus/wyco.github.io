@@ -1705,22 +1705,25 @@ pre {
   }
 
   .live-card {
-    min-height: 210px;
-    padding-top: 84px;
-  }
+  min-height: 210px;
+  padding-top: 84px;
+  padding-right: 140px;
+}
 
-  .card-live-meta {
-    top: 16px;
-    right: 16px;
-    left: auto;
-    max-width: 48%;
-    align-items: flex-end;
-    text-align: right;
-  }
+.card-live-meta {
+  top: 16px;
+  right: 16px;
+  left: auto;
+  width: 112px;
+  max-width: 112px;
+  align-items: flex-end;
+  text-align: right;
+}
 
-  .live-meta-line {
-    justify-content: flex-end;
-  }
+.live-meta-line {
+  justify-content: flex-end;
+  font-size: 0.72rem;
+}
 
   .timeline-line {
     left: 28px;
