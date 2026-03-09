@@ -1857,12 +1857,6 @@ pre {
     gap: 14px;
   }
 
-  .timeline-marker {
-    margin-top: 6px;
-    margin-left: 0;
-    justify-self: center;
-  }
-
   .timeline-empty {
     padding-left: 52px;
   }
