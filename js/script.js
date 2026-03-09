@@ -223,7 +223,15 @@ function renderTimeline() {
 
   const visibleItems = timelineData.slice(0, timelineVisibleCount);
 
-  timelineItems.innerHTML = visibleItems.map(buildTimelineItem).join('');
+  timelineItems.innerHTML = visibleItems
+  .map((item, index) => {
+    const html = buildTimelineItem(item);
+    return html.replace(
+      'class="timeline-item"',
+      `class="timeline-item" style="animation-delay:${index * 0.05}s"`
+    );
+  })
+  .join('');
   updateTimelineButton(timelineData.length);
 }
 
