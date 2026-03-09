@@ -1849,8 +1849,8 @@ pre {
   font-size: 0.72rem;
 }
 
-  .timeline-line {
-  left: 34px;
+ .timeline-line {
+  left: 36px;
 }
 
 .timeline-item {
@@ -1859,6 +1859,9 @@ pre {
 }
 
 .timeline-marker {
+  width: 20px;
+  height: 20px;
+  margin-top: 6px;
   margin-left: 0;
   justify-self: center;
 }
