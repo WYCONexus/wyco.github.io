@@ -549,6 +549,31 @@ pre {
   box-shadow: 0 0 18px rgba(111,137,255,0.08);
 }
 
+.timeline-item.branch-hub .timeline-marker {
+  background: radial-gradient(
+    circle at 35% 35%,
+    #ffffff,
+    #b9fbf3 14%,
+    #45e6d8 32%,
+    #6f89ff 64%,
+    #c75dff 100%
+  );
+  box-shadow:
+    0 0 0 6px rgba(69,230,216,0.12),
+    0 0 22px rgba(69,230,216,0.36),
+    0 0 46px rgba(111,137,255,0.30);
+}
+
+.timeline-item.branch-hub .timeline-marker::before {
+  border-color: rgba(69,230,216,0.24);
+  box-shadow: 0 0 20px rgba(199,93,255,0.18);
+}
+
+.timeline-item.branch-hub .timeline-branch-badge {
+  border-color: rgba(69,230,216,0.28);
+  box-shadow: 0 0 18px rgba(69,230,216,0.10);
+}
+
 .timeline-card {
   position: relative;
   padding: 18px 18px 18px 20px;
