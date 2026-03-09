@@ -632,6 +632,7 @@ pre {
 
 .timeline-load-more {
   min-width: 190px;
+   color: var(--cyan);
 }
 
 .timeline-load-more[hidden],
