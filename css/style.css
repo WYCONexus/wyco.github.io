@@ -1658,57 +1658,6 @@ pre {
   }
 }
 
-@media (max-width: 720px) {
-  .nav-wrap {
-    border-radius: 28px;
-    flex-wrap: wrap;
-  }
-
-  .main-nav {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
-  .main-nav.open {
-    display: flex;
-  }
-
-  .menu-toggle {
-    display: inline-flex;
-  }
-
-  .hero-grid,
-  .cards-3 {
-    grid-template-columns: 1fr;
-  }
-
-  .project-card {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-copy,
-  .feature-card,
-  .panel,
-  .page-hero,
-  .section-block,
-  .project-card,
-  .footer-grid {
-    padding: 20px;
-  }
-
-  .policy-card {
-    padding: 22px;
-  }
-
-  .live-card {
-    min-height: 210px;
-    padding-top: 84px;
-  }
-
   @media (max-width: 720px) {
   .nav-wrap {
     border-radius: 28px;
