@@ -274,7 +274,7 @@ pre {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  grid-template-columns: 1fr;
   gap: 24px;
   align-items: stretch;
   padding: 40px 0 28px;
@@ -1740,7 +1740,7 @@ pre {
 
 @media (max-width: 1180px) {
   .hero {
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    grid-template-columns: 1fr;
   }
 
   .hero-grid {
