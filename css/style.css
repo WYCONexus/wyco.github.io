@@ -1849,21 +1849,26 @@ pre {
 }
 
   .timeline-line {
-     left: 25px;
-   }
+  left: 34px;
+}
 
-   .timeline-item {
-     grid-template-columns: 40px 1fr;
-     gap: 14px;
-   }
+.timeline-item {
+  grid-template-columns: 52px 1fr;
+  gap: 14px;
+}
 
-   .timeline-marker {
-     margin-left: 0;
-   }
+.timeline-marker {
+  margin-left: 0;
+  justify-self: center;
+}
 
-  .timeline-empty {
-    padding-left: 40px;
-  }
+.timeline-empty {
+  padding-left: 52px;
+}
+
+.timeline-actions {
+  padding-left: 52px;
+}
 
   .timeline-card {
     padding: 16px;
