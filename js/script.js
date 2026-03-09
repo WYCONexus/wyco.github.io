@@ -109,6 +109,96 @@ document.addEventListener('DOMContentLoaded', () => {
     return firstCard.offsetWidth + gap;
   }
 
+  function formatDisplayDate(dateString) {
+    if (!dateString) return '';
+
+    const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return dateString;
+
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  }
+
+
+  /* ---------------------------
+     Hub Live Data Rendering
+  --------------------------- */
+
+  function renderLiveCardMeta() {
+    const liveCards = document.querySelectorAll('.live-card[data-card-key]');
+    const dataSource = window.wycoData && window.wycoData.cards;
+
+    if (!liveCards.length) return;
+
+    liveCards.forEach((card) => {
+      const key = card.dataset.cardKey;
+      const metaTarget = card.querySelector('.card-live-meta');
+      if (!metaTarget) return;
+
+      if (!dataSource || !dataSource[key] || !Array.isArray(dataSource[key].meta)) {
+        metaTarget.innerHTML = `<span class="live-meta-line">No live data yet</span>`;
+        return;
+      }
+
+      const metaLines = dataSource[key].meta
+        .filter(Boolean)
+        .slice(0, 3)
+        .map((line) => `<span class="live-meta-line">${escapeHtml(line)}</span>`)
+        .join('');
+
+      metaTarget.innerHTML = metaLines || `<span class="live-meta-line">No live data yet</span>`;
+    });
+  }
+
+  function renderTimeline() {
+    const timelineItems = document.getElementById('timelineItems');
+    const timelineEmpty = document.getElementById('timelineEmpty');
+    const timelineData = window.wycoData && Array.isArray(window.wycoData.timeline)
+      ? window.wycoData.timeline
+      : null;
+
+    if (!timelineItems) return;
+
+    if (!timelineData || timelineData.length === 0) {
+      timelineItems.innerHTML = '';
+      if (timelineEmpty) {
+        timelineEmpty.hidden = false;
+      }
+      return;
+    }
+
+    if (timelineEmpty) {
+      timelineEmpty.hidden = true;
+    }
+
+    timelineItems.innerHTML = timelineData.map((item) => {
+      const branch = escapeHtml(item.branch || 'WYCO');
+      const title = escapeHtml(item.title || 'Update');
+      const description = escapeHtml(item.description || '');
+      const displayDate = escapeHtml(formatDisplayDate(item.date || ''));
+      const badgeClass = item.branchClass ? ` ${escapeHtml(item.branchClass)}` : '';
+
+      return `
+        <article class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          <div class="timeline-card">
+            <div class="timeline-top">
+              <div class="timeline-branch">
+                <span class="timeline-branch-badge${badgeClass}">${branch}</span>
+              </div>
+              <span class="timeline-date">${displayDate}</span>
+            </div>
+            <h3 class="timeline-title">${title}</h3>
+            <p class="timeline-description">${description}</p>
+          </div>
+        </article>
+      `;
+    }).join('');
+  }
+
 
   /* ---------------------------
      Nexus Repo Rendering
@@ -400,37 +490,37 @@ document.addEventListener('DOMContentLoaded', () => {
     track.dataset.carouselReady = 'true';
   }
 
-  
+
   /* ---------------------------
-   Legal Links + Back Button
---------------------------- */
+     Legal Links + Back Button
+  --------------------------- */
 
-function setupLegalLinks() {
-  const legalLinks = document.querySelectorAll('.js-legal-link');
-  if (!legalLinks.length) return;
+  function setupLegalLinks() {
+    const legalLinks = document.querySelectorAll('.js-legal-link');
+    if (!legalLinks.length) return;
 
-  legalLinks.forEach((link) => {
-    const baseHref = link.getAttribute('href');
-    if (!baseHref) return;
+    legalLinks.forEach((link) => {
+      const baseHref = link.getAttribute('href');
+      if (!baseHref) return;
 
-    const from = window.location.pathname;
-    link.setAttribute('href', `${baseHref}?from=${encodeURIComponent(from)}`);
-  });
-}
-
-function setupLegalBackButton() {
-  const backButton = document.getElementById('backButton');
-  if (!backButton) return;
-
-  const params = new URLSearchParams(window.location.search);
-  const from = params.get('from');
-
-  if (from) {
-    backButton.setAttribute('href', from);
-  } else {
-    backButton.setAttribute('href', '/');
+      const from = window.location.pathname;
+      link.setAttribute('href', `${baseHref}?from=${encodeURIComponent(from)}`);
+    });
   }
-}
+
+  function setupLegalBackButton() {
+    const backButton = document.getElementById('backButton');
+    if (!backButton) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const from = params.get('from');
+
+    if (from) {
+      backButton.setAttribute('href', from);
+    } else {
+      backButton.setAttribute('href', '/');
+    }
+  }
 
 
   /* ---------------------------
@@ -442,6 +532,8 @@ function setupLegalBackButton() {
 
     setupLegalLinks();
     setupLegalBackButton();
+    renderLiveCardMeta();
+    renderTimeline();
     setupNexusCarouselButtons();
     setupMediaCarouselButtons();
     setupCompletedCarousel();
