@@ -30,9 +30,9 @@ window.wycoData = {
     },
     projects: {
       meta: [
-        "2 Active",
-        "3 Archived",
-        "Latest: WYCO Whimsy Addition",
+        "3 Active",
+        "2 Archived",
+        "Latest: Timeline Addition",
         "Status: Evolving"
       ]
     }
