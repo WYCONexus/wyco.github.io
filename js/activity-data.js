@@ -39,6 +39,15 @@ window.wycoData = {
   },
 
   timeline: [
+
+    {
+      date: "2026-03-09",
+      branch: "WYCO",
+      branchClass: "branch-wyco",
+      title: "Timeline addition to homepage",
+      description: "Addition of a running timeline to show each update in each branch."
+    },
+    
     {
       date: "2026-03-08",
       branch: "Nexus",
@@ -46,6 +55,7 @@ window.wycoData = {
       title: "Shared layout system refined",
       description: "Centralized header and footer structure is now powering the site with cleaner shared updates."
     },
+    
     {
       date: "2026-03-07",
       branch: "Whimsy",
@@ -53,6 +63,7 @@ window.wycoData = {
       title: "New poem draft added",
       description: "A new poem was added to Whimsy!"
     },
+    
     {
       date: "2026-03-07",
       branch: "WYCO",
@@ -60,6 +71,7 @@ window.wycoData = {
       title: "Whimsy branch was added",
       description: "WYCO Whimsy is the imaginative wing of the WYCO ecosystem — poetry, stories, concepts, and creative writing in all its forms."
     },
+    
     {
       date: "2026-03-05",
       branch: "Waves",
@@ -67,6 +79,7 @@ window.wycoData = {
       title: "Music and production direction sharpened",
       description: "Waves continued evolving as a home for lyrics, visuals, production work, and media releases."
     },
+    
     {
       date: "2026-03-04",
       branch: "Projects",
@@ -74,5 +87,6 @@ window.wycoData = {
       title: "Active build board moved forward",
       description: "The broader project layer continued taking shape as a live board for current WYCO development."
     }
+    
   ]
 };
