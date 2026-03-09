@@ -400,6 +400,26 @@ document.addEventListener('DOMContentLoaded', () => {
     track.dataset.carouselReady = 'true';
   }
 
+  
+  /* ---------------------------
+   Legal Page Back Button
+--------------------------- */
+
+const backButton = document.getElementById('backButton');
+
+if (backButton) {
+  backButton.addEventListener('click', function (event) {
+
+    // If the user came from another page within the same site
+    if (document.referrer && document.referrer.includes(window.location.host)) {
+      event.preventDefault();
+      history.back();
+    }
+
+    // Otherwise it falls back to href="/"
+  });
+}
+
 
   /* ---------------------------
      Initialize
