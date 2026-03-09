@@ -402,6 +402,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
   /* ---------------------------
+   Remember Last Internal Page
+--------------------------- */
+
+const currentPath = window.location.pathname;
+const isLegalPage =
+  currentPath.endsWith('/privacy.html') ||
+  currentPath.endsWith('/terms.html');
+
+if (!isLegalPage) {
+  sessionStorage.setItem('wycoLastPage', window.location.href);
+}
+
+
+/* ---------------------------
    Legal Page Back Button
 --------------------------- */
 
@@ -409,14 +423,12 @@ const backButton = document.getElementById('backButton');
 
 if (backButton) {
   backButton.addEventListener('click', function (event) {
+    const lastPage = sessionStorage.getItem('wycoLastPage');
 
-    // If the user came from another page within the same site
-    if (document.referrer && document.referrer.includes(window.location.host)) {
+    if (lastPage) {
       event.preventDefault();
-      history.back();
+      window.location.href = lastPage;
     }
-
-    // Otherwise it falls back to href="/"
   });
 }
 
