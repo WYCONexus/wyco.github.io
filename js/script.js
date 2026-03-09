@@ -402,34 +402,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
   /* ---------------------------
-   Remember Last Internal Page
+   Legal Links + Back Button
 --------------------------- */
 
-const currentPath = window.location.pathname;
-const isLegalPage =
-  currentPath.endsWith('/privacy.html') ||
-  currentPath.endsWith('/terms.html');
+function setupLegalLinks() {
+  const legalLinks = document.querySelectorAll('.js-legal-link');
+  if (!legalLinks.length) return;
 
-if (!isLegalPage) {
-  sessionStorage.setItem('wycoLastPage', window.location.href);
+  legalLinks.forEach((link) => {
+    const baseHref = link.getAttribute('href');
+    if (!baseHref) return;
+
+    const from = window.location.pathname;
+    link.setAttribute('href', `${baseHref}?from=${encodeURIComponent(from)}`);
+  });
 }
 
+function setupLegalBackButton() {
+  const backButton = document.getElementById('backButton');
+  if (!backButton) return;
 
-/* ---------------------------
-   Legal Page Back Button
---------------------------- */
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get('from');
 
-const backButton = document.getElementById('backButton');
-
-if (backButton) {
-  backButton.addEventListener('click', function (event) {
-    const lastPage = sessionStorage.getItem('wycoLastPage');
-
-    if (lastPage) {
-      event.preventDefault();
-      window.location.href = lastPage;
-    }
-  });
+  if (from) {
+    backButton.setAttribute('href', from);
+  } else {
+    backButton.setAttribute('href', '/');
+  }
 }
 
 
@@ -440,6 +440,8 @@ if (backButton) {
   async function initSite() {
     await loadIncludes();
 
+    setupLegalLinks();
+    setupLegalBackButton();
     setupNexusCarouselButtons();
     setupMediaCarouselButtons();
     setupCompletedCarousel();
