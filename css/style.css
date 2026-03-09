@@ -632,7 +632,6 @@ pre {
 
 .timeline-load-more {
   min-width: 190px;
-   color: var(--cyan);
 }
 
 .timeline-load-more[hidden],
@@ -653,6 +652,7 @@ pre {
   padding: 14px 18px;
   font-weight: 700;
   transition: 0.25s ease;
+   color: var(--cyan);
 }
 
 .btn:hover {
