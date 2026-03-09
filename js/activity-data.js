@@ -81,7 +81,7 @@ window.wycoData = {
     },
     
     {
-      date: "2026-03-04",
+      date: "2026, 2, 4",
       branch: "Projects",
       branchClass: "branch-projects",
       title: "Active build board moved forward",
