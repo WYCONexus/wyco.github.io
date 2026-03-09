@@ -167,15 +167,15 @@ function buildTimelineItem(item) {
   const title = escapeHtml(item.title || 'Update');
   const description = escapeHtml(item.description || '');
   const displayDate = escapeHtml(formatDisplayDate(item.date || ''));
-  const badgeClass = item.branchClass ? ` ${escapeHtml(item.branchClass)}` : '';
+  const branchClass = item.branchClass ? ` ${escapeHtml(item.branchClass)}` : '';
 
   return `
-    <article class="timeline-item">
+    <article class="timeline-item${branchClass}">
       <div class="timeline-marker" aria-hidden="true"></div>
       <div class="timeline-card">
         <div class="timeline-top">
           <div class="timeline-branch">
-            <span class="timeline-branch-badge${badgeClass}">${branch}</span>
+            <span class="timeline-branch-badge${branchClass}">${branch}</span>
           </div>
           <span class="timeline-date">${displayDate}</span>
         </div>
