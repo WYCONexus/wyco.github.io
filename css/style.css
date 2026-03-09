@@ -424,7 +424,7 @@ pre {
 
 .live-card p {
   margin: 0;
-  max-width: 32ch;
+  max-width: 36ch;
   color: var(--text);
   line-height: 1.4;
   font-size: 0.98rem;
