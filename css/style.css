@@ -437,7 +437,8 @@ pre {
   width: 20px;
   height: 20px;
   margin-top: 6px;
-  margin-left: 1px;
+  margin-left: 0;
+  justify-self: center;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #ffffff, var(--cyan) 26%, var(--blue) 58%, var(--magenta) 100%);
   box-shadow:
