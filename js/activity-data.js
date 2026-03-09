@@ -51,14 +51,14 @@ window.wycoData = {
       branch: "Whimsy",
       branchClass: "branch-whimsy",
       title: "New poem draft added",
-      description: "A new piece was added to the WYCO writing lane, expanding the creative side of the universe."
+      description: "A new poem was added to Whimsy!"
     },
     {
-      date: "2026-03-06",
-      branch: "Repairs",
-      branchClass: "branch-repairs",
-      title: "Service language and boundaries updated",
-      description: "Pricing, service framing, and operating boundaries were refined for the WYCO Repairs branch."
+      date: "2026-03-07",
+      branch: "WYCO",
+      branchClass: "branch-wyco",
+      title: "Whimsy branch was added",
+      description: "WYCO Whimsy is the imaginative wing of the WYCO ecosystem — poetry, stories, concepts, and creative writing in all its forms."
     },
     {
       date: "2026-03-05",
