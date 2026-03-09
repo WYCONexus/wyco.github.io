@@ -8,10 +8,10 @@
   <link rel="icon" href="/images/icons/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32.png">
   <link rel="manifest" href="/json/manifest.json">
-<meta name="theme-color" content="#070b14">
+  <meta name="theme-color" content="#070b14">
   <link rel="stylesheet" href="/css/style.css" />
 </head>
-  
+
 <body
   data-page="home"
   data-footer-brand="WYCO"
@@ -22,8 +22,8 @@
   <div class="orb orb-b"></div>
   <div class="orb orb-c"></div>
 
-   <!--------------- 
-        Header 
+  <!---------------
+        Header
   --------------->
   <div id="site-header"></div>
 
@@ -42,37 +42,52 @@
       </div>
 
       <div class="hero-grid">
-        
-        <article class="feature-card glass">
+
+        <article class="feature-card glass live-card" data-card-key="waves">
+          <div class="card-live-meta" aria-label="WYCO Waves live status">
+            <span class="live-meta-line">Loading...</span>
+          </div>
           <div class="icon">🌊</div>
           <h2>WYCO Waves</h2>
           <p>Music, lyrics, visuals, production work, and media releases.</p>
         </article>
 
-        <article class="feature-card glass">
+        <article class="feature-card glass live-card" data-card-key="whimsy">
+          <div class="card-live-meta" aria-label="WYCO Whimsy live status">
+            <span class="live-meta-line">Loading...</span>
+          </div>
           <div class="icon">✨</div>
           <h2>WYCO Whimsy</h2>
           <p>Writing, poetry, imagination, and creative storytelling within the WYCO universe.</p>
         </article>
-        
-        <article class="feature-card glass">
+
+        <article class="feature-card glass live-card" data-card-key="nexus">
+          <div class="card-live-meta" aria-label="WYCO Nexus live status">
+            <span class="live-meta-line">Loading...</span>
+          </div>
           <div class="icon">💻</div>
           <h2>WYCO Nexus</h2>
           <p>Code, bots, experiments, digital systems, and interactive builds.</p>
         </article>
-        
-        <article class="feature-card glass">
+
+        <article class="feature-card glass live-card" data-card-key="repairs">
+          <div class="card-live-meta" aria-label="WYCO Repairs live status">
+            <span class="live-meta-line">Loading...</span>
+          </div>
           <div class="icon">🔧</div>
           <h2>WYCO Repairs</h2>
           <p>A reference branch that points directly to the WYCO Repairs dedicated site.</p>
         </article>
-        
-        <article class="feature-card glass">
+
+        <article class="feature-card glass live-card" data-card-key="projects">
+          <div class="card-live-meta" aria-label="WYCO Projects live status">
+            <span class="live-meta-line">Loading...</span>
+          </div>
           <div class="icon">🪐</div>
           <h2>WYCO Projects</h2>
           <p>A live board for what is actively being built right now.</p>
         </article>
-        
+
       </div>
     </section>
 
@@ -81,12 +96,38 @@
         <div>
           <p class="eyebrow">What this site is</p>
           <h2>A unified home for the WYCO universe</h2>
+          <p class="section-intro">
+            Every branch connects back to one evolving system. WYCO Hub is the central landing point for creative work, digital builds, active projects, and practical craft.
+          </p>
         </div>
+      </div>
+    </section>
+
+    <section class="section wrap activity-section" aria-labelledby="activity-heading">
+      <div class="section-head activity-head">
+        <div>
+          <p class="eyebrow">Live Activity</p>
+          <h2 id="activity-heading">The WYCO timeline</h2>
+          <p class="section-intro">
+            A running feed of recent motion across the WYCO ecosystem.
+          </p>
+        </div>
+      </div>
+
+      <div class="activity-timeline glass" id="activityTimeline">
+        <div class="timeline-line" aria-hidden="true"></div>
+
+        <div class="timeline-empty" id="timelineEmpty">
+          <p>Timeline data will appear here once the activity data file is connected.</p>
+        </div>
+
+        <div class="timeline-items" id="timelineItems"></div>
+      </div>
     </section>
   </main>
-  
-  <!--------------- 
-        Footer 
+
+  <!---------------
+        Footer
   --------------->
   <div id="site-footer"></div>
 
