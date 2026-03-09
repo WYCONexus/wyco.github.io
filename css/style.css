@@ -1525,9 +1525,14 @@ pre {
 }
 
 .project-tag.tag-nexus {
-  background: linear-gradient(135deg, rgba(69,230,216,0.22), rgba(111,137,255,0.18));
-  border-color: rgba(69,230,216,0.28);
-  color: #ecffff;
+  background: linear-gradient(
+    135deg,
+    rgba(0,255,141,0.24),
+    rgba(69,230,216,0.18),
+    rgba(111,137,255,0.16)
+  );
+  border-color: rgba(0,255,141,0.32);
+  color: #eafff6;
 }
 
 .project-tag.tag-repairs {
