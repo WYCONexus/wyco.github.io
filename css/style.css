@@ -15,7 +15,7 @@
   --magenta: #c75dff;
   --radius: 24px;
   --shadow: 0 10px 40px rgba(0,0,0,0.35), 0 0 50px rgba(69,230,216,0.08);
-  --max-width: 1180px;
+  --max-width: 1320px;
 }
 
 
@@ -274,7 +274,7 @@ pre {
 
 .hero {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: 24px;
   align-items: stretch;
   padding: 40px 0 28px;
