@@ -101,6 +101,7 @@ h3 {
 .site-footer p {
   color: var(--muted);
   line-height: 1.7;
+   font-size: 1.08rem;
 }
 
 .muted {
