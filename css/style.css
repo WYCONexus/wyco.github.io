@@ -514,6 +514,22 @@ pre {
   line-height: 1.7;
 }
 
+.timeline-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  padding-left: 52px;
+}
+
+.timeline-load-more {
+  min-width: 190px;
+}
+
+.timeline-load-more[hidden],
+.timeline-actions[hidden] {
+  display: none;
+}
+
 
 /* ---------------------------
    Buttons + Pills
@@ -1741,6 +1757,10 @@ pre {
   .timeline-card {
     padding: 16px;
   }
+
+   .timeline-actions {
+     padding-left: 40px;
+   }
 }
 
 @media (max-width: 700px) {
