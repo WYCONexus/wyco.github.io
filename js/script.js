@@ -90,6 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
      Shared Helpers
   --------------------------- */
 
+  let timelineVisibleCount = 3;
+  const timelineBatchSize = 2;
+
   function escapeHtml(value) {
     return String(value)
       .replace(/&/g, '&amp;')
