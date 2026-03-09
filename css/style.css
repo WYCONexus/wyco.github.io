@@ -632,6 +632,10 @@ pre {
 
 .timeline-load-more {
   min-width: 190px;
+   color: var(--cyan);
+  -webkit-text-fill-color: var(--cyan);
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .timeline-load-more[hidden],
@@ -666,7 +670,6 @@ pre {
 .btn-secondary {
   background: rgba(255,255,255,0.05);
   border: 1px solid var(--border);
-   color: var(--cyan);
 }
 
 .pill {
