@@ -43,7 +43,7 @@ window.wycoData = {
     {
       date: "2026-03-09",
       branch: "HUB",
-      branchClass: "branch-wyco",
+      branchClass: "branch-hub",
       title: "Timeline addition to homepage",
       description: "Addition of a running timeline to show each update in each branch."
     },
@@ -67,7 +67,7 @@ window.wycoData = {
     {
       date: "2026-03-07",
       branch: "HUB",
-      branchClass: "branch-wyco",
+      branchClass: "branch-hub",
       title: "Whimsy branch was added",
       description: "WYCO Whimsy is the imaginative wing of the WYCO ecosystem — poetry, stories, concepts, and creative writing in all its forms."
     },
