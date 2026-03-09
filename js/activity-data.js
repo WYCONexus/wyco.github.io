@@ -41,7 +41,7 @@ window.wycoData = {
   timeline: [
 
     {
-      date: "2026-03-09",
+      date: "2026-03-10",
       branch: "HUB",
       branchClass: "branch-hub",
       title: "Timeline addition to homepage",
@@ -49,7 +49,7 @@ window.wycoData = {
     },
     
     {
-      date: "2026-03-08",
+      date: "2026-03-09",
       branch: "Nexus",
       branchClass: "branch-nexus",
       title: "Shared layout system refined",
@@ -57,7 +57,7 @@ window.wycoData = {
     },
     
     {
-      date: "2026-03-07",
+      date: "2026-03-08",
       branch: "Whimsy",
       branchClass: "branch-whimsy",
       title: "New poem draft added",
@@ -65,7 +65,7 @@ window.wycoData = {
     },
     
     {
-      date: "2026-03-07",
+      date: "2026-03-08",
       branch: "HUB",
       branchClass: "branch-hub",
       title: "Whimsy branch was added",
@@ -73,7 +73,7 @@ window.wycoData = {
     },
     
     {
-      date: "2026-03-05",
+      date: "2026-03-06",
       branch: "Waves",
       branchClass: "branch-waves",
       title: "Music and production direction sharpened",
@@ -81,7 +81,7 @@ window.wycoData = {
     },
     
     {
-      date: "2026, 2, 4",
+      date: "2026-03-05",
       branch: "Projects",
       branchClass: "branch-projects",
       title: "Active build board moved forward",
