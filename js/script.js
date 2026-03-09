@@ -153,51 +153,95 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function renderTimeline() {
-    const timelineItems = document.getElementById('timelineItems');
-    const timelineEmpty = document.getElementById('timelineEmpty');
-    const timelineData = window.wycoData && Array.isArray(window.wycoData.timeline)
-      ? window.wycoData.timeline
-      : null;
+  function getTimelineData() {
+  return window.wycoData && Array.isArray(window.wycoData.timeline)
+    ? window.wycoData.timeline
+    : [];
+}
 
-    if (!timelineItems) return;
+function buildTimelineItem(item) {
+  const branch = escapeHtml(item.branch || 'WYCO');
+  const title = escapeHtml(item.title || 'Update');
+  const description = escapeHtml(item.description || '');
+  const displayDate = escapeHtml(formatDisplayDate(item.date || ''));
+  const badgeClass = item.branchClass ? ` ${escapeHtml(item.branchClass)}` : '';
 
-    if (!timelineData || timelineData.length === 0) {
-      timelineItems.innerHTML = '';
-      if (timelineEmpty) {
-        timelineEmpty.hidden = false;
-      }
-      return;
-    }
-
-    if (timelineEmpty) {
-      timelineEmpty.hidden = true;
-    }
-
-    timelineItems.innerHTML = timelineData.map((item) => {
-      const branch = escapeHtml(item.branch || 'WYCO');
-      const title = escapeHtml(item.title || 'Update');
-      const description = escapeHtml(item.description || '');
-      const displayDate = escapeHtml(formatDisplayDate(item.date || ''));
-      const badgeClass = item.branchClass ? ` ${escapeHtml(item.branchClass)}` : '';
-
-      return `
-        <article class="timeline-item">
-          <div class="timeline-marker" aria-hidden="true"></div>
-          <div class="timeline-card">
-            <div class="timeline-top">
-              <div class="timeline-branch">
-                <span class="timeline-branch-badge${badgeClass}">${branch}</span>
-              </div>
-              <span class="timeline-date">${displayDate}</span>
-            </div>
-            <h3 class="timeline-title">${title}</h3>
-            <p class="timeline-description">${description}</p>
+  return `
+    <article class="timeline-item">
+      <div class="timeline-marker" aria-hidden="true"></div>
+      <div class="timeline-card">
+        <div class="timeline-top">
+          <div class="timeline-branch">
+            <span class="timeline-branch-badge${badgeClass}">${branch}</span>
           </div>
-        </article>
-      `;
-    }).join('');
+          <span class="timeline-date">${displayDate}</span>
+        </div>
+        <h3 class="timeline-title">${title}</h3>
+        <p class="timeline-description">${description}</p>
+      </div>
+    </article>
+  `;
+}
+
+function updateTimelineButton(totalItems) {
+  const loadMoreButton = document.getElementById('timelineLoadMore');
+  const timelineActions = document.getElementById('timelineActions');
+
+  if (!loadMoreButton || !timelineActions) return;
+
+  if (totalItems <= timelineVisibleCount) {
+    timelineActions.hidden = true;
+    loadMoreButton.hidden = true;
+  } else {
+    timelineActions.hidden = false;
+    loadMoreButton.hidden = false;
   }
+}
+
+function renderTimeline() {
+  const timelineItems = document.getElementById('timelineItems');
+  const timelineEmpty = document.getElementById('timelineEmpty');
+  const timelineData = getTimelineData();
+
+  if (!timelineItems) return;
+
+  if (!timelineData.length) {
+    timelineItems.innerHTML = '';
+    if (timelineEmpty) {
+      timelineEmpty.hidden = false;
+    }
+    updateTimelineButton(0);
+    return;
+  }
+
+  if (timelineEmpty) {
+    timelineEmpty.hidden = true;
+  }
+
+  const visibleItems = timelineData.slice(0, timelineVisibleCount);
+
+  timelineItems.innerHTML = visibleItems.map(buildTimelineItem).join('');
+  updateTimelineButton(timelineData.length);
+}
+
+function setupTimelineLoadMore() {
+  const loadMoreButton = document.getElementById('timelineLoadMore');
+  if (!loadMoreButton) return;
+
+  if (loadMoreButton.dataset.bound === 'true') return;
+  loadMoreButton.dataset.bound = 'true';
+
+  loadMoreButton.addEventListener('click', () => {
+    const timelineData = getTimelineData();
+    timelineVisibleCount += timelineBatchSize;
+
+    if (timelineVisibleCount > timelineData.length) {
+      timelineVisibleCount = timelineData.length;
+    }
+
+    renderTimeline();
+  });
+}
 
 
   /* ---------------------------
@@ -533,6 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLegalLinks();
     setupLegalBackButton();
     renderLiveCardMeta();
+    setupTimelineLoadMore();
     renderTimeline();
     setupNexusCarouselButtons();
     setupMediaCarouselButtons();
