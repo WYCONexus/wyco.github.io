@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       if (headerTarget) {
-        const headerResponse = await fetch('/partials/header.html');
+        const headerResponse = await fetch(`/partials/header.html?v=${Date.now()}`);
 
         if (!headerResponse.ok) {
           throw new Error(`Failed to load header: ${headerResponse.status}`);
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (footerTarget) {
-        const footerResponse = await fetch('/partials/footer.html');
+        const footerResponse = await fetch(`/partials/footer.html?v=${Date.now()}`);
 
         if (!footerResponse.ok) {
           throw new Error(`Failed to load footer: ${footerResponse.status}`);
