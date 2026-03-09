@@ -2,37 +2,38 @@ window.wycoData = {
   cards: {
     waves: {
       meta: [
-        "3 active builds",
-        "Latest: lyric draft",
-        "Status: in motion"
+        "0 Projects",
+        "Latest: TBA",
+        "Status: Pending"
       ]
     },
     whimsy: {
       meta: [
-        "4 pieces logged",
-        "Latest: poem draft",
-        "Status: expanding"
+        "2 Projects",
+        "Latest: Poem Draft",
+        "Status: Pending"
       ]
     },
     nexus: {
       meta: [
-        "5 recent repos",
-        "Latest: site system",
-        "Status: active dev"
+        "2 Projects",
+        "Latest: WYCO Hub Site",
+        "Status: Active"
       ]
     },
     repairs: {
       meta: [
-        "Dedicated site live",
-        "Policies updated",
-        "Status: operating"
+        "Dedicated Repairs Site",
+        "Latest: Policies updated",
+        "Status: Operating"
       ]
     },
     projects: {
       meta: [
-        "5 tracked branches",
-        "Hub + active builds",
-        "Status: evolving"
+        "2 Active",
+        "3 Archived",
+        "Latest: WYCO Whimsy Addition",
+        "Status: Evolving"
       ]
     }
   },
