@@ -11,36 +11,36 @@ window.wycoData = {
   cards: {
     waves: {
       meta: [
-        "🟡 Pending"
+        "🟡 Pending",
         "🕒 TBA",
-        "📦 0",
+        "📦 0"
       ]
     },
     whimsy: {
       meta: [
-        "🟡 Pending"
+        "🟡 Pending",
         "🕒 Poem Draft",
-        "📦 2",
+        "📦 2"
       ]
     },
     nexus: {
       meta: [
-        "🟢 Active"
+        "🟢 Active",
         "🕒 WYCO Hub Site",
-        "📦 2",
+        "📦 2"
       ]
     },
     repairs: {
       meta: [
-        "🟢 Active"
-        "🕒 TBA",
+        "🟢 Active",
+        "🕒 TBA"
       ]
     },
     projects: {
       meta: [
         "📦🟢 3",
         "📦⚪ 2",
-        "🕒 Timeline Addition",
+        "🕒 Timeline Addition"
       ]
     }
   },
