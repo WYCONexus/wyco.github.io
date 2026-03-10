@@ -1985,25 +1985,24 @@ pre {
   }
 
   .live-card {
-    min-height: 210px;
-    padding-top: 84px;
-    padding-right: 140px;
-  }
+  min-height: 180px;
+  padding-top: 24px;
+  padding-right: 24px;
+}
 
-  .card-live-meta {
-    top: 16px;
-    right: 16px;
-    left: auto;
-    width: 112px;
-    max-width: 112px;
-    align-items: flex-end;
-    text-align: right;
-  }
+.card-live-meta {
+  position: static;
+  width: auto;
+  max-width: none;
+  margin-bottom: 16px;
+  align-items: flex-end;
+  text-align: right;
+}
 
-  .live-meta-line {
-    justify-content: flex-end;
-    font-size: 0.72rem;
-  }
+.live-meta-line {
+  justify-content: flex-end;
+  font-size: 0.72rem;
+}
 
   .timeline-line {
     left: 34px;
