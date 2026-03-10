@@ -1,10 +1,19 @@
+/*KEY FOR META
+📦 - Projects
+🕒 - Latest
+🟢 - Active
+🟡 - Pending
+🔴 - Inactive/Stopped
+⚪ - Unavailable
+*/
+
 window.wycoData = {
   cards: {
     waves: {
       meta: [
-        "0 Projects",
-        "Latest: TBA",
-        "Status: Pending"
+        "📦 0",
+        "🕒 TBA",
+        "🟡 Pending"
       ]
     },
     whimsy: {
