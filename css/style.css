@@ -1985,16 +1985,20 @@ pre {
   }
 
   .live-card {
-  min-height: 180px;
+  min-height: 185px;
   padding-top: 24px;
-  padding-right: 24px;
+  padding-right: 132px;
+  padding-bottom: 24px;
 }
 
 .card-live-meta {
-  position: static;
-  width: auto;
-  max-width: none;
-  margin-bottom: 16px;
+  position: absolute;
+  top: auto;
+  bottom: 20px;
+  right: 16px;
+  left: auto;
+  width: 112px;
+  max-width: 112px;
   align-items: flex-end;
   text-align: right;
 }
