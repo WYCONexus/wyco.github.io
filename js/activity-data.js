@@ -13,7 +13,7 @@ window.wycoData = {
   cards: {
     waves: {
       meta: [
-        '<img src="/images/icons/pk1/music.png" alt="" class="meta-emoji"> 0',
+        '📦 0',
         "Status: Pending"
       ]
     },
