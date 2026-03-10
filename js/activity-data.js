@@ -14,7 +14,7 @@ window.wycoData = {
     waves: {
       meta: [
         "📦 0",
-        "Status: Pending"
+        "<b>Status:</b> Pending"
       ]
     },
     whimsy: {
