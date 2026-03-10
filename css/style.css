@@ -460,6 +460,16 @@ pre {
   text-shadow: 0 0 14px rgba(111,137,255,0.12);
 }
 
+/* Custom emoji support */
+.meta-emoji {
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+  vertical-align: -2px;
+  object-fit: contain;
+  display: inline-block;
+}
+
 .live-meta-line strong {
   color: var(--text);
   font-weight: 700;
