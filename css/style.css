@@ -462,8 +462,8 @@ pre {
 
 /* Custom emoji support */
 .meta-emoji {
-  width: 24px;
-  height: 24px;
+  width: 48px;
+  height: 48px;
   margin-right: 6px;
   vertical-align: -2px;
   object-fit: contain;
