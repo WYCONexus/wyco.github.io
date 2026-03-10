@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const metaLines = dataSource[key].meta
         .filter(Boolean)
         .slice(0, 3)
-        .map((line) => `<span class="live-meta-line">${escapeHtml(line)}</span>`)
+        .map((line) => `<span class="live-meta-line">${line}</span>`)
         .join('');
 
       metaTarget.innerHTML = metaLines || `<span class="live-meta-line">No live data yet</span>`;
