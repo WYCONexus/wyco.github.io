@@ -37,7 +37,7 @@ window.wycoData = {
     projects: {
       meta: [
         "📦 3 Active",
-        "📦 2 Archived",
+        "📦 2 Archived"
       ]
     }
   },
