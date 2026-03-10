@@ -11,23 +11,23 @@ window.wycoData = {
   cards: {
     waves: {
       meta: [
-        "📦 0"
+        "📦 0",
         "Status: Pending",
-        "✨ TBA",
+        "✨ TBA"
       ]
     },
     whimsy: {
       meta: [
-        "📦 2"
+        "📦 2",
         "Status: Pending",
-        "✨ Poem Draft",
+        "✨ Poem Draft"
       ]
     },
     nexus: {
       meta: [
-        "📦 2"
+        "📦 2",
         "Status: Active",
-        "✨ WYCO Hub Site",
+        "✨ WYCO Hub Site"
       ]
     },
     repairs: {
