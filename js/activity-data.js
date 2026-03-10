@@ -4,45 +4,43 @@
 🟢 - Active
 🟡 - Pending
 🔴 - Inactive/Stopped
-⚪ - Unavailable
+⚪ - Unavailable/Archived
 */
 
 window.wycoData = {
   cards: {
     waves: {
       meta: [
-        "📦 0",
-        "🕒 TBA",
         "🟡 Pending"
+        "🕒 TBA",
+        "📦 0",
       ]
     },
     whimsy: {
       meta: [
-        "2 Projects",
-        "Latest: Poem Draft",
-        "Status: Pending"
+        "🟡 Pending"
+        "🕒 Poem Draft",
+        "📦 2",
       ]
     },
     nexus: {
       meta: [
-        "2 Projects",
-        "Latest: WYCO Hub Site",
-        "Status: Active"
+        "🟢 Active"
+        "🕒 WYCO Hub Site",
+        "📦 2",
       ]
     },
     repairs: {
       meta: [
-        "Dedicated Repairs Site",
-        "Latest: Policies updated",
-        "Status: Operating"
+        "🟢 Active"
+        "🕒 TBA",
       ]
     },
     projects: {
       meta: [
-        "3 Active",
-        "2 Archived",
-        "Latest: Timeline Addition",
-        "Status: Evolving"
+        "📦🟢 3",
+        "📦⚪ 2",
+        "🕒 Timeline Addition",
       ]
     }
   },
