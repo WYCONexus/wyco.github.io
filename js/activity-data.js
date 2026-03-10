@@ -1,6 +1,6 @@
 /*KEY FOR META
 📦 - Projects
-🕒 - Latest
+✨ - Latest
 🟢 - Active
 🟡 - Pending
 🔴 - Inactive/Stopped
@@ -11,36 +11,36 @@ window.wycoData = {
   cards: {
     waves: {
       meta: [
-        "🟡 Pending",
-        "🕒 TBA",
         "📦 0"
+        "Status: Pending",
+        "✨ TBA",
       ]
     },
     whimsy: {
       meta: [
-        "🟡 Pending",
-        "🕒 Poem Draft",
         "📦 2"
+        "Status: Pending",
+        "✨ Poem Draft",
       ]
     },
     nexus: {
       meta: [
-        "🟢 Active",
-        "🕒 WYCO Hub Site",
         "📦 2"
+        "Status: Active",
+        "✨ WYCO Hub Site",
       ]
     },
     repairs: {
       meta: [
-        "🟢 Active",
-        "🕒 TBA"
+        "Status: Active",
+        "✨ TBA"
       ]
     },
     projects: {
       meta: [
-        "📦🟢 3",
-        "📦⚪ 2",
-        "🕒 Timeline Addition"
+        "📦 3 Active",
+        "📦 2 Archived",
+        "✨ Timeline Addition"
       ]
     }
   },
