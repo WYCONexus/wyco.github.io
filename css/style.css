@@ -314,11 +314,11 @@ pre {
   }
 
   #lightbox-prev {
-    left: 8px;
+    left: 15px;
   }
 
   #lightbox-next {
-    right: 8px;
+    right: 15px;
   }
 }
 
