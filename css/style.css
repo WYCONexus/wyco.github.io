@@ -197,6 +197,14 @@ pre {
   padding: 24px;
 }
 
+#lightbox-caption {
+  margin-top: 16px;
+  text-align: center;
+  color: #cfd6ff;
+  font-size: 14px;
+  max-width: 80vw;
+}
+
 #lightbox.is-open {
   display: flex;
 }
