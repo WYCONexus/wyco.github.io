@@ -167,6 +167,10 @@ pre {
   grid-template-columns: repeat(3, 1fr);
 }
 
+/* ---------------------------
+   Workbench Components
+--------------------------- */
+
 .workbench-scroll-row {
   display: grid;
   grid-auto-flow: column;
@@ -175,6 +179,28 @@ pre {
   overflow-x: auto;
   padding-bottom: 8px;
    -webkit-overflow-scrolling: touch;
+}
+
+/* ---------------------------
+   Lightbox (image popup)
+--------------------------- */
+
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(5,8,18,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(6px);
+}
+
+#lightbox img {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 18px;
+  box-shadow: 0 0 60px rgba(0,0,0,0.6);
 }
 
 
