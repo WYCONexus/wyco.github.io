@@ -167,6 +167,16 @@ pre {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.workbench-scroll-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 280px);
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+   -webkit-overflow-scrolling: touch;
+}
+
 
 /* ---------------------------
    Shared Surface Styles
