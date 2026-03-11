@@ -190,6 +190,7 @@ pre {
   display: inline-block;
   max-width: min(92vw, 1200px);
   max-height: 84vh;
+   overflow: visible;
 }
 
 .lightbox-media:hover #lightbox-caption {
