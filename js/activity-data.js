@@ -13,25 +13,22 @@ window.wycoData = {
   cards: {
     waves: {
       meta: [
-        '📦 0',
-        "Status: Pending"
+        '📦 0'
       ]
     },
     whimsy: {
       meta: [
-        "📦 2",
-        "Status: Pending"
+        "📦 2"
       ]
     },
     nexus: {
       meta: [
-        "📦 2",
-        "Status: Active"
+        "📦 2"
       ]
     },
     workbench: {
       meta: [
-        "Status: Active",
+        "📦 0"
       ]
     },
     projects: {
