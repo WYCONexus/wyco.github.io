@@ -185,6 +185,17 @@ pre {
    Lightbox (image popup)
 --------------------------- */
 
+.lightbox-media {
+  position: relative;
+  display: inline-block;
+  max-width: min(92vw, 1200px);
+  max-height: 84vh;
+}
+
+.lightbox-media:hover #lightbox-caption {
+  opacity: 1;
+}
+
 #lightbox {
   position: fixed;
   inset: 0;
@@ -198,11 +209,20 @@ pre {
 }
 
 #lightbox-caption {
-  margin-top: 16px;
-  text-align: center;
-  color: #cfd6ff;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 22px 20px 16px;
+  border-radius: 0 0 18px 18px;
+  background: linear-gradient(to top, rgba(6, 10, 20, 0.88), rgba(6, 10, 20, 0.00));
+  color: #eef2ff;
   font-size: 14px;
-  max-width: 80vw;
+  line-height: 1.4;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  text-align: left;
 }
 
 #lightbox.is-open {
@@ -210,11 +230,12 @@ pre {
 }
 
 #lightbox-img {
-  max-width: min(92vw, 1200px);
-  max-height: 84vh;
-  border-radius: 18px;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
-  object-fit: contain;
+   display: block;
+   max-width: min(92vw, 1200px);
+   max-height: 84vh;
+   border-radius: 18px;
+   box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+   object-fit: contain;
 }
 
 .lightbox-nav {
@@ -250,6 +271,11 @@ pre {
   cursor: zoom-in;
 }
 
+@media (hover: none), (pointer: coarse) {
+  #lightbox-caption {
+    opacity: 1;
+  }
+   
 @media (max-width: 700px) {
   .lightbox-nav {
     width: 44px;
