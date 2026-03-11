@@ -285,6 +285,7 @@ pre {
     width: 100%;
     max-width: 100%;
     max-height: 78vh;
+     position: relative;
   }
 
   #lightbox-img {
@@ -302,21 +303,21 @@ pre {
   }
 
   .lightbox-nav {
+     position: absolute;
     width: 46px;
     height: 46px;
     font-size: 24px;
-    top: auto;
-    bottom: 18px;
-    transform: none;
-    z-index: 2;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
   }
 
   #lightbox-prev {
-    left: 18px;
+    left: -10px;
   }
 
   #lightbox-next {
-    right: 18px;
+    right: -10px;
   }
 }
 
