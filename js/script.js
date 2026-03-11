@@ -586,6 +586,7 @@ function setupTimelineLoadMore() {
   const lightboxImg = document.getElementById("lightbox-img");
   const lightboxPrev = document.getElementById("lightbox-prev");
   const lightboxNext = document.getElementById("lightbox-next");
+  const lightboxCaption = document.getElementById("lightbox-caption");
 
   if (workbenchImages.length && lightbox && lightboxImg && lightboxPrev && lightboxNext) {
     let currentImageIndex = 0;
@@ -597,6 +598,7 @@ function setupTimelineLoadMore() {
       const img = workbenchImages[currentImageIndex];
       lightboxImg.src = img.src;
       lightboxImg.alt = img.alt || "";
+      lightboxCaption.textContent = img.alt || "";
       lightbox.classList.add("is-open");
       lightbox.setAttribute("aria-hidden", "false");
     }
