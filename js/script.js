@@ -682,9 +682,28 @@ if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption &
   }, { passive: true });
 }
 
-   /* ---------------------------
-     Music Related
-  --------------------------- */
+  /*--------------- 
+        Music Related 
+  ---------------*/
+  const modal = document.getElementById("wavesPlayerModal");
+  const backdrop = modal.querySelector(".waves-player-backdrop");
+  const closeBtn = modal.querySelector(".waves-player-close");
+
+  const modalImage = document.getElementById("wavesModalImage");
+  const modalTitle = document.getElementById("wavesModalTitle");
+  const modalSubtitle = document.getElementById("wavesModalSubtitle");
+
+  const audio = document.getElementById("wavesModalAudio");
+  const source = document.getElementById("wavesModalSource");
+
+  const playBtn = modal.querySelector(".wyco-modal-play");
+  const playIcon = modal.querySelector(".wyco-modal-play-icon");
+  const muteBtn = modal.querySelector(".wyco-modal-mute");
+  const progress = modal.querySelector(".wyco-modal-progress");
+  const volume = modal.querySelector(".wyco-modal-volume");
+  const currentTimeEl = modal.querySelector(".wyco-modal-current");
+  const durationEl = modal.querySelector(".wyco-modal-duration");
+
   function formatTime(time) {
     if (isNaN(time)) return "0:00";
     const minutes = Math.floor(time / 60);
@@ -692,124 +711,124 @@ if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption &
     return `${minutes}:${seconds}`;
   }
 
-  // Toggle the drawer open/closed
-  document.querySelectorAll(".waves-open-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const card = btn.closest(".waves-player-card");
-      const drawer = card.querySelector(".waves-player-drawer");
-      const isOpen = !drawer.hasAttribute("hidden");
+  function updatePlayState() {
+    if (audio.paused) {
+      playIcon.textContent = "▶";
+      playBtn.setAttribute("aria-label", "Play");
+    } else {
+      playIcon.textContent = "❚❚";
+      playBtn.setAttribute("aria-label", "Pause");
+    }
+  }
 
-      document.querySelectorAll(".waves-player-drawer").forEach((item) => {
-        item.hidden = true;
-      });
+  function updateMuteState() {
+    const muted = audio.muted || audio.volume === 0;
+    muteBtn.textContent = muted ? "🔇" : "🔊";
+    muteBtn.setAttribute("aria-label", muted ? "Unmute" : "Mute");
+  }
 
-      document.querySelectorAll(".waves-open-btn").forEach((otherBtn) => {
-        otherBtn.setAttribute("aria-expanded", "false");
-        otherBtn.classList.remove("is-open");
-      });
+  function updateProgress() {
+    if (!audio.duration) return;
+    progress.value = (audio.currentTime / audio.duration) * 100;
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+  }
 
-      if (!isOpen) {
-        drawer.hidden = false;
-        btn.setAttribute("aria-expanded", "true");
-        btn.classList.add("is-open");
+  function openPlayer(card) {
+    const title = card.dataset.trackTitle || "Untitled Track";
+    const subtitle = card.dataset.trackSubtitle || "";
+    const image = card.dataset.trackImage || "";
+    const mp3 = card.dataset.trackMp3 || "";
+
+    modalTitle.textContent = title;
+    modalSubtitle.textContent = subtitle;
+    modalImage.src = image;
+    modalImage.alt = `${title} cover art`;
+
+    audio.pause();
+    source.src = mp3;
+    audio.load();
+
+    currentTimeEl.textContent = "0:00";
+    durationEl.textContent = "0:00";
+    progress.value = 0;
+
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closePlayer() {
+    audio.pause();
+    modal.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll(".waves-track-card").forEach((card) => {
+    card.addEventListener("click", () => openPlayer(card));
+
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openPlayer(card);
       }
     });
   });
 
-  // Setup all custom audio players
-  document.querySelectorAll(".wyco-audio-player").forEach((player) => {
-    const audio = player.querySelector(".wyco-audio");
-    const playBtn = player.querySelector(".wyco-play-btn");
-    const playIcon = player.querySelector(".wyco-play-icon");
-    const muteBtn = player.querySelector(".wyco-mute-btn");
-    const progress = player.querySelector(".wyco-progress");
-    const volume = player.querySelector(".wyco-volume");
-    const currentTimeEl = player.querySelector(".wyco-current-time");
-    const durationEl = player.querySelector(".wyco-duration");
+  backdrop.addEventListener("click", closePlayer);
+  closeBtn.addEventListener("click", closePlayer);
 
-    volume.value = audio.volume;
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hidden) {
+      closePlayer();
+    }
+  });
 
-    function updatePlayState() {
-      if (audio.paused) {
-        playIcon.textContent = "▶";
-        playBtn.setAttribute("aria-label", "Play");
-      } else {
-        playIcon.textContent = "❚❚";
-        playBtn.setAttribute("aria-label", "Pause");
+  playBtn.addEventListener("click", async () => {
+    if (audio.paused) {
+      try {
+        await audio.play();
+      } catch (err) {
+        console.error("Playback failed:", err);
       }
+    } else {
+      audio.pause();
     }
+  });
 
-    function updateMuteState() {
-      muteBtn.textContent = audio.muted || audio.volume === 0 ? "🔇" : "🔊";
-      muteBtn.setAttribute(
-        "aria-label",
-        audio.muted || audio.volume === 0 ? "Unmute" : "Mute"
-      );
-    }
-
-    function updateProgress() {
-      if (!audio.duration) return;
-      const percent = (audio.currentTime / audio.duration) * 100;
-      progress.value = percent;
-      currentTimeEl.textContent = formatTime(audio.currentTime);
-    }
-
-    playBtn.addEventListener("click", () => {
-      const allAudios = document.querySelectorAll(".wyco-audio");
-
-      allAudios.forEach((otherAudio) => {
-        if (otherAudio !== audio) {
-          otherAudio.pause();
-          const otherPlayer = otherAudio.closest(".wyco-audio-player");
-          const otherIcon = otherPlayer.querySelector(".wyco-play-icon");
-          const otherBtn = otherPlayer.querySelector(".wyco-play-btn");
-          otherIcon.textContent = "▶";
-          otherBtn.setAttribute("aria-label", "Play");
-        }
-      });
-
-      if (audio.paused) {
-        audio.play();
-      } else {
-        audio.pause();
-      }
-    });
-
-    muteBtn.addEventListener("click", () => {
-      audio.muted = !audio.muted;
-      updateMuteState();
-    });
-
-    progress.addEventListener("input", () => {
-      if (!audio.duration) return;
-      const newTime = (progress.value / 100) * audio.duration;
-      audio.currentTime = newTime;
-    });
-
-    volume.addEventListener("input", () => {
-      audio.volume = parseFloat(volume.value);
-      audio.muted = audio.volume === 0;
-      updateMuteState();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-      updateProgress();
-    });
-
-    audio.addEventListener("timeupdate", updateProgress);
-    audio.addEventListener("play", updatePlayState);
-    audio.addEventListener("pause", updatePlayState);
-    audio.addEventListener("volumechange", updateMuteState);
-    audio.addEventListener("ended", () => {
-      updatePlayState();
-      progress.value = 0;
-      currentTimeEl.textContent = "0:00";
-    });
-
-    updatePlayState();
+  muteBtn.addEventListener("click", () => {
+    audio.muted = !audio.muted;
     updateMuteState();
   });
+
+  progress.addEventListener("input", () => {
+    if (!audio.duration) return;
+    audio.currentTime = (progress.value / 100) * audio.duration;
+  });
+
+  volume.addEventListener("input", () => {
+    audio.volume = parseFloat(volume.value);
+    audio.muted = audio.volume === 0;
+    updateMuteState();
+  });
+
+  audio.addEventListener("loadedmetadata", () => {
+    durationEl.textContent = formatTime(audio.duration);
+    volume.value = audio.volume;
+    updateProgress();
+  });
+
+  audio.addEventListener("timeupdate", updateProgress);
+  audio.addEventListener("play", updatePlayState);
+  audio.addEventListener("pause", updatePlayState);
+  audio.addEventListener("volumechange", updateMuteState);
+
+  audio.addEventListener("ended", () => {
+    progress.value = 0;
+    currentTimeEl.textContent = "0:00";
+    updatePlayState();
+  });
+
+  updatePlayState();
+  updateMuteState();
 
   /* ---------------------------
      Initialize
