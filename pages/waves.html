@@ -35,6 +35,76 @@
       </p>
     </section>
 
+    <section class="waves-player-section">
+  <div class="waves-player-card">
+    <div class="waves-player-header">
+      <div class="waves-player-copy">
+        <h2>Music</h2>
+        <p>Listen to original tracks directly on the site.</p>
+      </div>
+
+      <button class="waves-open-btn" type="button" aria-expanded="false" aria-label="Open music player">
+        ›
+      </button>
+    </div>
+
+    <div class="waves-player-drawer" hidden>
+      <div class="wyco-audio-player" data-title="Blown Fuse">
+        <audio class="wyco-audio" preload="metadata">
+          <source src="/audio/blown-fuse.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+
+        <div class="wyco-audio-top">
+          <div class="wyco-track-info">
+            <span class="wyco-track-label">Now playing</span>
+            <strong class="wyco-track-title">Blown Fuse</strong>
+          </div>
+        </div>
+
+        <div class="wyco-controls-shell">
+          <button class="wyco-play-btn" type="button" aria-label="Play">
+            <span class="wyco-play-icon">▶</span>
+          </button>
+
+          <div class="wyco-progress-wrap">
+            <div class="wyco-time-row">
+              <span class="wyco-current-time">0:00</span>
+              <span class="wyco-duration">0:00</span>
+            </div>
+
+            <input
+              class="wyco-progress"
+              type="range"
+              min="0"
+              max="100"
+              value="0"
+              step="0.1"
+              aria-label="Track progress"
+            >
+          </div>
+
+          <button class="wyco-mute-btn" type="button" aria-label="Mute">
+            🔊
+          </button>
+
+          <div class="wyco-volume-wrap">
+            <input
+              class="wyco-volume"
+              type="range"
+              min="0"
+              max="1"
+              value="1"
+              step="0.01"
+              aria-label="Volume"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    
     <section class="media-section glass panel">
       <div class="media-head">
         <div>
