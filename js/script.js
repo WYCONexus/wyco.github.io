@@ -682,6 +682,135 @@ if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption &
   }, { passive: true });
 }
 
+   /* ---------------------------
+     Music Related
+  --------------------------- */
+  function formatTime(time) {
+    if (isNaN(time)) return "0:00";
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60).toString().padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  }
+
+  // Toggle the drawer open/closed
+  document.querySelectorAll(".waves-open-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const card = btn.closest(".waves-player-card");
+      const drawer = card.querySelector(".waves-player-drawer");
+      const isOpen = !drawer.hasAttribute("hidden");
+
+      document.querySelectorAll(".waves-player-drawer").forEach((item) => {
+        item.hidden = true;
+      });
+
+      document.querySelectorAll(".waves-open-btn").forEach((otherBtn) => {
+        otherBtn.setAttribute("aria-expanded", "false");
+        otherBtn.classList.remove("is-open");
+      });
+
+      if (!isOpen) {
+        drawer.hidden = false;
+        btn.setAttribute("aria-expanded", "true");
+        btn.classList.add("is-open");
+      }
+    });
+  });
+
+  // Setup all custom audio players
+  document.querySelectorAll(".wyco-audio-player").forEach((player) => {
+    const audio = player.querySelector(".wyco-audio");
+    const playBtn = player.querySelector(".wyco-play-btn");
+    const playIcon = player.querySelector(".wyco-play-icon");
+    const muteBtn = player.querySelector(".wyco-mute-btn");
+    const progress = player.querySelector(".wyco-progress");
+    const volume = player.querySelector(".wyco-volume");
+    const currentTimeEl = player.querySelector(".wyco-current-time");
+    const durationEl = player.querySelector(".wyco-duration");
+
+    volume.value = audio.volume;
+
+    function updatePlayState() {
+      if (audio.paused) {
+        playIcon.textContent = "▶";
+        playBtn.setAttribute("aria-label", "Play");
+      } else {
+        playIcon.textContent = "❚❚";
+        playBtn.setAttribute("aria-label", "Pause");
+      }
+    }
+
+    function updateMuteState() {
+      muteBtn.textContent = audio.muted || audio.volume === 0 ? "🔇" : "🔊";
+      muteBtn.setAttribute(
+        "aria-label",
+        audio.muted || audio.volume === 0 ? "Unmute" : "Mute"
+      );
+    }
+
+    function updateProgress() {
+      if (!audio.duration) return;
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progress.value = percent;
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+    }
+
+    playBtn.addEventListener("click", () => {
+      const allAudios = document.querySelectorAll(".wyco-audio");
+
+      allAudios.forEach((otherAudio) => {
+        if (otherAudio !== audio) {
+          otherAudio.pause();
+          const otherPlayer = otherAudio.closest(".wyco-audio-player");
+          const otherIcon = otherPlayer.querySelector(".wyco-play-icon");
+          const otherBtn = otherPlayer.querySelector(".wyco-play-btn");
+          otherIcon.textContent = "▶";
+          otherBtn.setAttribute("aria-label", "Play");
+        }
+      });
+
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    });
+
+    muteBtn.addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      updateMuteState();
+    });
+
+    progress.addEventListener("input", () => {
+      if (!audio.duration) return;
+      const newTime = (progress.value / 100) * audio.duration;
+      audio.currentTime = newTime;
+    });
+
+    volume.addEventListener("input", () => {
+      audio.volume = parseFloat(volume.value);
+      audio.muted = audio.volume === 0;
+      updateMuteState();
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+      updateProgress();
+    });
+
+    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("play", updatePlayState);
+    audio.addEventListener("pause", updatePlayState);
+    audio.addEventListener("volumechange", updateMuteState);
+    audio.addEventListener("ended", () => {
+      updatePlayState();
+      progress.value = 0;
+      currentTimeEl.textContent = "0:00";
+    });
+
+    updatePlayState();
+    updateMuteState();
+  });
+
   /* ---------------------------
      Initialize
   --------------------------- */
