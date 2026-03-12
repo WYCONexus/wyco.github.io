@@ -324,189 +324,265 @@ pre {
 }
 
 /* =========================
-   WYCO MUSIC PLAYER SECTION
+   TRACK CARD GRID
 ========================= */
 
-.waves-player-section {
-  padding: 24px 0;
+.waves-track-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 280px));
+  gap: 22px;
+  align-items: start;
 }
 
-.waves-player-card {
+.waves-track-card {
   position: relative;
   overflow: hidden;
-  border-radius: 28px;
-  padding: 28px;
-  background:
-    linear-gradient(135deg, rgba(8, 22, 42, 0.96), rgba(4, 10, 30, 0.98));
+  border-radius: 26px;
+  cursor: pointer;
+  background: linear-gradient(180deg, rgba(10, 18, 42, 0.96), rgba(6, 11, 28, 0.98));
   border: 1px solid rgba(111, 137, 255, 0.18);
   box-shadow:
-    0 16px 50px rgba(0, 0, 0, 0.30),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    0 18px 50px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
-.waves-player-card::before {
+.waves-track-card:hover,
+.waves-track-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(69, 230, 216, 0.35);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(69, 230, 216, 0.10);
+  outline: none;
+}
+
+.waves-track-thumb {
+  position: relative;
+  aspect-ratio: 4 / 6;
+  overflow: hidden;
+}
+
+.waves-track-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.02) contrast(1.02);
+}
+
+.waves-track-thumb::after {
   content: "";
   position: absolute;
   inset: 0;
-  pointer-events: none;
   background:
-    radial-gradient(circle at top left, rgba(69, 230, 216, 0.10), transparent 35%),
-    radial-gradient(circle at top right, rgba(111, 137, 255, 0.12), transparent 40%);
+    linear-gradient(to top, rgba(5, 10, 24, 0.85) 8%, rgba(5, 10, 24, 0.18) 45%, rgba(5, 10, 24, 0.05) 100%);
+  pointer-events: none;
 }
 
-.waves-player-header {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
+.waves-track-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #eef3ff;
+  background: rgba(9, 15, 36, 0.84);
+  border: 1px solid rgba(132, 156, 255, 0.22);
+  backdrop-filter: blur(10px);
 }
 
-.waves-player-copy h2 {
+.waves-track-orb {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 1px solid rgba(132, 156, 255, 0.20);
+  background:
+    linear-gradient(135deg, rgba(25, 39, 83, 0.92), rgba(20, 31, 69, 0.88));
+  color: #edf3ff;
+  font-size: 1.15rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 10px 30px rgba(0,0,0,0.28);
+  pointer-events: none;
+}
+
+.waves-track-body {
+  padding: 16px 18px 18px;
+}
+
+.waves-track-body h3 {
   margin: 0 0 6px;
-  font-size: 2rem;
+  color: #f0f4ff;
+  font-size: 1.7rem;
   line-height: 1.05;
-  color: #ecf0ff;
 }
 
-.waves-player-copy p {
+.waves-track-body p {
   margin: 0;
-  color: #a3add0;
+  color: #a9b4d6;
   font-size: 1rem;
 }
 
-.waves-open-btn {
-  width: 46px;
-  height: 46px;
-  flex: 0 0 auto;
-  border-radius: 999px;
-  border: 1px solid rgba(111, 137, 255, 0.16);
-  background: rgba(10, 18, 42, 0.72);
-  color: #dce6ff;
-  font-size: 1.5rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+/* =========================
+   PLAYER MODAL
+========================= */
+
+.waves-player-modal[hidden] {
+  display: none;
 }
 
-.waves-open-btn:hover {
-  transform: scale(1.05);
-  border-color: rgba(69, 230, 216, 0.45);
-  background: rgba(18, 30, 64, 0.95);
+.waves-player-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
 }
 
-.waves-open-btn.is-open {
-  transform: rotate(90deg);
+.waves-player-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 8, 20, 0.74);
+  backdrop-filter: blur(12px);
 }
 
-.waves-player-drawer {
+.waves-player-dialog {
   position: relative;
   z-index: 1;
-  margin-top: 22px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  width: min(92vw, 760px);
+  margin: 6vh auto;
+  border-radius: 28px;
+  overflow: hidden;
+  padding: 24px;
+  background:
+    linear-gradient(135deg, rgba(8, 16, 40, 0.97), rgba(6, 10, 28, 0.98));
+  border: 1px solid rgba(111, 137, 255, 0.16);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.waves-player-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(132, 156, 255, 0.16);
+  background: rgba(13, 21, 46, 0.88);
+  color: #eef3ff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.waves-player-art {
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+  border-radius: 20px;
+  margin-bottom: 18px;
+}
+
+.waves-player-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.waves-player-info {
+  margin-bottom: 18px;
+}
+
+.waves-player-label {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #95a9df;
+}
+
+.waves-player-info h3 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+  line-height: 1.05;
+  color: #f3f6ff;
+}
+
+.waves-player-info p {
+  margin: 0;
+  color: #aab6da;
 }
 
 /* =========================
-   CUSTOM AUDIO PLAYER
+   CUSTOM MODAL AUDIO PLAYER
 ========================= */
 
-.wyco-audio-player {
+.wyco-modal-audio {
+  display: none;
+}
+
+.wyco-modal-audio-player {
   border-radius: 22px;
   padding: 18px;
   background:
-    linear-gradient(135deg,
-      rgba(111, 137, 255, 0.18),
-      rgba(199, 93, 255, 0.14) 45%,
-      rgba(69, 230, 216, 0.16)
+    linear-gradient(
+      135deg,
+      rgba(69, 230, 216, 0.12),
+      rgba(111, 137, 255, 0.16) 45%,
+      rgba(199, 93, 255, 0.14)
     );
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.05),
-    0 10px 30px rgba(0,0,0,0.22);
-  backdrop-filter: blur(10px);
+    0 14px 35px rgba(0,0,0,0.22);
 }
 
-.wyco-audio-top {
-  margin-bottom: 14px;
-}
-
-.wyco-track-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.wyco-track-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #9cb0e8;
-}
-
-.wyco-track-title {
-  color: #f2f5ff;
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-.wyco-controls-shell {
+.wyco-modal-controls {
   display: grid;
   grid-template-columns: auto 1fr auto 120px;
   gap: 14px;
   align-items: center;
 }
 
-.wyco-play-btn,
-.wyco-mute-btn {
-  width: 46px;
-  height: 46px;
+.wyco-modal-play,
+.wyco-modal-mute {
+  width: 48px;
+  height: 48px;
   border: none;
   border-radius: 999px;
   cursor: pointer;
   color: #f4f7ff;
   background:
-    linear-gradient(135deg, #6f89ff, #c75dff 55%, #45e6d8);
+    linear-gradient(135deg, #45e6d8 0%, #6f89ff 52%, #c75dff 100%);
   box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(255,255,255,0.2);
-  transition: transform 0.18s ease, filter 0.18s ease;
+    0 10px 24px rgba(0,0,0,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.18);
 }
 
-.wyco-play-btn:hover,
-.wyco-mute-btn:hover {
-  transform: translateY(-1px) scale(1.03);
-  filter: brightness(1.06);
-}
-
-.wyco-play-icon {
-  display: inline-block;
-  transform: translateX(1px);
-  font-size: 1rem;
-}
-
-.wyco-progress-wrap {
+.wyco-modal-progress-wrap {
   min-width: 0;
 }
 
-.wyco-time-row {
+.wyco-modal-time-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 6px;
   font-size: 0.86rem;
-  color: #cdd7f4;
+  color: #d2dcfb;
 }
 
-.wyco-volume-wrap {
-  display: flex;
-  align-items: center;
-}
-
-/* Base range reset */
-.wyco-progress,
-.wyco-volume {
+.wyco-modal-progress,
+.wyco-modal-volume {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
@@ -514,116 +590,62 @@ pre {
   cursor: pointer;
 }
 
-/* Track */
-.wyco-progress::-webkit-slider-runnable-track,
-.wyco-volume::-webkit-slider-runnable-track {
+.wyco-modal-progress::-webkit-slider-runnable-track,
+.wyco-modal-volume::-webkit-slider-runnable-track {
   height: 8px;
   border-radius: 999px;
-  background:
-    linear-gradient(90deg,
-      rgba(69, 230, 216, 0.9),
-      rgba(111, 137, 255, 0.95) 50%,
-      rgba(199, 93, 255, 0.9)
-    );
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  background: linear-gradient(90deg, #45e6d8 0%, #6f89ff 50%, #c75dff 100%);
 }
 
-.wyco-progress::-moz-range-track,
-.wyco-volume::-moz-range-track {
+.wyco-modal-progress::-moz-range-track,
+.wyco-modal-volume::-moz-range-track {
   height: 8px;
   border-radius: 999px;
-  background:
-    linear-gradient(90deg,
-      rgba(69, 230, 216, 0.9),
-      rgba(111, 137, 255, 0.95) 50%,
-      rgba(199, 93, 255, 0.9)
-    );
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  background: linear-gradient(90deg, #45e6d8 0%, #6f89ff 50%, #c75dff 100%);
 }
 
-/* Thumb */
-.wyco-progress::-webkit-slider-thumb,
-.wyco-volume::-webkit-slider-thumb {
+.wyco-modal-progress::-webkit-slider-thumb,
+.wyco-modal-volume::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 18px;
   height: 18px;
   margin-top: -5px;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
+  border: 2px solid rgba(255,255,255,0.85);
   background: #0d1223;
-  box-shadow:
-    0 0 0 3px rgba(111, 137, 255, 0.22),
-    0 4px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 0 0 3px rgba(111, 137, 255, 0.22);
 }
 
-.wyco-progress::-moz-range-thumb,
-.wyco-volume::-moz-range-thumb {
+.wyco-modal-progress::-moz-range-thumb,
+.wyco-modal-volume::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
+  border: 2px solid rgba(255,255,255,0.85);
   background: #0d1223;
-  box-shadow:
-    0 0 0 3px rgba(111, 137, 255, 0.22),
-    0 4px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 0 0 3px rgba(111, 137, 255, 0.22);
+  cursor: pointer;
 }
 
-/* Optional progress fill look using inline CSS var */
-.wyco-progress {
-  background:
-    linear-gradient(90deg,
-      #45e6d8 0%,
-      #6f89ff 50%,
-      #c75dff 100%);
-  border-radius: 999px;
-}
-
-/* Hide native audio element */
-.wyco-audio {
-  display: none;
-}
-
-@media (max-width: 820px) {
-  .wyco-controls-shell {
+@media (max-width: 720px) {
+  .wyco-modal-controls {
     grid-template-columns: auto 1fr auto;
   }
 
-  .wyco-volume-wrap {
+  .wyco-modal-volume-wrap {
     grid-column: 1 / -1;
   }
-}
 
-@media (max-width: 640px) {
-  .waves-player-card {
-    padding: 22px;
+  .waves-player-dialog {
+    width: min(94vw, 760px);
+    margin: 4vh auto;
+    padding: 18px;
     border-radius: 22px;
   }
 
-  .waves-player-copy h2 {
-    font-size: 1.65rem;
-  }
-
-  .waves-player-header {
-    align-items: flex-start;
-  }
-
-  .wyco-audio-player {
-    padding: 16px;
-    border-radius: 18px;
-  }
-
-  .wyco-controls-shell {
-    grid-template-columns: auto 1fr;
-    gap: 12px;
-  }
-
-  .wyco-mute-btn {
-    grid-column: 1 / 2;
-  }
-
-  .wyco-volume-wrap {
-    grid-column: 2 / 3;
+  .waves-player-info h3 {
+    font-size: 1.6rem;
   }
 }
 
