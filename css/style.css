@@ -324,6 +324,91 @@ pre {
 }
 
 /* =========================
+   FEATURED MUSIC SECTION
+========================= */
+
+.featured-music-section {
+  padding: 14px 0 30px;
+}
+
+.featured-music-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(69,230,216,0.10), transparent 28%),
+    radial-gradient(circle at 85% 0%, rgba(199,93,255,0.10), transparent 24%),
+    linear-gradient(180deg, rgba(9, 16, 38, 0.94), rgba(7, 11, 28, 0.98));
+  border: 1px solid rgba(111, 137, 255, 0.18);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.30),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+.featured-music-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.featured-music-title {
+  margin: 0 0 6px;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  line-height: 1.05;
+  color: #edf3ff;
+}
+
+.featured-music-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.featured-music-arrow {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 162, 255, 0.22);
+  background: rgba(10, 18, 40, 0.82);
+  color: #edf3ff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.featured-music-arrow:hover {
+  background: rgba(20, 30, 58, 0.95);
+  border-color: rgba(69, 230, 216, 0.35);
+}
+
+.featured-music-arrow:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 720px) {
+  .featured-music-panel {
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  .featured-music-head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .featured-music-arrow {
+    display: none;
+  }
+}
+
+/* =========================
    TRACK CARD GRID
 ========================= */
 
@@ -332,6 +417,7 @@ pre {
   grid-template-columns: repeat(auto-fit, minmax(230px, 280px));
   gap: 22px;
   align-items: start;
+   justify-content: start;
 }
 
 .waves-track-card {
