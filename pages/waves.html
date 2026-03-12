@@ -35,74 +35,48 @@
       </p>
     </section>
 
-    <section class="waves-player-section">
-  <div class="waves-player-card">
-    <div class="waves-player-header">
-      <div class="waves-player-copy">
-        <h2>Music</h2>
-        <p>Listen to original tracks directly on the site.</p>
-      </div>
-
-      <button class="waves-open-btn" type="button" aria-expanded="false" aria-label="Open music player">
-        ›
-      </button>
+   <section class="waves-track-grid">
+  <article
+    class="waves-track-card"
+    data-track-title="Blown Fuse"
+    data-track-subtitle="Single · WYCO Waves"
+    data-track-image="/images/covers/blown-fuse.jpg"
+    data-track-mp3="/audio/blown-fuse.mp3"
+    tabindex="0"
+    aria-label="Play Blown Fuse"
+  >
+    <div class="waves-track-thumb">
+      <img src="/images/covers/blown-fuse.jpg" alt="Blown Fuse cover art">
+      <span class="waves-track-badge">Music</span>
+      <button class="waves-track-orb" type="button" aria-hidden="true">✦</button>
     </div>
 
-    <div class="waves-player-drawer" hidden>
-      <div class="wyco-audio-player" data-title="Blown Fuse">
-        <audio class="wyco-audio" preload="metadata">
-          <source src="/audio/blown-fuse.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
-
-        <div class="wyco-audio-top">
-          <div class="wyco-track-info">
-            <span class="wyco-track-label">Now playing</span>
-            <strong class="wyco-track-title">Blown Fuse</strong>
-          </div>
-        </div>
-
-        <div class="wyco-controls-shell">
-          <button class="wyco-play-btn" type="button" aria-label="Play">
-            <span class="wyco-play-icon">▶</span>
-          </button>
-
-          <div class="wyco-progress-wrap">
-            <div class="wyco-time-row">
-              <span class="wyco-current-time">0:00</span>
-              <span class="wyco-duration">0:00</span>
-            </div>
-
-            <input
-              class="wyco-progress"
-              type="range"
-              min="0"
-              max="100"
-              value="0"
-              step="0.1"
-              aria-label="Track progress"
-            >
-          </div>
-
-          <button class="wyco-mute-btn" type="button" aria-label="Mute">
-            🔊
-          </button>
-
-          <div class="wyco-volume-wrap">
-            <input
-              class="wyco-volume"
-              type="range"
-              min="0"
-              max="1"
-              value="1"
-              step="0.01"
-              aria-label="Volume"
-            >
-          </div>
-        </div>
-      </div>
+    <div class="waves-track-body">
+      <h3>Blown Fuse</h3>
+      <p>Single · WYCO Waves</p>
     </div>
-  </div>
+  </article>
+
+  <article
+    class="waves-track-card"
+    data-track-title="Drifting Sand"
+    data-track-subtitle="Single · WYCO Waves"
+    data-track-image="/images/covers/drifting-sand.jpg"
+    data-track-mp3="/audio/drifting-sand.mp3"
+    tabindex="0"
+    aria-label="Play Drifting Sand"
+  >
+    <div class="waves-track-thumb">
+      <img src="/images/covers/drifting-sand.jpg" alt="Drifting Sand cover art">
+      <span class="waves-track-badge">Music</span>
+      <button class="waves-track-orb" type="button" aria-hidden="true">✦</button>
+    </div>
+
+    <div class="waves-track-body">
+      <h3>Drifting Sand</h3>
+      <p>Single · WYCO Waves</p>
+    </div>
+  </article>
 </section>
     
     <section class="media-section glass panel">
@@ -362,8 +336,70 @@
   <!--------------- 
         Footer 
   --------------->
+  
   <div id="site-footer"></div>
 
+  <div class="waves-player-modal" id="wavesPlayerModal" hidden>
+  <div class="waves-player-backdrop"></div>
+
+  <div class="waves-player-dialog" role="dialog" aria-modal="true" aria-labelledby="wavesModalTitle">
+    <button class="waves-player-close" type="button" aria-label="Close player">✕</button>
+
+    <div class="waves-player-art">
+      <img id="wavesModalImage" src="" alt="">
+    </div>
+
+    <div class="waves-player-info">
+      <span class="waves-player-label">Now Playing</span>
+      <h3 id="wavesModalTitle">Track Title</h3>
+      <p id="wavesModalSubtitle">Track subtitle</p>
+    </div>
+
+    <div class="wyco-modal-audio-player">
+      <audio id="wavesModalAudio" class="wyco-modal-audio" preload="metadata">
+        <source id="wavesModalSource" src="" type="audio/mpeg">
+      </audio>
+
+      <div class="wyco-modal-controls">
+        <button class="wyco-modal-play" type="button" aria-label="Play">
+          <span class="wyco-modal-play-icon">▶</span>
+        </button>
+
+        <div class="wyco-modal-progress-wrap">
+          <div class="wyco-modal-time-row">
+            <span class="wyco-modal-current">0:00</span>
+            <span class="wyco-modal-duration">0:00</span>
+          </div>
+
+          <input
+            class="wyco-modal-progress"
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+            step="0.1"
+            aria-label="Track progress"
+          >
+        </div>
+
+        <button class="wyco-modal-mute" type="button" aria-label="Mute">🔊</button>
+
+        <div class="wyco-modal-volume-wrap">
+          <input
+            class="wyco-modal-volume"
+            type="range"
+            min="0"
+            max="1"
+            value="1"
+            step="0.01"
+            aria-label="Volume"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
   <script src="/js/script.js"></script>
 </body>
 </html>
