@@ -35,6 +35,7 @@
       </p>
     </section>
 
+    <!--FEATURED MUSIC-->
     <section class="featured-music-section">
       <div class="featured-music-panel">
         <div class="featured-music-head">
@@ -58,6 +59,31 @@
       </div>
     </section>
 
+    <!--SHORT INSTRUMENTALS-->
+    <section class="featured-music-section">
+      <div class="featured-music-panel">
+        <div class="featured-music-head">
+          <div>
+            <h2 class="featured-music-title">Short Instrumentals</h2>
+            <p class="featured-music-subtitle">
+              Listen to short instrumental tracks.
+            </p>
+          </div>
+
+          <button
+            class="featured-music-arrow"
+            type="button"
+            aria-label="Next tracks"
+          >
+            ›
+          </button>
+        </div>
+
+        <div class="waves-track-grid" id="shortinstrumentalRow"></div>
+      </div>
+    </section>
+
+    <!--MUSIC-->
     <section class="media-section glass panel">
       <div class="media-head">
         <div>
@@ -75,43 +101,8 @@
         <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll music right" data-target="musicRow">›</button>
       </div>
     </section>
-
-    <section class="media-section glass panel">
-      <div class="media-head">
-        <div>
-          <h2>Lyrics</h2>
-          <p>Tap a title card to open the lyrics in a popup.</p>
-        </div>
-      </div>
-
-      <div class="media-carousel-shell">
-        <button class="media-arrow media-arrow-left" type="button" aria-label="Scroll lyrics left" data-target="lyricsRow">‹</button>
-
-        <div class="media-row" id="lyricsRow">
-        </div>
-
-        <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll lyrics right" data-target="lyricsRow">›</button>
-      </div>
-    </section>
-
-    <section class="media-section glass panel">
-      <div class="media-head">
-        <div>
-          <h2>Visual Media</h2>
-          <p>Visualizers, music videos, clips, and production work.</p>
-        </div>
-      </div>
-
-      <div class="media-carousel-shell">
-        <button class="media-arrow media-arrow-left" type="button" aria-label="Scroll visual media left" data-target="visualRow">‹</button>
-
-        <div class="media-row" id="visualRow">
-        </div>
-
-        <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll visual media right" data-target="visualRow">›</button>
-      </div>
-    </section>
-
+    
+<!-- LYRICS USAGE NOTICE -->
     <section class="section-block glass">
       <h2><span class="gradient-text">Lyrics Usage Notice</span></h2>
       <p>
@@ -122,6 +113,7 @@
     </section>
   </main>
 
+  <!--LYRICS MODAL-->
   <div class="lyrics-modal" id="lyricsModal" aria-hidden="true">
     <div class="lyrics-modal-panel">
       <div class="lyrics-modal-head">
