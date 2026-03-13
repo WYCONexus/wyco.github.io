@@ -867,8 +867,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const lyricsModalText = document.getElementById('lyricsModalText');
   const lyricsClose = document.getElementById('lyricsClose');
 
-  function openLyricsModal(title, subtitle, lyrics) {
+  let lyricsOpenedFromLibrary = false;
+
+  function openLyricsModal(title, subtitle, lyrics, fromLibrary = false) {
     if (!lyricsModal || !lyricsModalTitle || !lyricsModalSubtitle || !lyricsModalText) return;
+
+    lyricsOpenedFromLibrary = fromLibrary;
 
     lyricsModalTitle.textContent = title;
     lyricsModalSubtitle.textContent = subtitle;
@@ -876,15 +880,25 @@ document.addEventListener('DOMContentLoaded', () => {
     lyricsModal.classList.add('active');
     lyricsModal.setAttribute('aria-hidden', 'false');
     updateBodyScrollLock();
-    pushOverlayHistory('lyrics', title || '');
+
+    if (!fromLibrary) {
+      pushOverlayHistory('lyrics', title || '');
+    }
   }
 
   function closeLyricsModal(fromPopState = false, preserveHistory = false) {
     if (!lyricsModal) return;
 
+    const shouldReturnToLibrary = lyricsOpenedFromLibrary && sectionLibraryModal && sectionLibraryModal.classList.contains('active');
+
     lyricsModal.classList.remove('active');
     lyricsModal.setAttribute('aria-hidden', 'true');
+    lyricsOpenedFromLibrary = false;
     updateBodyScrollLock();
+
+    if (shouldReturnToLibrary) {
+      return;
+    }
 
     if (!fromPopState && !preserveHistory) {
       clearOverlayHistory();
@@ -1209,6 +1223,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentTimeEl = modal.querySelector(".wyco-modal-current");
     const durationEl = modal.querySelector(".wyco-modal-duration");
 
+    let playerOpenedFromLibrary = false;
+
     function formatTime(time) {
       if (isNaN(time)) return "0:00";
       const minutes = Math.floor(time / 60);
@@ -1277,7 +1293,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentTimeEl.textContent = formatTime(audio.currentTime);
     }
 
-    function openAudioPlayer(card) {
+    function openAudioPlayer(card, fromLibrary = false) {
       if (
         !modalTitle || !modalSubtitle || !modalImage ||
         !audio || !source || !currentTimeEl || !durationEl || !progress
@@ -1288,7 +1304,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const image = card.dataset.trackImage || "";
       const mediaSrc = card.dataset.mediaSrc || card.dataset.trackMp3 || "";
 
-      closeSectionLibraryModal(false, true);
+      playerOpenedFromLibrary = fromLibrary;
       closeLyricsModal(false, true);
 
       showAudioMode();
@@ -1309,10 +1325,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       modal.hidden = false;
       updateBodyScrollLock();
-      pushOverlayHistory('player', title);
+
+      if (!fromLibrary) {
+        pushOverlayHistory('player', title);
+      }
     }
 
-    function openVideoPlayer(card) {
+    function openVideoPlayer(card, fromLibrary = false) {
       if (
         !modalTitle || !modalSubtitle || !video || !videoSource
       ) return;
@@ -1322,7 +1341,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const image = card.dataset.trackImage || "";
       const mediaSrc = card.dataset.mediaSrc || "";
 
-      closeSectionLibraryModal(false, true);
+      playerOpenedFromLibrary = fromLibrary;
       closeLyricsModal(false, true);
 
       showVideoMode();
@@ -1342,14 +1361,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
       modal.hidden = false;
       updateBodyScrollLock();
-      pushOverlayHistory('player', title);
+
+      if (!fromLibrary) {
+        pushOverlayHistory('player', title);
+      }
     }
 
     function closePlayer(fromPopState = false, preserveHistory = false) {
+      const shouldReturnToLibrary = playerOpenedFromLibrary && sectionLibraryModal && sectionLibraryModal.classList.contains('active');
+
       if (audio) audio.pause();
       if (video) video.pause();
       modal.hidden = true;
+      playerOpenedFromLibrary = false;
       updateBodyScrollLock();
+
+      if (shouldReturnToLibrary) {
+        return;
+      }
 
       if (!fromPopState && !preserveHistory) {
         clearOverlayHistory();
@@ -1366,10 +1395,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const subtitle = card.dataset.trackSubtitle || "";
       const lyrics = card.dataset.lyrics || "No text added yet.";
       const mediaSrc = card.dataset.mediaSrc || "";
+      const fromLibrary = !!card.closest('.section-library-list, #sectionLibraryList, .section-library-item');
 
       if (mediaType === "lyrics" || mediaType === "text") {
-        closeSectionLibraryModal(false, true);
-        openLyricsModal(title, subtitle || "Text", lyrics);
+        openLyricsModal(title, subtitle || "Text", lyrics, fromLibrary);
         return;
       }
 
@@ -1381,11 +1410,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (mediaType === "video") {
-        openVideoPlayer(card);
+        openVideoPlayer(card, fromLibrary);
         return;
       }
 
-      openAudioPlayer(card);
+      openAudioPlayer(card, fromLibrary);
     }
 
     document.addEventListener("click", (event) => {
