@@ -12,7 +12,7 @@
 
   <link rel="stylesheet" href="/css/style.css" />
 </head>
-  
+
 <body
   data-page="nexus"
   data-footer-brand="WYCO Nexus"
@@ -20,117 +20,147 @@
   data-footer-description="All original code, artwork, media, written content, and digital assets on this site are protected. Unauthorized reproduction or commercial use is prohibited without permission."
 >
   <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
   <div class="orb orb-c"></div>
-  
-  <!--------------- 
-        Header 
+
+  <!---------------
+        Header
   --------------->
   <div id="site-header"></div>
 
   <main class="wrap page-main">
-    <section class="page-hero glass">
+
+    <section class="page-hero glass nexus-hero">
       <p class="eyebrow">WYCO Nexus</p>
-      <h1><span class="gradient-text">Code. Tools. Experiments.</span></h1>
+      <h1><span class="gradient-text">Code. Systems. Tools. Experiments.</span></h1>
       <p class="lead">
-        WYCO Nexus is the technology lab of the WYCO ecosystem — home to bots, software projects, automation tools, and digital experiments.
+        WYCO Nexus is the technology lab of the WYCO ecosystem — home to bots, websites, automation tools, digital systems, and coding experiments.
       </p>
     </section>
 
-    <section class="nexus-carousel-section glass panel">
-      <div class="nexus-section-head">
+    <section class="section-library-section glass panel nexus-library-section">
+      <div class="section-library-head">
         <div>
-          <h2>Project spotlight</h2>
-          <p>Featured projects from the WYCO Nexus side of the ecosystem.</p>
+          <p class="section-kicker">Featured</p>
+          <h2>Project Spotlight</h2>
+          <p class="section-library-copy">
+            Core projects from the Nexus side of WYCO — active builds, branded web systems, and evolving technical infrastructure.
+          </p>
         </div>
       </div>
 
-      <div class="nexus-carousel-shell">
-        <button class="nexus-arrow nexus-arrow-left" type="button" aria-label="Scroll spotlight left" data-target="spotlightRow">
+      <div class="section-carousel-shell nexus-carousel-shell">
+        <button
+          class="section-arrow section-arrow-left nexus-arrow"
+          type="button"
+          aria-label="Scroll spotlight left"
+          data-target="spotlightRow"
+        >
           ‹
         </button>
 
-        <div class="nexus-row" id="spotlightRow">
-          
+        <div class="section-row nexus-row" id="spotlightRow">
+
           <a
-            class="nexus-card"
+            class="section-card section-card-link nexus-card"
             href="https://github.com/WYCONexus/wyco.github.io"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Open ORB repository"
+            aria-label="Open WYCO Hub repository"
           >
-            <div class="nexus-thumb">
-              <span class="nexus-badge">Spotlight</span>
-              <span class="nexus-icon">⌘</span>
-              <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Nexus default artwork">
-              <div class="nexus-meta">
-                <h3 class="nexus-title">WYCO Hub</h3>
-                <p class="nexus-subtitle">Website</p>
-                <div class="nexus-lines">
-                  <span>Status: Active</span>
-                  <span>Stack: HTML / CSS / JS</span>
-                </div>
+            <div class="section-card-media nexus-card-media">
+              <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Hub artwork">
+              <span class="section-card-badge nexus-badge">Spotlight</span>
+              <span class="nexus-card-icon">⌘</span>
+            </div>
+
+            <div class="section-card-body nexus-card-body">
+              <h3>WYCO Hub</h3>
+              <p class="section-card-subtitle">Main website</p>
+              <div class="nexus-card-lines">
+                <span>Status: Active</span>
+                <span>Stack: HTML / CSS / JS</span>
               </div>
             </div>
           </a>
 
           <a
-            class="nexus-card"
+            class="section-card section-card-link nexus-card"
             href="https://github.com/WYCONexus/wycorepairs.github.io"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Open second spotlight repository"
+            aria-label="Open WYCO Repairs repository"
           >
-            <div class="nexus-thumb">
-              <span class="nexus-badge">Spotlight</span>
-              <span class="nexus-icon">⌘</span>
-              <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Nexus default artwork">
-              <div class="nexus-meta">
-                <h3 class="nexus-title">WYCO Repairs</h3>
-                <p class="nexus-subtitle">Website</p>
-                <div class="nexus-lines">
-                  <span>Status: Active</span>
-                  <span>Stack: HTML / CSS / JS</span>
-                </div>
+            <div class="section-card-media nexus-card-media">
+              <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Repairs artwork">
+              <span class="section-card-badge nexus-badge">Spotlight</span>
+              <span class="nexus-card-icon">⌘</span>
+            </div>
+
+            <div class="section-card-body nexus-card-body">
+              <h3>WYCO Repairs</h3>
+              <p class="section-card-subtitle">Business website</p>
+              <div class="nexus-card-lines">
+                <span>Status: Active</span>
+                <span>Stack: HTML / CSS / JS</span>
               </div>
             </div>
           </a>
-          
+
         </div>
 
-        <button class="nexus-arrow nexus-arrow-right" type="button" aria-label="Scroll spotlight right" data-target="spotlightRow">
+        <button
+          class="section-arrow section-arrow-right nexus-arrow"
+          type="button"
+          aria-label="Scroll spotlight right"
+          data-target="spotlightRow"
+        >
           ›
         </button>
       </div>
     </section>
 
-    <section class="nexus-carousel-section glass panel">
-      <div class="nexus-section-head">
+    <section class="section-library-section glass panel nexus-library-section">
+      <div class="section-library-head">
         <div>
+          <p class="section-kicker">GitHub</p>
           <h2>Repositories</h2>
-          <p>Public GitHub repositories, sorted by most recently updated.</p>
+          <p class="section-library-copy">
+            Public repositories sorted by most recently updated. This row is intended to be populated by JavaScript.
+          </p>
         </div>
       </div>
 
-      <div class="nexus-carousel-shell">
-        <button class="nexus-arrow nexus-arrow-left" type="button" aria-label="Scroll repositories left" data-target="repoRow">
+      <div class="section-carousel-shell nexus-carousel-shell">
+        <button
+          class="section-arrow section-arrow-left nexus-arrow"
+          type="button"
+          aria-label="Scroll repositories left"
+          data-target="repoRow"
+        >
           ‹
         </button>
 
-        <div class="nexus-row" id="repoRow"></div>
+        <div class="section-row nexus-row" id="repoRow"></div>
 
-        <button class="nexus-arrow nexus-arrow-right" type="button" aria-label="Scroll repositories right" data-target="repoRow">
+        <button
+          class="section-arrow section-arrow-right nexus-arrow"
+          type="button"
+          aria-label="Scroll repositories right"
+          data-target="repoRow"
+        >
           ›
         </button>
       </div>
     </section>
+
   </main>
 
-  <!--------------- 
-        Footer 
+  <!---------------
+        Footer
   --------------->
   <div id="site-footer"></div>
 
   <script src="/js/script.js"></script>
-
 </body>
 </html>
