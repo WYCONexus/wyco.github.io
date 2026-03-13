@@ -461,7 +461,7 @@ pre {
 
 .waves-track-thumb {
   position: relative;
-  min-height: 340px;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
 }
 
