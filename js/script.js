@@ -257,60 +257,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ---------------------------
-     Waves Featured Music Rendering
+     Waves Section Rendering
   --------------------------- */
 
-  function renderFeaturedMusic() {
-    const target = document.getElementById('featuredMusicRow');
-    const data = window.wavesData && Array.isArray(window.wavesData.featuredMusic)
-      ? window.wavesData.featuredMusic
-      : [];
+  function renderWavesSections() {
+    const rows = document.querySelectorAll('[data-waves-section]');
+    if (!rows.length || !window.wavesData) return;
 
-    if (!target) return;
+    rows.forEach((target) => {
+      const sectionKey = target.dataset.wavesSection;
+      const data = Array.isArray(window.wavesData[sectionKey])
+        ? window.wavesData[sectionKey]
+        : [];
 
-    if (!data.length) {
-      target.innerHTML = `
-        <div class="waves-track-card" aria-hidden="true">
-          <div class="waves-track-thumb">
-            <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Waves default artwork">
-            <span class="waves-track-badge">Music</span>
-            <span class="waves-track-orb" aria-hidden="true">✦</span>
-            <div class="waves-track-body">
-              <h3>No tracks yet</h3>
-              <p>Music will appear here when added.</p>
+      if (!data.length) {
+        target.innerHTML = `
+          <div class="waves-track-card" aria-hidden="true">
+            <div class="waves-track-thumb">
+              <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Waves default artwork">
+              <span class="waves-track-badge">Music</span>
+              <span class="waves-track-orb" aria-hidden="true">✦</span>
+              <div class="waves-track-body">
+                <h3>No tracks yet</h3>
+                <p>Media will appear here when added.</p>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-      return;
-    }
+        `;
+        return;
+      }
 
-    target.innerHTML = data.map((item) => `
-      <article
-        class="waves-track-card"
-        data-track-title="${escapeHtml(item.title || 'Untitled Track')}"
-        data-track-subtitle="${escapeHtml(item.subtitle || '')}"
-        data-track-image="${escapeHtml(item.image || '/images/waves/wyco_gradient_diagonal.jpg')}"
-        data-track-mp3="${escapeHtml(item.mediaSrc || '')}"
-        data-media-type="${escapeHtml(item.mediaType || 'audio')}"
-        tabindex="0"
-        aria-label="Play ${escapeHtml(item.title || 'Untitled Track')}"
-      >
-        <div class="waves-track-thumb">
-          <img
-            src="${escapeHtml(item.image || '/images/waves/wyco_gradient_diagonal.jpg')}"
-            alt="${escapeHtml(item.title || 'Untitled Track')} cover art"
-          >
-          <span class="waves-track-badge">${escapeHtml(item.badge || 'Music')}</span>
-          <span class="waves-track-orb" aria-hidden="true">✦</span>
+      target.innerHTML = data.map((item) => `
+        <article
+          class="waves-track-card"
+          data-track-title="${escapeHtml(item.title || 'Untitled Track')}"
+          data-track-subtitle="${escapeHtml(item.subtitle || '')}"
+          data-track-image="${escapeHtml(item.image || '/images/waves/wyco_gradient_diagonal.jpg')}"
+          data-track-mp3="${escapeHtml(item.mediaSrc || '')}"
+          data-media-type="${escapeHtml(item.mediaType || 'audio')}"
+          tabindex="0"
+          aria-label="Play ${escapeHtml(item.title || 'Untitled Track')}"
+        >
+          <div class="waves-track-thumb">
+            <img
+              src="${escapeHtml(item.image || '/images/waves/wyco_gradient_diagonal.jpg')}"
+              alt="${escapeHtml(item.title || 'Untitled Track')} cover art"
+            >
+            <span class="waves-track-badge">${escapeHtml(item.badge || 'Music')}</span>
+            <span class="waves-track-orb" aria-hidden="true">✦</span>
 
-          <div class="waves-track-body">
-            <h3>${escapeHtml(item.title || 'Untitled Track')}</h3>
-            <p>${escapeHtml(item.subtitle || '')}</p>
+            <div class="waves-track-body">
+              <h3>${escapeHtml(item.title || 'Untitled Track')}</h3>
+              <p>${escapeHtml(item.subtitle || '')}</p>
+            </div>
           </div>
-        </div>
-      </article>
-    `).join('');
+        </article>
+      `).join('');
+    });
   }
 
 
