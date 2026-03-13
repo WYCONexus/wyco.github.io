@@ -150,8 +150,17 @@ window.WYCO_WORKBENCH_DATA = {
     button.appendChild(img);
     button.addEventListener('click', (event) => {
       event.stopPropagation();
-      openSectionModal(sectionKey, true);
-    });
+
+      const data = getData();
+      const items = Array.isArray(data[sectionKey]) ? data[sectionKey] : [];
+      const clickedIndex = items.findIndex((entry) => entry.src === item.src && entry.title === item.title);
+
+      currentSectionKey = sectionKey;
+      currentSectionImages = items;
+      currentIndex = clickedIndex >= 0 ? clickedIndex : 0;
+
+      openLightbox(currentIndex, true);
+  });
 
     figure.appendChild(button);
     figure.appendChild(caption);
