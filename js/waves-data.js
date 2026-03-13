@@ -4,7 +4,7 @@ window.wavesData = {
       title: "Blown Fuse",
       subtitle: "Single · WYCO Waves",
       badge: "Music",
-      image: "/images/covers/blown-fuse.jpg",
+      image: "/images/waves/wyco_gradient_diagonal.jpg",
       mediaSrc: "/audio/blown-fuse.mp3",
       mediaType: "audio"
     },
@@ -12,7 +12,7 @@ window.wavesData = {
       title: "Drifting Sand",
       subtitle: "Single · WYCO Waves",
       badge: "Music",
-      image: "/images/covers/drifting-sand.jpg",
+      image: "/images/waves/wyco_gradient_diagonal.jpg",
       mediaSrc: "/audio/drifting-sand.mp3",
       mediaType: "audio"
     }
