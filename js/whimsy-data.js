@@ -19,7 +19,8 @@ window.whimsyData = {
       title: "We All Try",
       subtitle: "Poetry · WYCO",
       image: "/images/whimsy/we-all-try.png",
-      text: `Line 1
+      text: `
+            Line 1
 
             Some swim, 
             Some walk, 
@@ -50,7 +51,7 @@ window.whimsyData = {
             Some lie,
             
             Line 6
-            
+
             But in the end we all try.`
     }
   ],

@@ -25,24 +25,119 @@ window.wavesData = {
 
   /*<!--SHORT INSTRUMENTALS-->*/
   shortInstrumental: [
+    /*steelKeynoteAlbum*/
     {
-      title: "Peace",
-      subtitle: "Short · Sapphire Kindness",
-      album: "Sapphire Kindness",
+      title: "Alive",
+      subtitle: "Short · Steel Keynote",
+      album: "Steel Keynote",
       badge: "Short Instrumental",
-      image: "/assets/waves/sapphireKindness/mp3-peace.jpg",
-      mediaSrc: "/assets/waves/sapphireKindness/peace.mp3",
+      image: "/assets/waves/steelKeynote/mp3-alive.jpg",
+      mediaSrc: "/assets/waves/steelKeynote/alive.mp3",
       mediaType: "audio"
     },
     {
-      title: "Sole Addiction",
-      subtitle: "Short · Sapphire Kindness",
-      album: "Sapphire Kindness",
+      title: "Mask",
+      subtitle: "Short · Steel Keynote",
+      album: "Steel Keynote",
       badge: "Short Instrumental",
-      image: "/assets/waves/sapphireKindness/mp3-sole-addiction.jpg",
-      mediaSrc: "/assets/waves/sapphireKindness/sole-addiction.mp3",
+      image: "/assets/waves/steelKeynote/mp3-mask.jpg",
+      mediaSrc: "/assets/waves/steelKeynote/mask.mp3",
       mediaType: "audio"
     },
+    {
+      title: "Rock On",
+      subtitle: "Short · Steel Keynote",
+      album: "Steel Keynote",
+      badge: "Short Instrumental",
+      image: "/assets/waves/steelKeynote/mp3-rock-on.jpg",
+      mediaSrc: "/assets/waves/steelKeynote/rock-on.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Step Up",
+      subtitle: "Short · Steel Keynote",
+      album: "Steel Keynote",
+      badge: "Short Instrumental",
+      image: "/assets/waves/steelKeynote/mp3-step-up.jpg",
+      mediaSrc: "/assets/waves/steelKeynote/step-up.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Teeter Totter",
+      subtitle: "Short · Steel Keynote",
+      album: "Steel Keynote",
+      badge: "Short Instrumental",
+      image: "/assets/waves/steelKeynote/mp3-teeter-totter.jpg",
+      mediaSrc: "/assets/waves/steelKeynote/teeter-totter.mp3",
+      mediaType: "audio"
+    },
+    /*sunKissedAlbum*/
+    {
+      title: "5K",
+      subtitle: "Short · Sun Kissed",
+      album: "Sun Kissed",
+      badge: "Short Instrumental",
+      image: "/assets/waves/sunKissed/mp3-5k.jpg",
+      mediaSrc: "/assets/waves/sunKissed/5k.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Chariot",
+      subtitle: "Short · Sun Kissed",
+      album: "Sun Kissed",
+      badge: "Short Instrumental",
+      image: "/assets/waves/sunKissed/mp3-chariot.jpg",
+      mediaSrc: "/assets/waves/sunKissed/chariot.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Cheer",
+      subtitle: "Short · Sun Kissed",
+      album: "Sun Kissed",
+      badge: "Short Instrumental",
+      image: "/assets/waves/sunKissed/mp3-cheer.jpg",
+      mediaSrc: "/assets/waves/sunKissed/cheer.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Drifting Sand",
+      subtitle: "Short · Sun Kissed",
+      album: "Sun Kissed",
+      badge: "Short Instrumental",
+      image: "/assets/waves/sunKissed/mp3-drifting-sand.jpg",
+      mediaSrc: "/assets/waves/sunKissed/drifting-sand.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Young Love",
+      subtitle: "Short · Sun Kissed",
+      album: "Sun Kissed",
+      badge: "Short Instrumental",
+      image: "/assets/waves/sunKissed/mp3-young-love.jpg",
+      mediaSrc: "/assets/waves/sunKissed/young-love.mp3",
+      mediaType: "audio"
+    },
+    /*summerKindlingAlbum*/
+    {
+      title: "Fight Club",
+      subtitle: "Short · Summer Kindling",
+      album: "Summer Kindling",
+      badge: "Short Instrumental",
+      image: "/assets/waves/summerKindling/mp3-fight-club.jpg",
+      mediaSrc: "/assets/waves/summerKindling/fight-club.mp3",
+      mediaType: "audio"
+    },
+    /*simplyKindredAlbum*/
+    {
+      title: "Trickle",
+      subtitle: "Short · Simply Kindred",
+      album: "Simply Kindred",
+      badge: "Short Instrumental",
+      image: "/assets/waves/simplyKindred/mp3-trickle.jpg",
+      mediaSrc: "/assets/waves/simplyKindred/trickle.mp3",
+      mediaType: "audio"
+    },
+    /*silentKillerAlbum*/
     {
       title: "Bounce",
       subtitle: "Short · Silent Killer",
@@ -96,7 +191,82 @@ window.wavesData = {
       image: "/assets/waves/silentKiller/mp3-stand-down.jpg",
       mediaSrc: "/assets/waves/silentKiller/stand-down.mp3",
       mediaType: "audio"
-    }
+    },
+    /*sapphireKindnessAlbum*/
+    {
+      title: "Peace",
+      subtitle: "Short · Sapphire Kindness",
+      album: "Sapphire Kindness",
+      badge: "Short Instrumental",
+      image: "/assets/waves/sapphireKindness/mp3-peace.jpg",
+      mediaSrc: "/assets/waves/sapphireKindness/peace.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Sole Addiction",
+      subtitle: "Short · Sapphire Kindness",
+      album: "Sapphire Kindness",
+      badge: "Short Instrumental",
+      image: "/assets/waves/sapphireKindness/mp3-sole-addiction.jpg",
+      mediaSrc: "/assets/waves/sapphireKindness/sole-addiction.mp3",
+      mediaType: "audio"
+    },
+    /*soulKinshipAlbum*/
+    {
+      title: "Cardiac",
+      subtitle: "Short · Soul Kinship",
+      album: "Soul Kinship",
+      badge: "Short Instrumental",
+      image: "/assets/waves/soulKinship/mp3-cardiac.jpg",
+      mediaSrc: "/assets/waves/soulKinship/cardiac.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Drive",
+      subtitle: "Short · Soul Kinship",
+      album: "Soul Kinship",
+      badge: "Short Instrumental",
+      image: "/assets/waves/soulKinship/mp3-drive.jpg",
+      mediaSrc: "/assets/waves/soulKinship/drive.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Feel",
+      subtitle: "Short · Soul Kinship",
+      album: "Soul Kinship",
+      badge: "Short Instrumental",
+      image: "/assets/waves/soulKinship/mp3-feel.jpg",
+      mediaSrc: "/assets/waves/soulKinship/feel.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Pulse",
+      subtitle: "Short · Soul Kinship",
+      album: "Soul Kinship",
+      badge: "Short Instrumental",
+      image: "/assets/waves/soulKinship/mp3-pulse.jpg",
+      mediaSrc: "/assets/waves/soulKinship/pulse.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "The Return",
+      subtitle: "Short · Soul Kinship",
+      album: "Soul Kinship",
+      badge: "Short Instrumental",
+      image: "/assets/waves/soulKinship/mp3-the-return.jpg",
+      mediaSrc: "/assets/waves/soulKinship/the-return.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "The Road So Far",
+      subtitle: "Short · Soul Kinship",
+      album: "Soul Kinship",
+      badge: "Short Instrumental",
+      image: "/assets/waves/soulKinship/mp3-the-road-so-far.jpg",
+      mediaSrc: "/assets/waves/soulKinship/the-road-so-far.mp3",
+      mediaType: "audio"
+    },
+    
   ],
 
   /*VISUAL MEDIA*/
