@@ -2,13 +2,13 @@ window.WYCO_WORKBENCH_DATA = {
   repairs: [
     {
       title: 'Repair Project 01',
-      src: '/images/workbench/repair-project-01.jpg',
+      src: "/images/waves/wyco_gradient_diagonal.jpg",
       alt: 'Repair Project 01',
       caption: 'Repair Project 01'
     },
     {
       title: 'Repair Project 02',
-      src: '/images/workbench/repair-project-02.jpg',
+      src: "/images/waves/wyco_gradient_diagonal.jpg",
       alt: 'Repair Project 02',
       caption: 'Repair Project 02'
     }
@@ -16,7 +16,7 @@ window.WYCO_WORKBENCH_DATA = {
   furniture: [
     {
       title: 'Furniture Project 01',
-      src: '/images/workbench/furniture-project-01.jpg',
+      src: "/images/waves/wyco_gradient_diagonal.jpg",
       alt: 'Furniture Project 01',
       caption: 'Furniture Project 01'
     }
@@ -24,12 +24,16 @@ window.WYCO_WORKBENCH_DATA = {
   builds: [
     {
       title: 'Build Project 01',
-      src: '/images/workbench/build-project-01.jpg',
+      src: "/images/waves/wyco_gradient_diagonal.jpg",
       alt: 'Build Project 01',
       caption: 'Build Project 01'
     }
   ]
 };
+
+
+
+
 
 (function () {
   const pageKey = document.body?.dataset?.page;
