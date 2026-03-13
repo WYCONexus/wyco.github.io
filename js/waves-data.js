@@ -29,5 +29,19 @@ window.wavesData = {
       mediaSrc: "/audio/drifting-sand.mp3",
       mediaType: "audio"
     }
+  ],
+
+  /* LYRICS */
+  lyrics: [
+    {
+      title: "Blown Fuse",
+      subtitle: "Lyrics · WYCO Waves",
+      badge: "Lyrics",
+      image: "/images/waves/wyco_gradient_diagonal.jpg",
+      lyrics: "Your lyrics text goes here...",
+      mediaType: "lyrics"
+    }
   ]
+
+  
 };
