@@ -155,6 +155,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ---------------------------
+     Overlay History + Scroll Lock
+  --------------------------- */
+
+  let closeSectionLibraryFromHistory = null;
+  let closeLyricsFromHistory = null;
+  let closePlayerFromHistory = null;
+  let closeLightboxFromHistory = null;
+
+  function isOverlayHistoryEntry() {
+    return !!(history.state && history.state.overlayOpen);
+  }
+
+  function pushOverlayHistory(type, id = '') {
+    if (isOverlayHistoryEntry()) return;
+
+    history.pushState(
+      {
+        ...(history.state || {}),
+        overlayOpen: true,
+        overlayType: type,
+        overlayId: id
+      },
+      '',
+      window.location.href
+    );
+  }
+
+  function clearOverlayHistory() {
+    if (isOverlayHistoryEntry()) {
+      history.back();
+    }
+  }
+
+  function hasBlockingOverlayOpen() {
+    return !!document.querySelector(
+      '#sectionLibraryModal.active, #lyricsModal.active, #lightbox.is-open, #wavesPlayerModal:not([hidden])'
+    );
+  }
+
+  function updateBodyScrollLock() {
+    document.body.style.overflow = hasBlockingOverlayOpen() ? 'hidden' : '';
+  }
+
+  window.addEventListener('popstate', () => {
+    const playerModal = document.getElementById('wavesPlayerModal');
+    if (playerModal && !playerModal.hidden && typeof closePlayerFromHistory === 'function') {
+      closePlayerFromHistory();
+      return;
+    }
+
+    const lyricsModalEl = document.getElementById('lyricsModal');
+    if (lyricsModalEl && lyricsModalEl.classList.contains('active') && typeof closeLyricsFromHistory === 'function') {
+      closeLyricsFromHistory();
+      return;
+    }
+
+    const sectionLibraryModalEl = document.getElementById('sectionLibraryModal');
+    if (sectionLibraryModalEl && sectionLibraryModalEl.classList.contains('active') && typeof closeSectionLibraryFromHistory === 'function') {
+      closeSectionLibraryFromHistory();
+      return;
+    }
+
+    const lightboxEl = document.getElementById('lightbox');
+    if (lightboxEl && lightboxEl.classList.contains('is-open') && typeof closeLightboxFromHistory === 'function') {
+      closeLightboxFromHistory();
+    }
+  });
+
+
+  /* ---------------------------
      Hub Live Data Rendering
   --------------------------- */
 
@@ -496,13 +566,15 @@ document.addEventListener('DOMContentLoaded', () => {
     sectionLibraryModal.classList.add('active');
     sectionLibraryModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('section-library-open');
+    updateBodyScrollLock();
+    pushOverlayHistory('section-library', panel.dataset.librarySource || panel.id || '');
 
     if (sectionLibrarySearch) {
       setTimeout(() => sectionLibrarySearch.focus(), 0);
     }
   }
 
-  function closeSectionLibraryModal() {
+  function closeSectionLibraryModal(fromPopState = false) {
     if (!sectionLibraryModal) return;
 
     sectionLibraryModal.classList.remove('active');
@@ -513,7 +585,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sectionLibrarySearch) {
       sectionLibrarySearch.value = '';
     }
+
+    updateBodyScrollLock();
+
+    if (!fromPopState) {
+      clearOverlayHistory();
+    }
   }
+
+  closeSectionLibraryFromHistory = () => closeSectionLibraryModal(true);
 
   function setupSectionLibrarySearch() {
     if (!sectionLibrarySearch) return;
@@ -598,7 +678,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (sectionLibraryClose && sectionLibraryClose.dataset.bound !== 'true') {
       sectionLibraryClose.dataset.bound = 'true';
-      sectionLibraryClose.addEventListener('click', closeSectionLibraryModal);
+      sectionLibraryClose.addEventListener('click', () => closeSectionLibraryModal());
       sectionLibraryClose.addEventListener('touchend', (event) => {
         event.preventDefault();
         closeSectionLibraryModal();
@@ -795,20 +875,27 @@ document.addEventListener('DOMContentLoaded', () => {
     lyricsModalText.textContent = lyrics;
     lyricsModal.classList.add('active');
     lyricsModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    updateBodyScrollLock();
+    pushOverlayHistory('lyrics', title || '');
   }
 
-  function closeLyricsModal() {
+  function closeLyricsModal(fromPopState = false) {
     if (!lyricsModal) return;
 
     lyricsModal.classList.remove('active');
     lyricsModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    updateBodyScrollLock();
+
+    if (!fromPopState) {
+      clearOverlayHistory();
+    }
   }
+
+  closeLyricsFromHistory = () => closeLyricsModal(true);
 
   if (lyricsModal) {
     if (lyricsClose) {
-      lyricsClose.addEventListener('click', closeLyricsModal);
+      lyricsClose.addEventListener('click', () => closeLyricsModal());
     }
 
     lyricsModal.addEventListener('click', (event) => {
@@ -1001,15 +1088,24 @@ document.addEventListener('DOMContentLoaded', () => {
       lightboxCaption.textContent = img.alt || "";
       lightbox.classList.add("is-open");
       lightbox.setAttribute("aria-hidden", "false");
+      updateBodyScrollLock();
+      pushOverlayHistory('lightbox', String(index));
     }
 
-    function closeLightbox() {
+    function closeLightbox(fromPopState = false) {
       lightbox.classList.remove("is-open");
       lightbox.setAttribute("aria-hidden", "true");
       lightboxImg.src = "";
       lightboxImg.alt = "";
       lightboxCaption.textContent = "";
+      updateBodyScrollLock();
+
+      if (!fromPopState) {
+        clearOverlayHistory();
+      }
     }
+
+    closeLightboxFromHistory = () => closeLightbox(true);
 
     function showNextImage() {
       currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
@@ -1212,7 +1308,8 @@ document.addEventListener('DOMContentLoaded', () => {
       progress.value = 0;
 
       modal.hidden = false;
-      document.body.style.overflow = "hidden";
+      updateBodyScrollLock();
+      pushOverlayHistory('player', title);
     }
 
     function openVideoPlayer(card) {
@@ -1244,15 +1341,22 @@ document.addEventListener('DOMContentLoaded', () => {
       video.load();
 
       modal.hidden = false;
-      document.body.style.overflow = "hidden";
+      updateBodyScrollLock();
+      pushOverlayHistory('player', title);
     }
 
-    function closePlayer() {
+    function closePlayer(fromPopState = false) {
       if (audio) audio.pause();
       if (video) video.pause();
       modal.hidden = true;
-      document.body.style.overflow = "";
+      updateBodyScrollLock();
+
+      if (!fromPopState) {
+        clearOverlayHistory();
+      }
     }
+
+    closePlayerFromHistory = () => closePlayer(true);
 
     function handleMediaCardActivation(card) {
       if (!card) return;
@@ -1304,11 +1408,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (backdrop) {
-      backdrop.addEventListener("click", closePlayer);
+      backdrop.addEventListener("click", () => closePlayer());
     }
 
     if (closeBtn) {
-      closeBtn.addEventListener("click", closePlayer);
+      closeBtn.addEventListener("click", () => closePlayer());
     }
 
     document.addEventListener("keydown", (e) => {
