@@ -267,18 +267,22 @@ document.addEventListener('DOMContentLoaded', () => {
     rows.forEach((target) => {
       const sectionKey = target.dataset.wavesSection;
       const data = Array.isArray(window.wavesData[sectionKey])
+        ? window.wycoData?.[sectionKey] || window.wavesData[sectionKey]
+        : [];
+
+      const normalizedData = Array.isArray(window.wavesData[sectionKey])
         ? window.wavesData[sectionKey]
         : [];
 
-      if (!data.length) {
+      if (!normalizedData.length) {
         target.innerHTML = `
           <div class="waves-track-card" aria-hidden="true">
             <div class="waves-track-thumb">
               <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Waves default artwork">
-              <span class="waves-track-badge">Music</span>
+              <span class="waves-track-badge">Empty</span>
               <span class="waves-track-orb" aria-hidden="true">✦</span>
               <div class="waves-track-body">
-                <h3>No tracks yet</h3>
+                <h3>No items yet</h3>
                 <p>Media will appear here when added.</p>
               </div>
             </div>
@@ -287,23 +291,25 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      target.innerHTML = data.map((item) => `
+      target.innerHTML = normalizedData.map((item) => `
         <article
           class="waves-track-card"
           data-track-title="${escapeHtml(item.title || 'Untitled Track')}"
           data-track-subtitle="${escapeHtml(item.subtitle || '')}"
           data-track-image="${escapeHtml(item.image || '/images/waves/wyco_gradient_diagonal.jpg')}"
           data-track-mp3="${escapeHtml(item.mediaSrc || '')}"
+          data-media-src="${escapeHtml(item.mediaSrc || '')}"
           data-media-type="${escapeHtml(item.mediaType || 'audio')}"
+          data-lyrics="${escapeHtml(item.lyricsText || item.lyrics || '')}"
           tabindex="0"
-          aria-label="Play ${escapeHtml(item.title || 'Untitled Track')}"
+          aria-label="Open ${escapeHtml(item.title || 'Untitled Track')}"
         >
           <div class="waves-track-thumb">
             <img
               src="${escapeHtml(item.image || '/images/waves/wyco_gradient_diagonal.jpg')}"
               alt="${escapeHtml(item.title || 'Untitled Track')} cover art"
             >
-            <span class="waves-track-badge">${escapeHtml(item.badge || 'Music')}</span>
+            <span class="waves-track-badge">${escapeHtml(item.badge || 'Media')}</span>
             <span class="waves-track-orb" aria-hidden="true">✦</span>
 
             <div class="waves-track-body">
@@ -465,10 +471,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ---------------------------
-     Waves / Whimsy Text Modal
+     Lyrics Modal
   --------------------------- */
 
-  const lyricsCards = document.querySelectorAll('.lyrics-card');
   const lyricsModal = document.getElementById('lyricsModal');
   const lyricsModalTitle = document.getElementById('lyricsModalTitle');
   const lyricsModalSubtitle = document.getElementById('lyricsModalSubtitle');
@@ -494,17 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   }
 
-  if (lyricsCards.length && lyricsModal) {
-    lyricsCards.forEach((card) => {
-      card.addEventListener('click', () => {
-        openLyricsModal(
-          card.dataset.title || 'Untitled',
-          card.dataset.subtitle || 'Lyrics',
-          card.dataset.lyrics || 'No lyrics added yet.'
-        );
-      });
-    });
-
+  if (lyricsModal) {
     if (lyricsClose) {
       lyricsClose.addEventListener('click', closeLyricsModal);
     }
@@ -551,7 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const row = document.getElementById(rowId);
         if (!row) return;
 
-        const amount = getScrollAmount(row, '.media-card, .lyrics-card');
+        const amount = getScrollAmount(row, '.media-card, .lyrics-card, .waves-track-card');
         const direction = button.classList.contains('media-arrow-left') ? -1 : 1;
 
         row.scrollBy({
@@ -561,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    const rows = document.querySelectorAll('.media-row');
+    const rows = document.querySelectorAll('.media-row, .waves-track-grid');
 
     rows.forEach((row) => {
       row.addEventListener('scroll', () => updateMediaCarouselButtons(row.id));
@@ -571,7 +566,9 @@ document.addEventListener('DOMContentLoaded', () => {
       rows.forEach((row) => updateMediaCarouselButtons(row.id));
     });
 
-    rows.forEach((row) => updateMediaCarouselButtons(row.id));
+    rows.forEach((row) => {
+      if (row.id) updateMediaCarouselButtons(row.id);
+    });
   }
 
 
@@ -747,7 +744,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ---------------------------
-     Music Related
+     Waves Media Modal
   --------------------------- */
 
   const modal = document.getElementById("wavesPlayerModal");
@@ -760,8 +757,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalTitle = document.getElementById("wavesModalTitle");
     const modalSubtitle = document.getElementById("wavesModalSubtitle");
 
+    const audioShell = document.getElementById("wavesAudioPlayerShell");
+    const videoShell = document.getElementById("wavesVideoPlayerShell");
+
     const audio = document.getElementById("wavesModalAudio");
     const source = document.getElementById("wavesModalSource");
+
+    const video = document.getElementById("wavesModalVideo");
+    const videoSource = document.getElementById("wavesModalVideoSource");
 
     const playBtn = modal.querySelector(".wyco-modal-play");
     const playIcon = modal.querySelector(".wyco-modal-play-icon");
@@ -776,6 +779,38 @@ document.addEventListener('DOMContentLoaded', () => {
       const minutes = Math.floor(time / 60);
       const seconds = Math.floor(time % 60).toString().padStart(2, "0");
       return `${minutes}:${seconds}`;
+    }
+
+    function showAudioMode() {
+      if (audioShell) audioShell.hidden = false;
+      if (videoShell) videoShell.hidden = true;
+      if (video) video.pause();
+    }
+
+    function showVideoMode() {
+      if (audioShell) audioShell.hidden = true;
+      if (videoShell) videoShell.hidden = false;
+      if (audio) audio.pause();
+    }
+
+    function resetAudioPlayer() {
+      if (!audio || !source) return;
+      audio.pause();
+      audio.currentTime = 0;
+      source.src = "";
+      audio.load();
+
+      if (currentTimeEl) currentTimeEl.textContent = "0:00";
+      if (durationEl) durationEl.textContent = "0:00";
+      if (progress) progress.value = 0;
+    }
+
+    function resetVideoPlayer() {
+      if (!video || !videoSource) return;
+      video.pause();
+      video.currentTime = 0;
+      videoSource.src = "";
+      video.load();
     }
 
     function updatePlayState() {
@@ -805,7 +840,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentTimeEl.textContent = formatTime(audio.currentTime);
     }
 
-    function openPlayer(card) {
+    function openAudioPlayer(card) {
       if (
         !modalTitle || !modalSubtitle || !modalImage ||
         !audio || !source || !currentTimeEl || !durationEl || !progress
@@ -814,7 +849,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const title = card.dataset.trackTitle || "Untitled Track";
       const subtitle = card.dataset.trackSubtitle || "";
       const image = card.dataset.trackImage || "";
-      const mp3 = card.dataset.trackMp3 || "";
+      const mediaSrc = card.dataset.mediaSrc || card.dataset.trackMp3 || "";
+
+      showAudioMode();
+      resetVideoPlayer();
 
       modalTitle.textContent = title;
       modalSubtitle.textContent = subtitle;
@@ -822,7 +860,7 @@ document.addEventListener('DOMContentLoaded', () => {
       modalImage.alt = `${title} cover art`;
 
       audio.pause();
-      source.src = mp3;
+      source.src = mediaSrc;
       audio.load();
 
       currentTimeEl.textContent = "0:00";
@@ -833,8 +871,36 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.overflow = "hidden";
     }
 
+    function openVideoPlayer(card) {
+      if (
+        !modalTitle || !modalSubtitle || !modalImage ||
+        !video || !videoSource
+      ) return;
+
+      const title = card.dataset.trackTitle || "Untitled Video";
+      const subtitle = card.dataset.trackSubtitle || "";
+      const image = card.dataset.trackImage || "";
+      const mediaSrc = card.dataset.mediaSrc || "";
+
+      showVideoMode();
+      resetAudioPlayer();
+
+      modalTitle.textContent = title;
+      modalSubtitle.textContent = subtitle;
+      modalImage.src = image;
+      modalImage.alt = `${title} cover art`;
+
+      video.pause();
+      videoSource.src = mediaSrc;
+      video.load();
+
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+    }
+
     function closePlayer() {
       if (audio) audio.pause();
+      if (video) video.pause();
       modal.hidden = true;
       document.body.style.overflow = "";
     }
@@ -843,17 +909,50 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = event.target.closest(".waves-track-card");
       if (!card) return;
 
-      openPlayer(card);
+      const mediaType = card.dataset.mediaType || "audio";
+
+      if (mediaType === "lyrics") {
+        openLyricsModal(
+          card.dataset.trackTitle || "Untitled",
+          card.dataset.trackSubtitle || "Lyrics",
+          card.dataset.lyrics || "No lyrics added yet."
+        );
+        return;
+      }
+
+      if (mediaType === "video") {
+        openVideoPlayer(card);
+        return;
+      }
+
+      openAudioPlayer(card);
     });
 
     document.addEventListener("keydown", (event) => {
       const card = event.target.closest(".waves-track-card");
       if (!card) return;
 
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openPlayer(card);
+      if (event.key !== "Enter" && event.key !== " ") return;
+
+      event.preventDefault();
+
+      const mediaType = card.dataset.mediaType || "audio";
+
+      if (mediaType === "lyrics") {
+        openLyricsModal(
+          card.dataset.trackTitle || "Untitled",
+          card.dataset.trackSubtitle || "Lyrics",
+          card.dataset.lyrics || "No lyrics added yet."
+        );
+        return;
       }
+
+      if (mediaType === "video") {
+        openVideoPlayer(card);
+        return;
+      }
+
+      openAudioPlayer(card);
     });
 
     if (backdrop) {
@@ -872,6 +971,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (playBtn && audio) {
       playBtn.addEventListener("click", async () => {
+        if (audioShell && audioShell.hidden) return;
+
         if (audio.paused) {
           try {
             await audio.play();
@@ -886,6 +987,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (muteBtn && audio) {
       muteBtn.addEventListener("click", () => {
+        if (audioShell && audioShell.hidden) return;
+
         audio.muted = !audio.muted;
         updateMuteState();
       });
@@ -893,6 +996,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (progress && audio) {
       progress.addEventListener("input", () => {
+        if (audioShell && audioShell.hidden) return;
         if (!audio.duration) return;
         audio.currentTime = (progress.value / 100) * audio.duration;
       });
@@ -900,6 +1004,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (volume && audio) {
       volume.addEventListener("input", () => {
+        if (audioShell && audioShell.hidden) return;
+
         audio.volume = parseFloat(volume.value);
         audio.muted = audio.volume === 0;
         updateMuteState();
@@ -925,6 +1031,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    showAudioMode();
     updatePlayState();
     updateMuteState();
   }
