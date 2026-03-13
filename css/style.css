@@ -393,6 +393,8 @@ pre {
   color: #edf3ff;
   display: grid;
   place-items: center;
+  position: relative;
+  z-index: 5;
   cursor: pointer;
   backdrop-filter: blur(10px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
