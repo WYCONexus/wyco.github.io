@@ -636,6 +636,15 @@ pre {
 .section-library-head {
   padding: 24px 24px 16px;
   border-bottom: 1px solid rgba(122, 162, 255, 0.12);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(8, 16, 40, 0.97),
+      rgba(6, 10, 28, 0.98));
 }
 
 .section-library-head-trigger {
@@ -831,6 +840,16 @@ pre {
 
   .section-library-item-subtitle {
     font-size: 0.86rem;
+  }
+
+  .section-library-search-wrap {
+    margin-top: 14px;
+    max-width: 100%;
+  }
+
+  .section-library-search {
+    height: 46px;
+    font-size: 16px;
   }
 }
 
