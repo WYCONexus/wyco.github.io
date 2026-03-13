@@ -32,6 +32,62 @@ window.wavesData = {
       image: "/assets/waves/sapphireKindness/mp3-peace.png",
       mediaSrc: "/assets/waves/sapphireKindness/peace.mp3",
       mediaType: "audio"
+    },
+    {
+      title: "Sole Addiction",
+      subtitle: "Short · Sapphire Kindness",
+      badge: "Short Instrumental",
+      image: "/assets/waves/sapphireKindness/mp3-sole-addiction.png",
+      mediaSrc: "/assets/waves/sapphireKindness/sole-addiction.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Bounce",
+      subtitle: "Short · Silent Killer",
+      badge: "Short Instrumental",
+      image: "/assets/waves/silentKiller/mp3-bounce.png",
+      mediaSrc: "/assets/waves/silentKiller/bounce.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Home Alone",
+      subtitle: "Short · Silent Killer",
+      badge: "Short Instrumental",
+      image: "/assets/waves/silentKiller/mp3-home-alone.png",
+      mediaSrc: "/assets/waves/silentKiller/home-alone.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Jungle Jam",
+      subtitle: "Short · Silent Killer",
+      badge: "Short Instrumental",
+      image: "/assets/waves/silentKiller/mp3-jungle-jam.png",
+      mediaSrc: "/assets/waves/silentKiller/jungle-jam.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Progression",
+      subtitle: "Short · Silent Killer",
+      badge: "Short Instrumental",
+      image: "/assets/waves/silentKiller/mp3-progression.png",
+      mediaSrc: "/assets/waves/silentKiller/progression.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Ride",
+      subtitle: "Short · Silent Killer",
+      badge: "Short Instrumental",
+      image: "/assets/waves/silentKiller/mp3-ride.png",
+      mediaSrc: "/assets/waves/silentKiller/ride.mp3",
+      mediaType: "audio"
+    },
+    {
+      title: "Stand Down",
+      subtitle: "Short · Silent Killer",
+      badge: "Short Instrumental",
+      image: "/assets/waves/silentKiller/mp3-stand-down.png",
+      mediaSrc: "/assets/waves/silentKiller/stand-down.mp3",
+      mediaType: "audio"
     }
   ],
 
