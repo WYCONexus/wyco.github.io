@@ -610,6 +610,8 @@ pre {
   margin: 6vh auto;
   border-radius: 28px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background:
     linear-gradient(135deg, rgba(8, 16, 40, 0.97), rgba(6, 10, 28, 0.98));
   border: 1px solid rgba(111, 137, 255, 0.16);
@@ -671,9 +673,33 @@ pre {
 }
 
 .section-library-body {
-  max-height: calc(84vh - 110px);
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 18px 24px 24px;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(122, 162, 255, 0.55) rgba(255,255,255,0.04);
+}
+
+.section-library-body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.section-library-body::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.04);
+  border-radius: 999px;
+}
+
+.section-library-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(69, 230, 216, 0.55),
+    rgba(111, 137, 255, 0.55),
+    rgba(199, 93, 255, 0.5)
+  );
+  border-radius: 999px;
+  border: 2px solid rgba(6, 10, 28, 0.65);
 }
 
 .section-library-list {
@@ -814,7 +840,8 @@ pre {
   }
 
   .section-library-body {
-    max-height: calc(88vh - 96px);
+    flex: 1;
+    min-height: 0;
     padding: 14px 18px 18px;
   }
 
