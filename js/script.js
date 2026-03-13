@@ -746,10 +746,7 @@ function setupMediaCarouselButtons() {
       const amount = getScrollAmount(row, '.media-card, .lyrics-card, .waves-track-card');
       const direction = button.classList.contains('media-arrow-left') ? -1 : 1;
 
-      row.scrollTo({
-        left: row.scrollLeft + (amount * direction),
-        behavior: 'smooth'
-      });
+      row.scrollLeft += amount * direction;
     });
   });
 
@@ -767,11 +764,16 @@ function setupMediaCarouselButtons() {
       const row = panel ? panel.querySelector('.waves-track-grid') : null;
       if (!row) return;
 
-      const amount = getScrollAmount(row, '.waves-track-card');
+      const firstCard = row.querySelector('.waves-track-card');
+      if (!firstCard) return;
+
+      const rowStyles = window.getComputedStyle(row);
+      const gap = parseInt(rowStyles.columnGap || rowStyles.gap || 18, 10) || 18;
+      const amount = firstCard.offsetWidth + gap;
       const direction = button.classList.contains('arrow-left') ? -1 : 1;
 
-      row.scrollTo({
-        left: row.scrollLeft + (amount * direction),
+      row.scrollBy({
+        left: amount * direction,
         behavior: 'smooth'
       });
     });
