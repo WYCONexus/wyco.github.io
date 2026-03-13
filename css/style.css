@@ -481,9 +481,9 @@ pre {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(7, 11, 20, 0.06) 0%,
-    rgba(7, 11, 20, 0.18) 40%,
-    rgba(7, 11, 20, 0.88) 100%
+    rgba(7,11,20,0.04) 0%,
+    rgba(7,11,20,0.18) 40%,
+    rgba(7,11,20,0.92) 100%
   );
   pointer-events: none;
 }
