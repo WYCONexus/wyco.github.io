@@ -370,6 +370,13 @@ pre {
   margin-bottom: 22px;
 }
 
+.featured-music-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-self: end;
+}
+
 .featured-music-title {
   margin: 0 0 6px;
   font-size: clamp(1.8rem, 3vw, 2.4rem);
@@ -421,7 +428,7 @@ pre {
     align-items: start;
   }
 
-  .featured-music-arrow {
+  .featured-music-controls {
     display: none;
   }
 }

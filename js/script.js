@@ -710,63 +710,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ---------------------------
-     Waves / Whimsy Carousel Controls
-  --------------------------- */
+   Waves / Whimsy Carousel Controls
+--------------------------- */
 
-  function updateMediaCarouselButtons(rowId) {
-    const row = document.getElementById(rowId);
-    if (!row) return;
+function updateMediaCarouselButtons(rowId) {
+  const row = document.getElementById(rowId);
+  if (!row) return;
 
-    const leftButton = document.querySelector(`.media-arrow-left[data-target="${rowId}"]`);
-    const rightButton = document.querySelector(`.media-arrow-right[data-target="${rowId}"]`);
-    if (!leftButton || !rightButton) return;
+  const leftButton = document.querySelector(`.media-arrow-left[data-target="${rowId}"]`);
+  const rightButton = document.querySelector(`.media-arrow-right[data-target="${rowId}"]`);
+  if (!leftButton || !rightButton) return;
 
-    const maxScrollLeft = Math.max(0, row.scrollWidth - row.clientWidth);
-    const currentScroll = Math.round(row.scrollLeft);
+  const maxScrollLeft = Math.max(0, row.scrollWidth - row.clientWidth);
+  const currentScroll = Math.round(row.scrollLeft);
 
-    leftButton.disabled = currentScroll <= 2;
-    rightButton.disabled = currentScroll >= maxScrollLeft - 2;
-  }
+  leftButton.disabled = currentScroll <= 2;
+  rightButton.disabled = currentScroll >= maxScrollLeft - 2;
+}
 
-  function setupMediaCarouselButtons() {
-    const arrowButtons = document.querySelectorAll('.media-arrow');
+function setupMediaCarouselButtons() {
+  const mediaArrowButtons = document.querySelectorAll('.media-arrow');
 
-    arrowButtons.forEach((button) => {
-      if (button.dataset.bound === 'true') return;
-      button.dataset.bound = 'true';
+  mediaArrowButtons.forEach((button) => {
+    if (button.dataset.bound === 'true') return;
+    button.dataset.bound = 'true';
 
-      button.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-        const rowId = button.dataset.target;
-        const row = document.getElementById(rowId);
-        if (!row) return;
+      const rowId = button.dataset.target;
+      const row = document.getElementById(rowId);
+      if (!row) return;
 
-        const amount = getScrollAmount(row, '.media-card, .lyrics-card, .waves-track-card');
-        const direction = button.classList.contains('media-arrow-left') ? -1 : 1;
+      const amount = getScrollAmount(row, '.media-card, .lyrics-card, .waves-track-card');
+      const direction = button.classList.contains('media-arrow-left') ? -1 : 1;
 
-        row.scrollBy({
-          left: amount * direction,
-          behavior: 'smooth'
-        });
+      row.scrollTo({
+        left: row.scrollLeft + (amount * direction),
+        behavior: 'smooth'
       });
     });
+  });
 
-    const rows = document.querySelectorAll('.media-row, .waves-track-grid');
+  const featuredArrowButtons = document.querySelectorAll('.featured-music-arrow');
 
-    rows.forEach((row) => {
-      row.addEventListener('scroll', () => updateMediaCarouselButtons(row.id));
+  featuredArrowButtons.forEach((button) => {
+    if (button.dataset.bound === 'true') return;
+    button.dataset.bound = 'true';
+
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const panel = button.closest('.featured-music-panel');
+      const row = panel ? panel.querySelector('.waves-track-grid') : null;
+      if (!row) return;
+
+      const amount = getScrollAmount(row, '.waves-track-card');
+      const direction = button.classList.contains('arrow-left') ? -1 : 1;
+
+      row.scrollTo({
+        left: row.scrollLeft + (amount * direction),
+        behavior: 'smooth'
+      });
     });
+  });
 
-    window.addEventListener('resize', () => {
-      rows.forEach((row) => updateMediaCarouselButtons(row.id));
+  const rows = document.querySelectorAll('.media-row, .waves-track-grid');
+
+  rows.forEach((row) => {
+    row.addEventListener('scroll', () => {
+      if (row.id) updateMediaCarouselButtons(row.id);
     });
+  });
 
+  window.addEventListener('resize', () => {
     rows.forEach((row) => {
       if (row.id) updateMediaCarouselButtons(row.id);
     });
-  }
+  });
+
+  rows.forEach((row) => {
+    if (row.id) updateMediaCarouselButtons(row.id);
+  });
+}
 
 
   /* ---------------------------
