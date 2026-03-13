@@ -1,0 +1,13 @@
+h1 {
+  margin: 0;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+.gradient-text {
+  background: linear-gradient(90deg, #ffffff, var(--cyan), var(--blue), var(--magenta));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.muted { color: var(--muted); }

@@ -1,0 +1,8 @@
+.lyrics-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.lyrics-modal.active { display: flex; }

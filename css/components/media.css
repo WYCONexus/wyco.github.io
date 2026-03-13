@@ -1,0 +1,10 @@
+.media-row {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.media-card {
+  display: block;
+  min-height: 360px;
+}

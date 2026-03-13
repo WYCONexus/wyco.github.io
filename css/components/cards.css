@@ -1,0 +1,11 @@
+.feature-card,
+.panel,
+.project-card {
+  padding: 24px;
+}
+.glass {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
