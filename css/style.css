@@ -843,6 +843,7 @@ pre {
   .section-library-body {
     flex: 1;
     min-height: 0;
+    overflow-y: auto;
     padding: 14px 18px 18px;
   }
 
