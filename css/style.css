@@ -46,6 +46,14 @@ body {
   overflow-x: hidden;
 }
 
+body[data-page="workbench"] {
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255,181,90,0.14), transparent 25%),
+    radial-gradient(circle at 80% 10%, rgba(255,220,168,0.12), transparent 20%),
+    radial-gradient(circle at 50% 90%, rgba(160,120,255,0.12), transparent 28%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+}
+
 body.section-library-open {
   overflow: hidden;
 }
@@ -191,6 +199,27 @@ pre {
   overflow-x: auto;
   padding-bottom: 8px;
   -webkit-overflow-scrolling: touch;
+}
+
+body[data-page="workbench"] .panel,
+body[data-page="workbench"] .page-hero {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255,181,90,0.08), transparent 28%),
+    radial-gradient(circle at 85% 0%, rgba(160,120,255,0.08), transparent 24%),
+    rgba(16, 23, 45, 0.72);
+}
+
+body[data-page="workbench"] .workbench-scroll-row .panel {
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+body[data-page="workbench"] .workbench-scroll-row .panel:hover,
+body[data-page="workbench"] .workbench-scroll-row .panel:focus-within {
+  transform: translateY(-4px);
+  border-color: rgba(255,181,90,0.28);
+  box-shadow:
+    0 24px 54px rgba(0, 0, 0, 0.34),
+    0 0 24px rgba(255,181,90,0.10);
 }
 
 /* ---------------------------
@@ -628,6 +657,13 @@ pre {
     inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
+body[data-page="workbench"] .section-library-dialog {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255,181,90,0.10), transparent 26%),
+    radial-gradient(circle at 85% 0%, rgba(160,120,255,0.10), transparent 24%),
+    linear-gradient(135deg, rgba(8, 16, 40, 0.97), rgba(6, 10, 28, 0.98));
+}
+
 .section-library-close {
   position: absolute;
   top: 16px;
@@ -655,6 +691,13 @@ pre {
       135deg,
       rgba(8, 16, 40, 0.97),
       rgba(6, 10, 28, 0.98));
+}
+
+body[data-page="workbench"] .section-library-head {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255,181,90,0.08), transparent 26%),
+    radial-gradient(circle at 90% 0%, rgba(160,120,255,0.08), transparent 24%),
+    linear-gradient(135deg, rgba(8, 16, 40, 0.97), rgba(6, 10, 28, 0.98));
 }
 
 .section-library-head-trigger {
@@ -2916,6 +2959,28 @@ pre {
   bottom: 0;
   background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.18), rgba(69,230,216,0.18) 18%, rgba(199,93,255,0.14) 44%, transparent 72%);
   animation-duration: 16s;
+}
+
+body[data-page="workbench"] .orb-b {
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(255,255,255,0.24),
+    rgba(255,220,168,0.24) 18%,
+    rgba(255,181,90,0.20) 42%,
+    rgba(160,120,255,0.16) 68%,
+    transparent 72%
+  );
+}
+
+body[data-page="workbench"] .orb-c {
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(255,255,255,0.18),
+    rgba(255,220,168,0.16) 18%,
+    rgba(255,181,90,0.14) 40%,
+    rgba(160,120,255,0.14) 62%,
+    transparent 72%
+  );
 }
 
 @keyframes float {
