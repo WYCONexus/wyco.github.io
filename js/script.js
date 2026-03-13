@@ -752,6 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (modal) {
     const backdrop = modal.querySelector(".waves-player-backdrop");
     const closeBtn = modal.querySelector(".waves-player-close");
+    const artBlock = modal.querySelector(".waves-player-art");
 
     const modalImage = document.getElementById("wavesModalImage");
     const modalTitle = document.getElementById("wavesModalTitle");
@@ -782,12 +783,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showAudioMode() {
+      if (artBlock) artBlock.hidden = false;
       if (audioShell) audioShell.hidden = false;
       if (videoShell) videoShell.hidden = true;
       if (video) video.pause();
     }
 
     function showVideoMode() {
+      if (artBlock) artBlock.hidden = true;
       if (audioShell) audioShell.hidden = true;
       if (videoShell) videoShell.hidden = false;
       if (audio) audio.pause();
