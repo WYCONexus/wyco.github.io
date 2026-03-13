@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function isInteractiveElement(target) {
     return !!target.closest(
-      '.featured-music-arrow, .media-arrow, .nexus-arrow, button, a, input, textarea, select, audio, video'
+      '.featured-music-arrow, .media-arrow, .section-arrow, .nexus-arrow, button, a, input, textarea, select, audio, video'
     );
   }
 
@@ -713,23 +713,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const repoUrl = escapeHtml(repo.html_url);
     const language = escapeHtml(repo.language || 'Miscellaneous');
     const description = escapeHtml(repo.description || 'No description added yet.');
+    const updated = escapeHtml(formatDisplayDate(repo.updated_at));
 
     return `
       <a
-        class="nexus-card"
+        class="section-card section-card-link nexus-card"
         href="${repoUrl}"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Open ${repoName} repository"
       >
-        <div class="nexus-thumb">
-          <span class="nexus-badge">Repository</span>
-          <span class="nexus-icon">↗</span>
-          <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Nexus default artwork">
-          <div class="nexus-meta">
-            <h3 class="nexus-title">${repoName}</h3>
-            <p class="nexus-subtitle">${language}</p>
-            <div class="nexus-lines">
+        <div class="section-card-media nexus-card-media">
+          <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="${repoName} artwork">
+          <span class="section-card-badge nexus-badge">Repo</span>
+          <span class="nexus-card-icon">⌘</span>
+
+          <div class="section-card-body nexus-card-body">
+            <h3>${repoName}</h3>
+            <p class="section-card-subtitle">${language}</p>
+            <div class="nexus-card-lines">
+              <span>Updated: ${updated}</span>
               <span>${description}</span>
             </div>
           </div>
@@ -746,9 +749,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!repoRow) return;
 
     repoRow.innerHTML = `
-      <div class="nexus-card" style="display:grid;place-items:center;min-height:220px;">
-        <div class="nexus-meta">
-          <h3 class="nexus-title">Loading repositories...</h3>
+      <div class="section-card nexus-card" style="display:grid;place-items:center;min-height:220px;">
+        <div class="section-card-body nexus-card-body">
+          <h3>Loading repositories...</h3>
         </div>
       </div>
     `;
@@ -771,10 +774,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (publicRepos.length === 0) {
         repoRow.innerHTML = `
-          <div class="nexus-card" style="display:grid;place-items:center;min-height:220px;">
-            <div class="nexus-meta">
-              <h3 class="nexus-title">No public repositories found</h3>
-              <p class="nexus-subtitle">Add public repos on GitHub and they’ll appear here.</p>
+          <div class="section-card nexus-card" style="display:grid;place-items:center;min-height:220px;">
+            <div class="section-card-body nexus-card-body">
+              <h3>No public repositories found</h3>
+              <p class="section-card-subtitle">Add public repos on GitHub and they’ll appear here.</p>
             </div>
           </div>
         `;
@@ -786,10 +789,10 @@ document.addEventListener('DOMContentLoaded', () => {
       updateNexusCarouselButtons('repoRow');
     } catch (error) {
       repoRow.innerHTML = `
-        <div class="nexus-card" style="display:grid;place-items:center;min-height:220px;">
-          <div class="nexus-meta">
-            <h3 class="nexus-title">Could not load repositories</h3>
-            <p class="nexus-subtitle">Check your GitHub username or try again later.</p>
+        <div class="section-card nexus-card" style="display:grid;place-items:center;min-height:220px;">
+          <div class="section-card-body nexus-card-body">
+            <h3>Could not load repositories</h3>
+            <p class="section-card-subtitle">Check your GitHub username or try again later.</p>
           </div>
         </div>
       `;
@@ -807,8 +810,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const row = document.getElementById(rowId);
     if (!row) return;
 
-    const leftButton = document.querySelector(`.nexus-arrow-left[data-target="${rowId}"]`);
-    const rightButton = document.querySelector(`.nexus-arrow-right[data-target="${rowId}"]`);
+    const leftButton = document.querySelector(`.section-arrow-left[data-target="${rowId}"], .nexus-arrow-left[data-target="${rowId}"]`);
+    const rightButton = document.querySelector(`.section-arrow-right[data-target="${rowId}"], .nexus-arrow-right[data-target="${rowId}"]`);
     if (!leftButton || !rightButton) return;
 
     const maxScrollLeft = Math.max(0, row.scrollWidth - row.clientWidth);
@@ -819,22 +822,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setupNexusCarouselButtons() {
-    const arrowButtons = document.querySelectorAll('.nexus-arrow');
+    const arrowButtons = document.querySelectorAll('.nexus-arrow, .section-arrow');
 
     arrowButtons.forEach((button) => {
       if (button.dataset.bound === 'true') return;
       button.dataset.bound = 'true';
 
       button.addEventListener('click', (event) => {
+        const shell = button.closest('.nexus-carousel-shell, .section-carousel-shell');
+        const rowId = button.dataset.target;
+        const row = document.getElementById(rowId);
+
+        if (!shell || !row) return;
+        if (!row.classList.contains('nexus-row') && row.id !== 'repoRow' && row.id !== 'spotlightRow') return;
+
         event.preventDefault();
         event.stopPropagation();
 
-        const rowId = button.dataset.target;
-        const row = document.getElementById(rowId);
-        if (!row) return;
-
-        const amount = getScrollAmount(row, '.nexus-card');
-        const direction = button.classList.contains('nexus-arrow-left') ? -1 : 1;
+        const amount = getScrollAmount(row, '.section-card, .nexus-card');
+        const direction = button.classList.contains('section-arrow-left') || button.classList.contains('nexus-arrow-left') ? -1 : 1;
 
         row.scrollBy({
           left: amount * direction,
@@ -1418,6 +1424,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener("click", (event) => {
+      if (event.target.closest('.section-arrow, .nexus-arrow, .media-arrow, .featured-music-arrow')) return;
       if (isInteractiveElement(event.target)) return;
 
       const card = event.target.closest(".waves-track-card");
