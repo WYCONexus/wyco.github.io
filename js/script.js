@@ -125,6 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function isInteractiveElement(target) {
+    return !!target.closest(
+      '.featured-music-arrow, .media-arrow, .nexus-arrow, button, a, input, textarea, select, audio, video'
+    );
+  }
+
 
   /* ---------------------------
      Hub Live Data Rendering
@@ -427,70 +433,79 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setupSectionLibraryTriggers() {
-  const triggers = document.querySelectorAll('.section-library-trigger');
-  if (!triggers.length) return;
+    const triggers = document.querySelectorAll('.section-library-trigger');
+    if (!triggers.length) return;
 
-  triggers.forEach((panel) => {
-    const headTrigger = panel.querySelector('.section-library-head-trigger');
-    if (!headTrigger) return;
+    triggers.forEach((panel) => {
+      const headTrigger = panel.querySelector('.section-library-head-trigger');
+      if (!headTrigger) return;
 
-    if (headTrigger.dataset.libraryBound === 'true') return;
-    headTrigger.dataset.libraryBound = 'true';
+      if (headTrigger.dataset.libraryBound === 'true') return;
+      headTrigger.dataset.libraryBound = 'true';
 
-    let touchMoved = false;
+      let touchMoved = false;
 
-    headTrigger.addEventListener('touchstart', () => {
-      touchMoved = false;
-    }, { passive: true });
+      headTrigger.addEventListener('touchstart', () => {
+        touchMoved = false;
+      }, { passive: true });
 
-    headTrigger.addEventListener('touchmove', () => {
-      touchMoved = true;
-    }, { passive: true });
+      headTrigger.addEventListener('touchmove', () => {
+        touchMoved = true;
+      }, { passive: true });
 
-    headTrigger.addEventListener('touchend', (event) => {
-      if (touchMoved) return;
-      event.preventDefault();
-      openSectionLibraryModal(panel);
-    }, { passive: false });
+      headTrigger.addEventListener('touchend', (event) => {
+        if (touchMoved) return;
+        if (isInteractiveElement(event.target)) return;
 
-    headTrigger.addEventListener('click', (event) => {
-      event.preventDefault();
-      openSectionLibraryModal(panel);
+        event.preventDefault();
+        event.stopPropagation();
+        openSectionLibraryModal(panel);
+      }, { passive: false });
+
+      headTrigger.addEventListener('click', (event) => {
+        if (isInteractiveElement(event.target)) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        openSectionLibraryModal(panel);
+      });
+
+      headTrigger.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        if (isInteractiveElement(event.target)) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        openSectionLibraryModal(panel);
+      });
     });
 
-    headTrigger.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter' && event.key !== ' ') return;
-      event.preventDefault();
-      openSectionLibraryModal(panel);
-    });
-  });
-
-  if (sectionLibraryClose && sectionLibraryClose.dataset.bound !== 'true') {
-    sectionLibraryClose.dataset.bound = 'true';
-    sectionLibraryClose.addEventListener('click', closeSectionLibraryModal);
-    sectionLibraryClose.addEventListener('touchend', (event) => {
-      event.preventDefault();
-      closeSectionLibraryModal();
-    }, { passive: false });
-  }
-
-  if (sectionLibraryModal && sectionLibraryModal.dataset.bound !== 'true') {
-    sectionLibraryModal.dataset.bound = 'true';
-
-    sectionLibraryModal.addEventListener('click', (event) => {
-      if (event.target.matches('[data-close-library]')) {
-        closeSectionLibraryModal();
-      }
-    });
-
-    sectionLibraryModal.addEventListener('touchend', (event) => {
-      if (event.target.matches('[data-close-library]')) {
+    if (sectionLibraryClose && sectionLibraryClose.dataset.bound !== 'true') {
+      sectionLibraryClose.dataset.bound = 'true';
+      sectionLibraryClose.addEventListener('click', closeSectionLibraryModal);
+      sectionLibraryClose.addEventListener('touchend', (event) => {
         event.preventDefault();
         closeSectionLibraryModal();
-      }
-    }, { passive: false });
+      }, { passive: false });
+    }
+
+    if (sectionLibraryModal && sectionLibraryModal.dataset.bound !== 'true') {
+      sectionLibraryModal.dataset.bound = 'true';
+
+      sectionLibraryModal.addEventListener('click', (event) => {
+        if (event.target.matches('[data-close-library]')) {
+          closeSectionLibraryModal();
+        }
+      });
+
+      sectionLibraryModal.addEventListener('touchend', (event) => {
+        if (event.target.matches('[data-close-library]')) {
+          event.preventDefault();
+          closeSectionLibraryModal();
+        }
+      }, { passive: false });
+    }
   }
-}
 
 
   /* ---------------------------
@@ -611,7 +626,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const arrowButtons = document.querySelectorAll('.nexus-arrow');
 
     arrowButtons.forEach((button) => {
-      button.addEventListener('click', () => {
+      if (button.dataset.bound === 'true') return;
+      button.dataset.bound = 'true';
+
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
         const rowId = button.dataset.target;
         const row = document.getElementById(rowId);
         if (!row) return;
@@ -711,7 +732,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const arrowButtons = document.querySelectorAll('.media-arrow');
 
     arrowButtons.forEach((button) => {
-      button.addEventListener('click', () => {
+      if (button.dataset.bound === 'true') return;
+      button.dataset.bound = 'true';
+
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
         const rowId = button.dataset.target;
         const row = document.getElementById(rowId);
         if (!row) return;
@@ -1085,6 +1112,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener("click", (event) => {
+      if (isInteractiveElement(event.target)) return;
+
       const card = event.target.closest(".waves-track-card");
       if (!card) return;
 
