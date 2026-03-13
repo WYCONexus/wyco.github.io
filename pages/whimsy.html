@@ -12,7 +12,7 @@
   
   <link rel="stylesheet" href="/css/style.css" />
 </head>
-  
+
 <body
   data-page="whimsy"
   data-footer-brand="WYCO Whimsy"
@@ -22,196 +22,111 @@
   <div class="orb orb-a"></div>
   <div class="orb orb-b"></div>
 
-  <!--------------- 
-        Header 
-  --------------->
   <div id="site-header"></div>
 
   <main class="wrap page-main">
+
     <section class="page-hero glass">
       <p class="eyebrow">WYCO Whimsy</p>
       <h1><span class="gradient-text">Words. Wonder. Worlds.</span></h1>
       <p class="lead">
-        WYCO Whimsy is the imaginative wing of the WYCO ecosystem — poetry, stories, concepts, and creative writing in all its forms.
+        WYCO Whimsy is the imaginative wing of the WYCO ecosystem — poetry, stories, concepts, and creative writing.
       </p>
     </section>
 
-    <section class="media-section glass panel">
-      <div class="media-head">
-        <div>
-          <h2>Featured Writing</h2>
-          <p>Read featured pieces, hosted wherever each work lives.</p>
-        </div>
-      </div>
+    <!-- FEATURED WRITING -->
+    <section class="featured-music-section">
+      <div
+        class="featured-music-panel section-library-trigger"
+        data-library-title="Featured Writing"
+        data-library-subtitle="Read featured written works."
+        data-library-source="featuredWriting"
+      >
+        <div class="featured-music-head section-library-head-trigger" tabindex="0" role="button" aria-label="Open section library">
+          <div>
+            <h2 class="featured-music-title">Featured Writing</h2>
+            <p class="featured-music-subtitle">Highlighted stories and written works.</p>
+          </div>
 
-      <div class="media-carousel-shell">
-        <button class="media-arrow media-arrow-left" type="button" aria-label="Scroll featured writing left" data-target="writingRow">‹</button>
-
-        <div class="media-row" id="writingRow">
-
-          <button
-            class="lyrics-card"
-            type="button"
-            data-title="Nightmare"
-            data-subtitle="Chapter I · WYCO Whimsy"
-            data-lyrics="                                       
-          In a lake of blood stood a young girl. Her lips taut; her eyes sliding into a frown down her face. The loss and sadness she was feeling echoed through the dormant winter trees. She inhaled, ripping cold air down her throat. She exhaled. Feeling the sorrow leave with every breath, she started to wade through the blood contaminated lagoon. Knee deep in animal blood and her heart broken, she looked up into the sky. Darkness rolled in quickly overhead, slowly enveloping the sunset. The reflected shine of light-less energy devouring clouds, cloud by cloud, mirrored off of her eyes. Pinks, oranges, and reds became nothing. A cessation of existence. Panicked, the girl started to scurry faster. Blood ripples getting closer together and more frequent in the water. Her white dress was now stained crimson, fading into an orange as it soaked into the fabric up her body. Spatters of the watered down life-force clung to her midsection. She approached the side of the lake and lifted her foot to the snow covered grass. Her feet were darkened by frostbite and her toes were hardened by the cold. She finished stepping up out of the lake and knelt down into the fluffy white sheet of ice. She turned around and laid back, her maroon colored hair, piercing into the white blanket of soft ice as her head hit the earth.
-          As soon as her head hit the earth, she lifted up in panic. Clenching her chest and gasping for air she jumped up out of bed and rushed across the room to her dresser. On top of it held a white miniature fridge her mother had given her as a gift many years ago. She whipped it open, grabbed a bottle of ice cold water, and cracked the cap. She poured the water over her face, feeling the cold tighten every pore it penetrated. She paused; Remembering the dream. Water running down her face and shivering, she took a drink of water. Another Nightmare. A scene of purity turned to pain once again."
-            aria-label="Open Glass Static text"
-          >
-            <div class="media-thumb">
-              <span class="media-badge">Writing</span>
-              <span class="play-badge">✦</span>
-              <img src="/images/whimsy/nightmare.png" alt="Nightmare Cover Art">
-              <div class="media-meta">
-                <h3 class="media-title">Nightmare</h3>
-                <p class="media-subtitle">Chapter I · WYCO</p>
-              </div>
-            </div>
-          </button>
-
+          <div class="featured-music-controls">
+            <button class="featured-music-arrow arrow-left" type="button">◄</button>
+            <button class="featured-music-arrow arrow-right" type="button">►</button>
+          </div>
         </div>
 
-        <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll featured writing right" data-target="writingRow">›</button>
+        <div class="waves-track-grid" id="featuredWritingRow" data-waves-section="featuredWriting"></div>
       </div>
     </section>
 
-    <section class="media-section glass panel">
-      <div class="media-head">
-        <div>
-          <h2>Poetry & Passages</h2>
-          <p>Tap a title card to open the full text in a popup.</p>
-        </div>
-      </div>
+    <!-- POETRY -->
+    <section class="featured-music-section">
+      <div
+        class="featured-music-panel section-library-trigger"
+        data-library-title="Poetry & Passages"
+        data-library-subtitle="Short poems and written passages."
+        data-library-source="poetryPassages"
+      >
+        <div class="featured-music-head section-library-head-trigger" tabindex="0" role="button">
+          <div>
+            <h2 class="featured-music-title">Poetry & Passages</h2>
+            <p class="featured-music-subtitle">Tap a card to open the full text.</p>
+          </div>
 
-      <div class="media-carousel-shell">
-        <button class="media-arrow media-arrow-left" type="button" aria-label="Scroll poetry left" data-target="poetryRow">‹</button>
-
-        <div class="media-row" id="poetryRow">
-          
-          <button
-            class="lyrics-card"
-            type="button"
-            data-title="We All Try"
-            data-subtitle="Poetry · WYCO Whimsy"
-            data-lyrics="
-            Line 1&#10;
-            Some swim, 
-            Some walk, 
-            Some fly,
-            &#10;
-            Line 2&#10;
-            Some live, 
-            Some survive, 
-            Some die,
-            &#10;
-            Line 3&#10;
-            Some smile, 
-            Some hurt, 
-            Some cry,
-            &#10;
-            Line 4&#10;
-            Some thank, 
-            Some shank, 
-            Some spy,
-            &#10;
-            Line 5&#10;
-            Some truth, 
-            Some stall, 
-            Some lie,
-            &#10;
-            Line 6&#10;
-            But in the end we all try."
-            aria-label="Open Glass Static text"
-          >
-            <div class="media-thumb">
-              <span class="media-badge">Poetry</span>
-              <span class="play-badge">✦</span>
-              <img src="/images/whimsy/we-all-try.png" alt="We All Try Artwork">
-              <div class="media-meta">
-                <h3 class="media-title">We All Try</h3>
-                <p class="media-subtitle">Poetry · WYCO</p>
-              </div>
-            </div>
-          </button>
-
+          <div class="featured-music-controls">
+            <button class="featured-music-arrow arrow-left" type="button">◄</button>
+            <button class="featured-music-arrow arrow-right" type="button">►</button>
+          </div>
         </div>
 
-        <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll poetry right" data-target="poetryRow">›</button>
+        <div class="waves-track-grid" id="poetryPassagesRow" data-waves-section="poetryPassages"></div>
       </div>
     </section>
 
-    <section class="media-section glass panel">
-      <div class="media-head">
-        <div>
-          <h2>Worldbuilding & Concepts</h2>
-          <p>Ideas, story frameworks, visual concepts, and imaginative experiments.</p>
-        </div>
-      </div>
+    <!-- WORLDBUILDING -->
+    <section class="featured-music-section">
+      <div
+        class="featured-music-panel section-library-trigger"
+        data-library-title="Worldbuilding & Concepts"
+        data-library-subtitle="Story frameworks and creative ideas."
+        data-library-source="worldbuildingConcepts"
+      >
+        <div class="featured-music-head section-library-head-trigger" tabindex="0" role="button">
+          <div>
+            <h2 class="featured-music-title">Worldbuilding & Concepts</h2>
+            <p class="featured-music-subtitle">Ideas, lore, and imagination experiments.</p>
+          </div>
 
-      <div class="media-carousel-shell">
-        <button class="media-arrow media-arrow-left" type="button" aria-label="Scroll concept media left" data-target="conceptRow">‹</button>
-
-        <div class="media-row" id="conceptRow">
-          
-          <a
-            class="media-card"
-            href="https://docs.google.com/document/d/1raQGSbnho81BHXPuUgXpsD044l2HivExOG9HKMMDHYU/edit?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open Glass Static"
-          >
-            <div class="media-thumb">
-              <span class="media-badge">Writing</span>
-              <span class="play-badge">✦</span>
-              <img src="/images/whimsy/nightmare.png" alt="Nightmare Cover Art">
-              <div class="media-meta">
-                <h3 class="media-title">Nightmare</h3>
-                <p class="media-subtitle">Story · WYCO</p>
-              </div>
-            </div>
-          </a>
-
+          <div class="featured-music-controls">
+            <button class="featured-music-arrow arrow-left" type="button">◄</button>
+            <button class="featured-music-arrow arrow-right" type="button">►</button>
+          </div>
         </div>
 
-        <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll concept media right" data-target="conceptRow">›</button>
+        <div class="waves-track-grid" id="worldbuildingConceptsRow" data-waves-section="worldbuildingConcepts"></div>
       </div>
     </section>
 
-    <section class="media-section glass panel">
-      <div class="media-head">
-        <div>
-          <h2>Visual Arts</h2>
-          <p>Drawing, painting, sculpting, and various illustrations.</p>
-        </div>
-      </div>
+    <!-- VISUAL ARTS -->
+    <section class="featured-music-section">
+      <div
+        class="featured-music-panel section-library-trigger"
+        data-library-title="Visual Arts"
+        data-library-subtitle="Artwork, drawings, and creative visual pieces."
+        data-library-source="visualArts"
+      >
+        <div class="featured-music-head section-library-head-trigger" tabindex="0" role="button">
+          <div>
+            <h2 class="featured-music-title">Visual Arts</h2>
+            <p class="featured-music-subtitle">Illustrations and visual creations.</p>
+          </div>
 
-      <div class="media-carousel-shell">
-        <button class="media-arrow media-arrow-left" type="button" aria-label="Scroll visual media left" data-target="visualRow">‹</button>
-
-        <div class="media-row" id="visualRow">
-
-          <!--
-          <a
-            class="media-card"
-            href="https://youtube.com/your-video-link-here"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open Echo Drift Visualizer"
-          >
-            <div class="media-thumb">
-              <span class="media-badge">Visual</span>
-              <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Waves default artwork">
-              <div class="media-meta">
-                <h3 class="media-title">Echo Drift Visualizer</h3>
-              </div>
-            </div>
-          </a>
-          -->
-
+          <div class="featured-music-controls">
+            <button class="featured-music-arrow arrow-left" type="button">◄</button>
+            <button class="featured-music-arrow arrow-right" type="button">►</button>
+          </div>
         </div>
 
-        <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll visual media right" data-target="visualRow">›</button>
+        <div class="waves-track-grid" id="visualArtsRow" data-waves-section="visualArts"></div>
       </div>
     </section>
 
@@ -219,12 +134,13 @@
       <h2><span class="gradient-text">Writing Usage Notice</span></h2>
       <p>
         Writing published on this site is original work by Sean Skipworth unless otherwise noted.
-        Quoting brief excerpts with credit may be allowed, but verbatim reproduction, redistribution,
-        or commercial use of full written works without permission is prohibited.
+        Reproduction, redistribution, or commercial use without permission is prohibited.
       </p>
     </section>
+
   </main>
 
+  <!-- TEXT MODAL -->
   <div class="lyrics-modal" id="lyricsModal" aria-hidden="true">
     <div class="lyrics-modal-panel">
       <div class="lyrics-modal-head">
@@ -232,7 +148,7 @@
           <h3 id="lyricsModalTitle">Text Title</h3>
           <p id="lyricsModalSubtitle">Text subtitle</p>
         </div>
-        <button class="lyrics-close" id="lyricsClose" type="button" aria-label="Close text modal">✕</button>
+        <button class="lyrics-close" id="lyricsClose" type="button">✕</button>
       </div>
       <div class="lyrics-modal-body">
         <pre id="lyricsModalText"></pre>
@@ -240,11 +156,12 @@
     </div>
   </div>
 
-  <!--------------- 
-        Footer 
-  --------------->
   <div id="site-footer"></div>
 
+  <script src="/js/wyco-data.js"></script>
+  <script src="/js/waves-data.js"></script>
+  <script src="/js/whimsy-data.js"></script>
   <script src="/js/script.js"></script>
+
 </body>
 </html>
