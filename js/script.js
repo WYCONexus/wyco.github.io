@@ -574,7 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function closeSectionLibraryModal(fromPopState = false) {
+  function closeSectionLibraryModal(fromPopState = false, preserveHistory = false) {
     if (!sectionLibraryModal) return;
 
     sectionLibraryModal.classList.remove('active');
@@ -588,7 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateBodyScrollLock();
 
-    if (!fromPopState) {
+    if (!fromPopState && !preserveHistory) {
       clearOverlayHistory();
     }
   }
@@ -879,14 +879,14 @@ document.addEventListener('DOMContentLoaded', () => {
     pushOverlayHistory('lyrics', title || '');
   }
 
-  function closeLyricsModal(fromPopState = false) {
+  function closeLyricsModal(fromPopState = false, preserveHistory = false) {
     if (!lyricsModal) return;
 
     lyricsModal.classList.remove('active');
     lyricsModal.setAttribute('aria-hidden', 'true');
     updateBodyScrollLock();
 
-    if (!fromPopState) {
+    if (!fromPopState && !preserveHistory) {
       clearOverlayHistory();
     }
   }
@@ -1288,8 +1288,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const image = card.dataset.trackImage || "";
       const mediaSrc = card.dataset.mediaSrc || card.dataset.trackMp3 || "";
 
-      closeSectionLibraryModal();
-      closeLyricsModal();
+      closeSectionLibraryModal(false, true);
+      closeLyricsModal(false, true);
 
       showAudioMode();
       resetVideoPlayer();
@@ -1322,8 +1322,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const image = card.dataset.trackImage || "";
       const mediaSrc = card.dataset.mediaSrc || "";
 
-      closeSectionLibraryModal();
-      closeLyricsModal();
+      closeSectionLibraryModal(false, true);
+      closeLyricsModal(false, true);
 
       showVideoMode();
       resetAudioPlayer();
@@ -1345,13 +1345,13 @@ document.addEventListener('DOMContentLoaded', () => {
       pushOverlayHistory('player', title);
     }
 
-    function closePlayer(fromPopState = false) {
+    function closePlayer(fromPopState = false, preserveHistory = false) {
       if (audio) audio.pause();
       if (video) video.pause();
       modal.hidden = true;
       updateBodyScrollLock();
 
-      if (!fromPopState) {
+      if (!fromPopState && !preserveHistory) {
         clearOverlayHistory();
       }
     }
@@ -1368,7 +1368,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const mediaSrc = card.dataset.mediaSrc || "";
 
       if (mediaType === "lyrics" || mediaType === "text") {
-        closeSectionLibraryModal();
+        closeSectionLibraryModal(false, true);
         openLyricsModal(title, subtitle || "Text", lyrics);
         return;
       }
