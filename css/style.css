@@ -175,6 +175,14 @@ pre {
    Workbench Components
 --------------------------- */
 
+.workbench-preview-trigger,
+.section-library-item {
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  background: none;
+}
+
 .workbench-scroll-row {
   display: grid;
   grid-auto-flow: column;

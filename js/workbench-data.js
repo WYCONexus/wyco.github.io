@@ -35,6 +35,8 @@ window.WYCO_WORKBENCH_DATA = {
   ]
 };
 
+
+
 (function () {
   const pageKey = document.body?.dataset?.page;
   if (pageKey !== 'workbench') return;
@@ -60,11 +62,10 @@ window.WYCO_WORKBENCH_DATA = {
     }
   };
 
-  
-
   let currentSectionKey = null;
   let currentSectionImages = [];
   let currentIndex = 0;
+  let suppressNextPopstate = false;
 
   function getModalElements() {
     return {
@@ -88,15 +89,100 @@ window.WYCO_WORKBENCH_DATA = {
     };
   }
 
-  function updateBodyScrollState() {
-    const modalOpen = getModalElements().modal?.classList.contains('active');
-    const lightboxOpen = getLightboxElements().lightbox?.classList.contains('is-open');
+  function getData() {
+    return window.WYCO_WORKBENCH_DATA || {
+      repairs: [],
+      furniture: [],
+      builds: []
+    };
+  }
 
-    if (modalOpen || lightboxOpen) {
+  function isModalOpen() {
+    return !!getModalElements().modal?.classList.contains('active');
+  }
+
+  function isLightboxOpen() {
+    return !!getLightboxElements().lightbox?.classList.contains('is-open');
+  }
+
+  function updateBodyScrollState() {
+    if (isModalOpen() || isLightboxOpen()) {
       document.body.classList.add('section-library-open');
     } else {
       document.body.classList.remove('section-library-open');
     }
+  }
+
+  function renderPreviewFigure(item, sectionKey) {
+    const figure = document.createElement('figure');
+    figure.className = 'glass panel';
+    figure.style.margin = '0';
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'workbench-preview-trigger';
+    button.setAttribute('aria-label', `Open ${sectionMeta[sectionKey].title} gallery`);
+    button.style.display = 'block';
+    button.style.width = '100%';
+    button.style.padding = '0';
+    button.style.border = '0';
+    button.style.background = 'transparent';
+    button.style.cursor = 'pointer';
+    button.style.textAlign = 'left';
+
+    const img = document.createElement('img');
+    img.className = 'workbench-img';
+    img.src = item.src;
+    img.alt = item.alt || item.title || 'Workbench image';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.style.width = '100%';
+    img.style.aspectRatio = '4 / 3';
+    img.style.objectFit = 'cover';
+    img.style.borderRadius = '16px';
+    img.style.display = 'block';
+
+    const caption = document.createElement('figcaption');
+    caption.className = 'muted';
+    caption.style.marginTop = '12px';
+    caption.textContent = item.caption || item.title || '';
+
+    button.appendChild(img);
+    button.addEventListener('click', (event) => {
+      event.stopPropagation();
+      openSectionModal(sectionKey, true);
+    });
+
+    figure.appendChild(button);
+    figure.appendChild(caption);
+
+    return figure;
+  }
+
+  function renderSectionPreviews() {
+    const data = getData();
+
+    Object.keys(sectionMeta).forEach((sectionKey) => {
+      const target = document.querySelector(`[data-workbench-gallery="${sectionKey}"]`);
+      if (!target) return;
+
+      const items = Array.isArray(data[sectionKey]) ? data[sectionKey] : [];
+      target.innerHTML = '';
+
+      if (!items.length) {
+        const empty = document.createElement('article');
+        empty.className = 'glass panel';
+        empty.style.margin = '0';
+        empty.style.minWidth = 'min(320px, 100%)';
+        empty.innerHTML = '<p class="muted" style="margin: 0;">No projects added yet.</p>';
+        target.appendChild(empty);
+        return;
+      }
+
+      items.forEach((item) => {
+        target.appendChild(renderPreviewFigure(item, sectionKey));
+      });
+    });
   }
 
   function updateLightbox() {
@@ -109,71 +195,35 @@ window.WYCO_WORKBENCH_DATA = {
     caption.textContent = item.caption || item.title || '';
   }
 
-  function openLightbox(index) {
-    const { lightbox } = getLightboxElements();
-    if (!lightbox || !currentSectionImages.length) return;
-
-    currentIndex = index;
-    updateLightbox();
-    lightbox.classList.add('is-open');
-    lightbox.setAttribute('aria-hidden', 'false');
-    updateBodyScrollState();
+  function showModalVisualState() {
+    const { modal } = getModalElements();
+    if (!modal) return;
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    modal.style.visibility = '';
+    modal.style.pointerEvents = '';
+    modal.style.opacity = '';
   }
 
-  function closeLightbox() {
-    const { lightbox } = getLightboxElements();
-    if (!lightbox) return;
-
-    lightbox.classList.remove('is-open');
-    lightbox.setAttribute('aria-hidden', 'true');
-    updateBodyScrollState();
+  function hideModalVisualState() {
+    const { modal } = getModalElements();
+    if (!modal) return;
+    modal.style.visibility = 'hidden';
+    modal.style.pointerEvents = 'none';
+    modal.style.opacity = '0';
   }
 
-  function showPrevious() {
-    if (!currentSectionImages.length) return;
-    currentIndex = (currentIndex - 1 + currentSectionImages.length) % currentSectionImages.length;
-    updateLightbox();
+  function clearModalVisualOverrides() {
+    const { modal } = getModalElements();
+    if (!modal) return;
+    modal.style.visibility = '';
+    modal.style.pointerEvents = '';
+    modal.style.opacity = '';
   }
 
-  function showNext() {
-    if (!currentSectionImages.length) return;
-    currentIndex = (currentIndex + 1) % currentSectionImages.length;
-    updateLightbox();
-  }
-
-  function createSectionItem(item, index, meta) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'section-library-item';
-    button.setAttribute('aria-label', `Open ${item.title || item.alt || 'gallery image'}`);
-    button.style.width = '100%';
-    button.style.textAlign = 'left';
-    button.style.cursor = 'pointer';
-    button.style.color = 'inherit';
-
-    const subtitle = item.subtitle || item.caption || meta.description || '';
-
-    button.innerHTML = `
-      <div class="section-library-item-media">
-        <img src="${item.src}" alt="${item.alt || item.title || 'Workbench image'}" loading="lazy" decoding="async">
-      </div>
-
-      <div class="section-library-item-copy">
-        <div class="section-library-item-badge">${meta.badge}</div>
-        <h4 class="section-library-item-title">${item.title || item.caption || 'Untitled Project'}</h4>
-        <p class="section-library-item-subtitle">${subtitle}</p>
-      </div>
-
-      <div class="section-library-item-arrow" aria-hidden="true">&#10095;</div>
-    `;
-
-    button.addEventListener('click', () => openLightbox(index));
-    return button;
-  }
-
-  function openSectionModal(sectionKey) {
+  function openSectionModal(sectionKey, pushHistory = true) {
     const { modal, title, eyebrow, description, list } = getModalElements();
-    const data = window.WYCO_WORKBENCH_DATA || {};
+    const data = getData();
     const items = Array.isArray(data[sectionKey]) ? data[sectionKey] : [];
     const meta = sectionMeta[sectionKey];
 
@@ -200,18 +250,128 @@ window.WYCO_WORKBENCH_DATA = {
       });
     }
 
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
+    showModalVisualState();
+
+    if (pushHistory) {
+      history.pushState(
+        { wycoWorkbench: 'modal', section: sectionKey },
+        '',
+        ''
+      );
+    }
+
     updateBodyScrollState();
   }
 
-  function closeSectionModal() {
+  function closeSectionModal(fromPopstate = false) {
     const { modal } = getModalElements();
     if (!modal) return;
 
     modal.classList.remove('active');
     modal.setAttribute('aria-hidden', 'true');
+    clearModalVisualOverrides();
     updateBodyScrollState();
+
+    if (!fromPopstate) {
+      if (isLightboxOpen()) return;
+      if (history.state?.wycoWorkbench === 'modal') {
+        suppressNextPopstate = true;
+        history.back();
+      }
+    }
+  }
+
+  function openLightbox(index, pushHistory = true) {
+    const { lightbox } = getLightboxElements();
+    if (!lightbox || !currentSectionImages.length) return;
+
+    currentIndex = index;
+    updateLightbox();
+
+    hideModalVisualState();
+
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+
+    if (pushHistory) {
+      history.pushState(
+        {
+          wycoWorkbench: 'lightbox',
+          section: currentSectionKey,
+          index: currentIndex
+        },
+        '',
+        ''
+      );
+    }
+
+    updateBodyScrollState();
+  }
+
+  function closeLightbox(fromPopstate = false) {
+    const { lightbox } = getLightboxElements();
+    if (!lightbox) return;
+
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+
+    if (currentSectionKey) {
+      showModalVisualState();
+    } else {
+      clearModalVisualOverrides();
+    }
+
+    updateBodyScrollState();
+
+    if (!fromPopstate && history.state?.wycoWorkbench === 'lightbox') {
+      suppressNextPopstate = true;
+      history.back();
+    }
+  }
+
+  function showPrevious() {
+    if (!currentSectionImages.length) return;
+    currentIndex = (currentIndex - 1 + currentSectionImages.length) % currentSectionImages.length;
+    updateLightbox();
+  }
+
+  function showNext() {
+    if (!currentSectionImages.length) return;
+    currentIndex = (currentIndex + 1) % currentSectionImages.length;
+    updateLightbox();
+  }
+
+  function createSectionItem(item, index, meta) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'section-library-item';
+    button.setAttribute('aria-label', `Open ${item.title || item.alt || 'gallery image'}`);
+    button.style.width = '100%';
+    button.style.textAlign = 'left';
+    button.style.cursor = 'pointer';
+    button.style.color = 'inherit';
+    button.style.appearance = 'none';
+    button.style.webkitAppearance = 'none';
+    button.style.font = 'inherit';
+
+    const subtitle = item.subtitle || item.caption || meta.description || '';
+
+    button.innerHTML = `
+      <div class="section-library-item-media">
+        <img src="${item.src}" alt="${item.alt || item.title || 'Workbench image'}" loading="lazy" decoding="async">
+      </div>
+
+      <div class="section-library-item-copy">
+        <div class="section-library-item-badge">${meta.badge}</div>
+        <h4 class="section-library-item-title">${item.title || item.caption || 'Untitled Project'}</h4>
+        <p class="section-library-item-subtitle">${subtitle}</p>
+      </div>
+
+      <div class="section-library-item-arrow" aria-hidden="true">&#10095;</div>
+    `;
+
+    button.addEventListener('click', () => openLightbox(index, true));
+    return button;
   }
 
   function bindSectionCards() {
@@ -221,7 +381,7 @@ window.WYCO_WORKBENCH_DATA = {
       card.addEventListener('click', () => {
         const key = card.dataset.workbenchSection;
         if (!key) return;
-        openSectionModal(key);
+        openSectionModal(key, true);
       });
 
       card.addEventListener('keydown', (event) => {
@@ -229,7 +389,7 @@ window.WYCO_WORKBENCH_DATA = {
           event.preventDefault();
           const key = card.dataset.workbenchSection;
           if (!key) return;
-          openSectionModal(key);
+          openSectionModal(key, true);
         }
       });
     });
@@ -239,8 +399,8 @@ window.WYCO_WORKBENCH_DATA = {
     const { modal, backdrop, close } = getModalElements();
     if (!modal) return;
 
-    close?.addEventListener('click', closeSectionModal);
-    backdrop?.addEventListener('click', closeSectionModal);
+    close?.addEventListener('click', () => closeSectionModal(false));
+    backdrop?.addEventListener('click', () => closeSectionModal(false));
   }
 
   function bindLightbox() {
@@ -259,22 +419,22 @@ window.WYCO_WORKBENCH_DATA = {
 
     lightbox.addEventListener('click', (event) => {
       if (event.target === lightbox) {
-        closeLightbox();
+        closeLightbox(false);
       }
     });
 
     document.addEventListener('keydown', (event) => {
-      const modalOpen = getModalElements().modal?.classList.contains('active');
-      const lightboxOpen = lightbox.classList.contains('is-open');
+      const modalOpen = isModalOpen();
+      const lightboxOpen = isLightboxOpen();
 
       if (event.key === 'Escape') {
         if (lightboxOpen) {
-          closeLightbox();
+          closeLightbox(false);
           return;
         }
 
         if (modalOpen) {
-          closeSectionModal();
+          closeSectionModal(false);
         }
       }
 
@@ -285,10 +445,56 @@ window.WYCO_WORKBENCH_DATA = {
     });
   }
 
+  function syncUiToHistoryState(state) {
+    const modal = getModalElements().modal;
+    const lightbox = getLightboxElements().lightbox;
+
+    lightbox?.classList.remove('is-open');
+    lightbox?.setAttribute('aria-hidden', 'true');
+
+    modal?.classList.remove('active');
+    modal?.setAttribute('aria-hidden', 'true');
+    clearModalVisualOverrides();
+
+    if (!state || !state.wycoWorkbench) {
+      currentSectionKey = null;
+      currentSectionImages = [];
+      currentIndex = 0;
+      updateBodyScrollState();
+      return;
+    }
+
+    if (state.wycoWorkbench === 'modal' && state.section) {
+      openSectionModal(state.section, false);
+      return;
+    }
+
+    if (state.wycoWorkbench === 'lightbox' && state.section) {
+      openSectionModal(state.section, false);
+      currentIndex = typeof state.index === 'number' ? state.index : 0;
+      openLightbox(currentIndex, false);
+      return;
+    }
+
+    updateBodyScrollState();
+  }
+
+  function bindHistory() {
+    window.addEventListener('popstate', (event) => {
+      if (suppressNextPopstate) {
+        suppressNextPopstate = false;
+        return;
+      }
+      syncUiToHistoryState(event.state);
+    });
+  }
+
   function initWorkbench() {
+    renderSectionPreviews();
     bindSectionCards();
     bindModal();
     bindLightbox();
+    bindHistory();
   }
 
   if (document.readyState === 'loading') {

@@ -22,9 +22,6 @@
   <div class="orb orb-b"></div>
   <div class="orb orb-c"></div>
 
-  <!---------------
-        Header
-  --------------->
   <div id="site-header"></div>
 
   <main class="wrap page-main">
@@ -46,6 +43,12 @@
     >
       <h2>Repair Transformations</h2>
       <p class="muted">Before-and-after fixes, practical improvements, and functional restorations.</p>
+      <div
+        id="workbench-repair-gallery"
+        class="workbench-scroll-row workbench-gallery"
+        data-workbench-gallery="repairs"
+        aria-label="Repair transformations preview gallery"
+      ></div>
     </section>
 
     <section
@@ -58,6 +61,12 @@
     >
       <h2>Furniture &amp; Refurbishing</h2>
       <p class="muted">Pieces restored, refreshed, reworked, or given a second life.</p>
+      <div
+        id="workbench-furniture-gallery"
+        class="workbench-scroll-row workbench-gallery"
+        data-workbench-gallery="furniture"
+        aria-label="Furniture and refurbishing preview gallery"
+      ></div>
     </section>
 
     <section
@@ -70,18 +79,18 @@
     >
       <h2>Builds &amp; Experiments</h2>
       <p class="muted">Custom pieces, practical builds, prototypes, and workbench ideas in physical form.</p>
+      <div
+        id="workbench-builds-gallery"
+        class="workbench-scroll-row workbench-gallery"
+        data-workbench-gallery="builds"
+        aria-label="Builds and experiments preview gallery"
+      ></div>
     </section>
 
-    <!---------------
-        DIVIDER
-    --------------->
     <section style="margin: 44px 0 28px;">
       <div style="height: 1px; width: 100%; background: linear-gradient(90deg, rgba(111,137,255,0.08), rgba(69,230,216,0.7), rgba(199,93,255,0.7), rgba(111,137,255,0.08));"></div>
     </section>
 
-    <!---------------
-      WYCO REPAIRS SECTION
-    --------------->
     <section class="page-hero glass">
       <p class="eyebrow">WYCO Repairs</p>
       <h1><span class="gradient-text">The Fix For What Matters</span></h1>
@@ -146,9 +155,6 @@
     <button id="lightbox-next" class="lightbox-nav" aria-label="Next image">&#10095;</button>
   </div>
 
-  <!---------------
-        Footer
-  --------------->
   <div id="site-footer"></div>
 
   <script src="/js/workbench-data.js"></script>
