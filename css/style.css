@@ -67,15 +67,27 @@ body[data-page="nexus"] {
 }
 
 body[data-page="nexus"] .orb-a {
-  background: radial-gradient(circle, rgba(69, 230, 216, 0.26), transparent 68%);
+  background: radial-gradient(circle,
+    rgba(110,255,140,0.32) 0%,
+    rgba(90,220,120,0.20) 40%,
+    rgba(0,0,0,0) 70%
+  );
 }
 
 body[data-page="nexus"] .orb-b {
-  background: radial-gradient(circle, rgba(111, 137, 255, 0.22), transparent 68%);
+  background: radial-gradient(circle,
+    rgba(80,255,120,0.28) 0%,
+    rgba(60,210,100,0.18) 45%,
+    rgba(0,0,0,0) 75%
+  );
 }
 
 body[data-page="nexus"] .orb-c {
-  background: radial-gradient(circle, rgba(199, 93, 255, 0.22), transparent 68%);
+  background: radial-gradient(circle,
+    rgba(140,255,160,0.25) 0%,
+    rgba(90,220,130,0.15) 50%,
+    rgba(0,0,0,0) 80%
+  );
 }
 
 body[data-page="nexus"] .gradient-text {
