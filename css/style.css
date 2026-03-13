@@ -413,22 +413,38 @@ pre {
 ========================= */
 
 .waves-track-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 280px));
-  gap: 22px;
-  align-items: start;
-   justify-content: start;
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.waves-track-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.waves-track-grid > * {
+  flex: 0 0 210px;
+  min-width: 210px;
+  max-width: 210px;
+  scroll-snap-align: start;
 }
 
 .waves-track-card {
   position: relative;
   overflow: hidden;
-  border-radius: 26px;
+  border-radius: 22px;
   cursor: pointer;
   background: linear-gradient(180deg, rgba(10, 18, 42, 0.96), rgba(6, 11, 28, 0.98));
   border: 1px solid rgba(111, 137, 255, 0.18);
   box-shadow:
-    0 18px 50px rgba(0, 0, 0, 0.34),
+    0 18px 44px rgba(0, 0, 0, 0.30),
     inset 0 1px 0 rgba(255,255,255,0.03);
   transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
@@ -445,7 +461,7 @@ pre {
 
 .waves-track-thumb {
   position: relative;
-  aspect-ratio: 4 / 6;
+  min-height: 340px;
   overflow: hidden;
 }
 
@@ -483,17 +499,19 @@ pre {
 
 .waves-track-orb {
   position: absolute;
-  right: 16px;
-  bottom: 16px;
+  right: 14px;
+  bottom: 72px;
   z-index: 2;
-  width: 58px;
-  height: 58px;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   border: 1px solid rgba(132, 156, 255, 0.20);
-  background:
-    linear-gradient(135deg, rgba(25, 39, 83, 0.92), rgba(20, 31, 69, 0.88));
+  background: linear-gradient(135deg, rgba(25, 39, 83, 0.92), rgba(20, 31, 69, 0.88));
   color: #edf3ff;
-  font-size: 1.15rem;
+  font-size: 1rem;
+  line-height: 1;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.08),
     0 10px 30px rgba(0,0,0,0.28);
@@ -501,20 +519,54 @@ pre {
 }
 
 .waves-track-body {
-  padding: 16px 18px 18px;
+  padding: 16px 16px 14px;
 }
 
 .waves-track-body h3 {
   margin: 0 0 6px;
   color: #f0f4ff;
-  font-size: 1.7rem;
-  line-height: 1.05;
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 .waves-track-body p {
   margin: 0;
   color: #a9b4d6;
-  font-size: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+@media (max-width: 700px) {
+  .waves-track-grid {
+    gap: 14px;
+    padding-bottom: 6px;
+  }
+
+  .waves-track-grid > * {
+    flex: 0 0 170px;
+    min-width: 170px;
+    max-width: 170px;
+  }
+
+  .waves-track-thumb {
+    min-height: 290px;
+  }
+
+  .waves-track-orb {
+    width: 46px;
+    height: 46px;
+    bottom: 68px;
+    font-size: 0.95rem;
+  }
+
+  .waves-track-body h3 {
+    font-size: 1rem;
+  }
+
+  .waves-track-body p {
+    font-size: 0.86rem;
+  }
 }
 
 /* =========================
