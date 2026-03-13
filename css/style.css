@@ -461,7 +461,7 @@ pre {
 
 .waves-track-thumb {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 220 / 360;
   overflow: hidden;
 }
 
@@ -546,10 +546,6 @@ pre {
     flex: 0 0 170px;
     min-width: 170px;
     max-width: 170px;
-  }
-
-  .waves-track-thumb {
-    min-height: 290px;
   }
 
   .waves-track-orb {
