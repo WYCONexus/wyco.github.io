@@ -620,6 +620,38 @@ pre {
     inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
+.section-library-scroll-controls {
+  position: absolute;
+  right: 14px;
+  top: 110px;
+  bottom: 18px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.section-library-scroll-btn {
+  pointer-events: auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 162, 255, 0.22);
+  background: rgba(10, 18, 40, 0.88);
+  color: #edf3ff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+.section-library-scroll-btn:hover {
+  border-color: rgba(69, 230, 216, 0.35);
+  background: rgba(20, 30, 58, 0.95);
+}
+
 .section-library-close {
   position: absolute;
   top: 16px;

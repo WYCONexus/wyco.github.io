@@ -496,6 +496,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function setupSectionLibraryScrollButtons() {
+  const body = document.querySelector('.section-library-body');
+  const upBtn = document.querySelector('.section-library-scroll-btn.scroll-up');
+  const downBtn = document.querySelector('.section-library-scroll-btn.scroll-down');
+
+  if (!body || !upBtn || !downBtn) return;
+
+  if (upBtn.dataset.bound !== 'true') {
+    upBtn.dataset.bound = 'true';
+    upBtn.addEventListener('click', () => {
+      body.scrollBy({ top: -240, behavior: 'smooth' });
+    });
+  }
+
+  if (downBtn.dataset.bound !== 'true') {
+    downBtn.dataset.bound = 'true';
+    downBtn.addEventListener('click', () => {
+      body.scrollBy({ top: 240, behavior: 'smooth' });
+    });
+  }
+}
+
   function setupSectionLibraryTriggers() {
     const triggers = document.querySelectorAll('.section-library-trigger');
     if (!triggers.length) return;
@@ -1359,6 +1381,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderWavesSections();
     setupSectionLibraryTriggers();
     setupSectionLibrarySearch();
+    setupSectionLibraryScrollButtons();
     setupNexusCarouselButtons();
     setupMediaCarouselButtons();
     setupCompletedCarousel();
