@@ -36,49 +36,52 @@
       </p>
     </section>
 
-    <section class="glass panel" style="margin-top: 24px;">
+    <section
+      class="glass panel section-library-head-trigger"
+      data-workbench-section="repairs"
+      tabindex="0"
+      role="button"
+      aria-label="Open Repair Transformations gallery"
+      style="margin-top: 24px; cursor: pointer;"
+    >
       <h2>Repair Transformations</h2>
       <p class="muted">Before-and-after fixes, practical improvements, and functional restorations.</p>
-      <div
-        id="workbench-repair-gallery"
-        class="workbench-scroll-row workbench-gallery"
-        data-workbench-gallery="repairs"
-        aria-label="Repair transformations gallery"
-      ></div>
     </section>
 
-    <section class="glass panel" style="margin-top: 24px;">
+    <section
+      class="glass panel section-library-head-trigger"
+      data-workbench-section="furniture"
+      tabindex="0"
+      role="button"
+      aria-label="Open Furniture and Refurbishing gallery"
+      style="margin-top: 24px; cursor: pointer;"
+    >
       <h2>Furniture &amp; Refurbishing</h2>
       <p class="muted">Pieces restored, refreshed, reworked, or given a second life.</p>
-      <div
-        id="workbench-furniture-gallery"
-        class="workbench-scroll-row workbench-gallery"
-        data-workbench-gallery="furniture"
-        aria-label="Furniture and refurbishing gallery"
-      ></div>
     </section>
 
-    <section class="glass panel" style="margin-top: 24px;">
+    <section
+      class="glass panel section-library-head-trigger"
+      data-workbench-section="builds"
+      tabindex="0"
+      role="button"
+      aria-label="Open Builds and Experiments gallery"
+      style="margin-top: 24px; cursor: pointer;"
+    >
       <h2>Builds &amp; Experiments</h2>
       <p class="muted">Custom pieces, practical builds, prototypes, and workbench ideas in physical form.</p>
-      <div
-        id="workbench-builds-gallery"
-        class="workbench-scroll-row workbench-gallery"
-        data-workbench-gallery="builds"
-        aria-label="Builds and experiments gallery"
-      ></div>
     </section>
 
     <!---------------
         DIVIDER
-  --------------->
+    --------------->
     <section style="margin: 44px 0 28px;">
       <div style="height: 1px; width: 100%; background: linear-gradient(90deg, rgba(111,137,255,0.08), rgba(69,230,216,0.7), rgba(199,93,255,0.7), rgba(111,137,255,0.08));"></div>
     </section>
 
     <!---------------
-    WYCO REPAIRS SECTION
-  --------------->
+      WYCO REPAIRS SECTION
+    --------------->
     <section class="page-hero glass">
       <p class="eyebrow">WYCO Repairs</p>
       <h1><span class="gradient-text">The Fix For What Matters</span></h1>
@@ -104,9 +107,33 @@
           <li>WYCO Repairs primarily serves the greater Des Moines area and surrounding communities in central Iowa. Service availability may vary depending on scheduling and project scope, but most work is focused within a reasonable driving distance of the Des Moines metro area.</li>
         </ul>
       </article>
-
     </section>
   </main>
+
+  <div id="workbench-section-modal" class="section-library-modal" aria-hidden="true">
+    <div class="section-library-backdrop"></div>
+
+    <div class="section-library-dialog" role="dialog" aria-modal="true" aria-labelledby="workbench-dialog-title">
+      <button
+        type="button"
+        id="workbench-dialog-close"
+        class="section-library-close"
+        aria-label="Close section gallery"
+      >
+        &times;
+      </button>
+
+      <div class="section-library-head">
+        <p class="eyebrow" id="workbench-dialog-eyebrow">WYCO Workbench</p>
+        <h3 id="workbench-dialog-title">Section Gallery</h3>
+        <p id="workbench-dialog-description">Browse this section.</p>
+      </div>
+
+      <div class="section-library-body">
+        <div id="workbench-dialog-list" class="section-library-list"></div>
+      </div>
+    </div>
+  </div>
 
   <div id="lightbox" aria-hidden="true">
     <button id="lightbox-prev" class="lightbox-nav" aria-label="Previous image">&#10094;</button>
