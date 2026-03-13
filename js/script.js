@@ -467,6 +467,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const sectionLibrarySearch = document.getElementById('sectionLibrarySearch');
 
   let currentSectionLibraryItems = [];
+  let sectionLibrarySuspended = false;
+
+  function suspendSectionLibraryModal() {
+    if (!sectionLibraryModal || !sectionLibraryModal.classList.contains('active')) return;
+
+    sectionLibrarySuspended = true;
+    sectionLibraryModal.style.visibility = 'hidden';
+    sectionLibraryModal.style.pointerEvents = 'none';
+  }
+
+  function resumeSectionLibraryModal() {
+    if (!sectionLibraryModal) return;
+
+    sectionLibrarySuspended = false;
+    sectionLibraryModal.style.visibility = '';
+    sectionLibraryModal.style.pointerEvents = '';
+  }
 
   function getSectionLibraryIcon(item) {
     const mediaType = item.mediaType || item.type || 'audio';
@@ -563,6 +580,8 @@ document.addEventListener('DOMContentLoaded', () => {
       renderSectionLibraryItems(items);
     }
 
+    resumeSectionLibraryModal();
+
     sectionLibraryModal.classList.add('active');
     sectionLibraryModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('section-library-open');
@@ -576,6 +595,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function closeSectionLibraryModal(fromPopState = false, preserveHistory = false) {
     if (!sectionLibraryModal) return;
+
+    resumeSectionLibraryModal();
 
     sectionLibraryModal.classList.remove('active');
     sectionLibraryModal.setAttribute('aria-hidden', 'true');
@@ -716,7 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updated = escapeHtml(formatDisplayDate(repo.updated_at));
 
     return `
-      <a
+     <a
         class="section-card section-card-link nexus-card"
         href="${repoUrl}"
         target="_blank"
@@ -726,19 +747,19 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="section-card-media nexus-card-media">
           <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="${repoName} artwork">
           <span class="section-card-badge nexus-badge">Repo</span>
-          <span class="nexus-card-icon">⌘</span>
-
-          <div class="section-card-body nexus-card-body">
-            <h3>${repoName}</h3>
-            <p class="section-card-subtitle">${language}</p>
-            <div class="nexus-card-lines">
-              <span>Updated: ${updated}</span>
-              <span>${description}</span>
-            </div>
-          </div>
+         <span class="nexus-card-icon">⌘</span>
         </div>
-      </a>
-    `;
+
+        <div class="section-card-body nexus-card-body">
+         <h3>${repoName}</h3>
+          <p class="section-card-subtitle">${language}</p>
+          <div class="nexus-card-lines">
+            <span>Updated: ${updated}</span>
+            <span>${description}</span>
+          </div>
+       </div>
+     </a>
+   `;
   }
 
   async function loadGitHubRepos() {
@@ -750,8 +771,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     repoRow.innerHTML = `
       <div class="section-card nexus-card" style="display:grid;place-items:center;min-height:220px;">
-        <div class="section-card-body nexus-card-body">
-          <h3>Loading repositories...</h3>
+       <div class="section-card-body nexus-card-body">
+         <h3>Loading repositories...</h3>
         </div>
       </div>
     `;
@@ -789,13 +810,13 @@ document.addEventListener('DOMContentLoaded', () => {
       updateNexusCarouselButtons('repoRow');
     } catch (error) {
       repoRow.innerHTML = `
-        <div class="section-card nexus-card" style="display:grid;place-items:center;min-height:220px;">
-          <div class="section-card-body nexus-card-body">
-            <h3>Could not load repositories</h3>
-            <p class="section-card-subtitle">Check your GitHub username or try again later.</p>
+          <div class="section-card nexus-card" style="display:grid;place-items:center;min-height:220px;">
+            <div class="section-card-body nexus-card-body">
+              <h3>Could not load repositories</h3>
+              <p class="section-card-subtitle">Check your GitHub username or try again later.</p>
+            </div>
           </div>
-        </div>
-      `;
+        `;
       updateNexusCarouselButtons('repoRow');
       console.error(error);
     }
@@ -880,6 +901,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     lyricsOpenedFromLibrary = fromLibrary;
 
+    if (fromLibrary) {
+      suspendSectionLibraryModal();
+    }
+
     lyricsModalTitle.textContent = title;
     lyricsModalSubtitle.textContent = subtitle;
     lyricsModalText.textContent = lyrics;
@@ -900,11 +925,14 @@ document.addEventListener('DOMContentLoaded', () => {
     lyricsModal.classList.remove('active');
     lyricsModal.setAttribute('aria-hidden', 'true');
     lyricsOpenedFromLibrary = false;
-    updateBodyScrollLock();
 
     if (shouldReturnToLibrary) {
+      resumeSectionLibraryModal();
+      updateBodyScrollLock();
       return;
     }
+
+    updateBodyScrollLock();
 
     if (!fromPopState && !preserveHistory) {
       clearOverlayHistory();
@@ -1313,6 +1341,10 @@ document.addEventListener('DOMContentLoaded', () => {
       playerOpenedFromLibrary = fromLibrary;
       closeLyricsModal(false, true);
 
+      if (fromLibrary) {
+        suspendSectionLibraryModal();
+      }
+
       showAudioMode();
       resetVideoPlayer();
 
@@ -1350,6 +1382,10 @@ document.addEventListener('DOMContentLoaded', () => {
       playerOpenedFromLibrary = fromLibrary;
       closeLyricsModal(false, true);
 
+      if (fromLibrary) {
+        suspendSectionLibraryModal();
+      }
+
       showVideoMode();
       resetAudioPlayer();
 
@@ -1380,11 +1416,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (video) video.pause();
       modal.hidden = true;
       playerOpenedFromLibrary = false;
-      updateBodyScrollLock();
 
       if (shouldReturnToLibrary) {
+        resumeSectionLibraryModal();
+        updateBodyScrollLock();
         return;
       }
+
+      updateBodyScrollLock();
 
       if (!fromPopState && !preserveHistory) {
         clearOverlayHistory();
