@@ -157,102 +157,161 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getTimelineData() {
-  return window.wycoData && Array.isArray(window.wycoData.timeline)
-    ? window.wycoData.timeline
-    : [];
-}
+    return window.wycoData && Array.isArray(window.wycoData.timeline)
+      ? window.wycoData.timeline
+      : [];
+  }
 
-function buildTimelineItem(item) {
-  const branch = escapeHtml(item.branch || 'WYCO');
-  const title = escapeHtml(item.title || 'Update');
-  const description = escapeHtml(item.description || '');
-  const displayDate = escapeHtml(formatDisplayDate(item.date || ''));
-  const branchClass = item.branchClass ? ` ${escapeHtml(item.branchClass)}` : '';
+  function buildTimelineItem(item) {
+    const branch = escapeHtml(item.branch || 'WYCO');
+    const title = escapeHtml(item.title || 'Update');
+    const description = escapeHtml(item.description || '');
+    const displayDate = escapeHtml(formatDisplayDate(item.date || ''));
+    const branchClass = item.branchClass ? ` ${escapeHtml(item.branchClass)}` : '';
 
-  return `
-    <article class="timeline-item${branchClass}">
-      <div class="timeline-marker" aria-hidden="true"></div>
-      <div class="timeline-card">
-        <div class="timeline-top">
-          <div class="timeline-branch">
-            <span class="timeline-branch-badge${branchClass}">${branch}</span>
+    return `
+      <article class="timeline-item${branchClass}">
+        <div class="timeline-marker" aria-hidden="true"></div>
+        <div class="timeline-card">
+          <div class="timeline-top">
+            <div class="timeline-branch">
+              <span class="timeline-branch-badge${branchClass}">${branch}</span>
+            </div>
+            <span class="timeline-date">${displayDate}</span>
           </div>
-          <span class="timeline-date">${displayDate}</span>
+          <h3 class="timeline-title">${title}</h3>
+          <p class="timeline-description">${description}</p>
         </div>
-        <h3 class="timeline-title">${title}</h3>
-        <p class="timeline-description">${description}</p>
-      </div>
-    </article>
-  `;
-}
-
-function updateTimelineButton(totalItems) {
-  const loadMoreButton = document.getElementById('timelineLoadMore');
-  const timelineActions = document.getElementById('timelineActions');
-
-  if (!loadMoreButton || !timelineActions) return;
-
-  if (totalItems <= timelineVisibleCount) {
-    timelineActions.hidden = true;
-    loadMoreButton.hidden = true;
-  } else {
-    timelineActions.hidden = false;
-    loadMoreButton.hidden = false;
+      </article>
+    `;
   }
-}
 
-function renderTimeline() {
-  const timelineItems = document.getElementById('timelineItems');
-  const timelineEmpty = document.getElementById('timelineEmpty');
-  const timelineData = getTimelineData();
+  function updateTimelineButton(totalItems) {
+    const loadMoreButton = document.getElementById('timelineLoadMore');
+    const timelineActions = document.getElementById('timelineActions');
 
-  if (!timelineItems) return;
+    if (!loadMoreButton || !timelineActions) return;
 
-  if (!timelineData.length) {
-    timelineItems.innerHTML = '';
-    if (timelineEmpty) {
-      timelineEmpty.hidden = false;
+    if (totalItems <= timelineVisibleCount) {
+      timelineActions.hidden = true;
+      loadMoreButton.hidden = true;
+    } else {
+      timelineActions.hidden = false;
+      loadMoreButton.hidden = false;
     }
-    updateTimelineButton(0);
-    return;
   }
 
-  if (timelineEmpty) {
-    timelineEmpty.hidden = true;
-  }
-
-  const visibleItems = timelineData.slice(0, timelineVisibleCount);
-
-  timelineItems.innerHTML = visibleItems
-  .map((item, index) => {
-    const html = buildTimelineItem(item);
-    return html.replace(
-      'class="timeline-item"',
-      `class="timeline-item" style="animation-delay:${index * 0.05}s"`
-    );
-  })
-  .join('');
-  updateTimelineButton(timelineData.length);
-}
-
-function setupTimelineLoadMore() {
-  const loadMoreButton = document.getElementById('timelineLoadMore');
-  if (!loadMoreButton) return;
-
-  if (loadMoreButton.dataset.bound === 'true') return;
-  loadMoreButton.dataset.bound = 'true';
-
-  loadMoreButton.addEventListener('click', () => {
+  function renderTimeline() {
+    const timelineItems = document.getElementById('timelineItems');
+    const timelineEmpty = document.getElementById('timelineEmpty');
     const timelineData = getTimelineData();
-    timelineVisibleCount += timelineBatchSize;
 
-    if (timelineVisibleCount > timelineData.length) {
-      timelineVisibleCount = timelineData.length;
+    if (!timelineItems) return;
+
+    if (!timelineData.length) {
+      timelineItems.innerHTML = '';
+      if (timelineEmpty) {
+        timelineEmpty.hidden = false;
+      }
+      updateTimelineButton(0);
+      return;
     }
 
-    renderTimeline();
-  });
-}
+    if (timelineEmpty) {
+      timelineEmpty.hidden = true;
+    }
+
+    const visibleItems = timelineData.slice(0, timelineVisibleCount);
+
+    timelineItems.innerHTML = visibleItems
+      .map((item, index) => {
+        const html = buildTimelineItem(item);
+        return html.replace(
+          'class="timeline-item"',
+          `class="timeline-item" style="animation-delay:${index * 0.05}s"`
+        );
+      })
+      .join('');
+
+    updateTimelineButton(timelineData.length);
+  }
+
+  function setupTimelineLoadMore() {
+    const loadMoreButton = document.getElementById('timelineLoadMore');
+    if (!loadMoreButton) return;
+
+    if (loadMoreButton.dataset.bound === 'true') return;
+    loadMoreButton.dataset.bound = 'true';
+
+    loadMoreButton.addEventListener('click', () => {
+      const timelineData = getTimelineData();
+      timelineVisibleCount += timelineBatchSize;
+
+      if (timelineVisibleCount > timelineData.length) {
+        timelineVisibleCount = timelineData.length;
+      }
+
+      renderTimeline();
+    });
+  }
+
+
+  /* ---------------------------
+     Waves Featured Music Rendering
+  --------------------------- */
+
+  function renderFeaturedMusic() {
+    const target = document.getElementById('featuredMusicRow');
+    const data = window.wavesData && Array.isArray(window.wavesData.featuredMusic)
+      ? window.wavesData.featuredMusic
+      : [];
+
+    if (!target) return;
+
+    if (!data.length) {
+      target.innerHTML = `
+        <div class="waves-track-card" aria-hidden="true">
+          <div class="waves-track-thumb">
+            <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="WYCO Waves default artwork">
+            <span class="waves-track-badge">Music</span>
+            <span class="waves-track-orb" aria-hidden="true">✦</span>
+            <div class="waves-track-body">
+              <h3>No tracks yet</h3>
+              <p>Music will appear here when added.</p>
+            </div>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    target.innerHTML = data.map((item) => `
+      <article
+        class="waves-track-card"
+        data-track-title="${escapeHtml(item.title || 'Untitled Track')}"
+        data-track-subtitle="${escapeHtml(item.subtitle || '')}"
+        data-track-image="${escapeHtml(item.image || '/images/waves/wyco_gradient_diagonal.jpg')}"
+        data-track-mp3="${escapeHtml(item.mediaSrc || '')}"
+        data-media-type="${escapeHtml(item.mediaType || 'audio')}"
+        tabindex="0"
+        aria-label="Play ${escapeHtml(item.title || 'Untitled Track')}"
+      >
+        <div class="waves-track-thumb">
+          <img
+            src="${escapeHtml(item.image || '/images/waves/wyco_gradient_diagonal.jpg')}"
+            alt="${escapeHtml(item.title || 'Untitled Track')} cover art"
+          >
+          <span class="waves-track-badge">${escapeHtml(item.badge || 'Music')}</span>
+          <span class="waves-track-orb" aria-hidden="true">✦</span>
+
+          <div class="waves-track-body">
+            <h3>${escapeHtml(item.title || 'Untitled Track')}</h3>
+            <p>${escapeHtml(item.subtitle || '')}</p>
+          </div>
+        </div>
+      </article>
+    `).join('');
+  }
 
 
   /* ---------------------------
@@ -577,286 +636,296 @@ function setupTimelineLoadMore() {
     }
   }
 
+
   /* ---------------------------
-   Workbench Image Lightbox
---------------------------- */
+     Workbench Image Lightbox
+  --------------------------- */
 
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightbox-img");
-const lightboxPrev = document.getElementById("lightbox-prev");
-const lightboxNext = document.getElementById("lightbox-next");
-const lightboxCaption = document.getElementById("lightbox-caption");
-const workbenchGalleries = Array.from(document.querySelectorAll(".workbench-gallery"));
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxPrev = document.getElementById("lightbox-prev");
+  const lightboxNext = document.getElementById("lightbox-next");
+  const lightboxCaption = document.getElementById("lightbox-caption");
+  const workbenchGalleries = Array.from(document.querySelectorAll(".workbench-gallery"));
 
-if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption && workbenchGalleries.length) {
-  let currentGalleryImages = [];
-  let currentImageIndex = 0;
-  let touchStartX = 0;
-  let touchEndX = 0;
+  if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption && workbenchGalleries.length) {
+    let currentGalleryImages = [];
+    let currentImageIndex = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-  function showImage(index) {
-    currentImageIndex = index;
-    const img = currentGalleryImages[currentImageIndex];
+    function showImage(index) {
+      currentImageIndex = index;
+      const img = currentGalleryImages[currentImageIndex];
 
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt || "";
-    lightboxCaption.textContent = img.alt || "";
-    lightbox.classList.add("is-open");
-    lightbox.setAttribute("aria-hidden", "false");
-  }
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt || "";
+      lightboxCaption.textContent = img.alt || "";
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+    }
 
-  function closeLightbox() {
-    lightbox.classList.remove("is-open");
-    lightbox.setAttribute("aria-hidden", "true");
-    lightboxImg.src = "";
-    lightboxImg.alt = "";
-    lightboxCaption.textContent = "";
-  }
+    function closeLightbox() {
+      lightbox.classList.remove("is-open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImg.src = "";
+      lightboxImg.alt = "";
+      lightboxCaption.textContent = "";
+    }
 
-  function showNextImage() {
-    currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
-    showImage(currentImageIndex);
-  }
+    function showNextImage() {
+      currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
+      showImage(currentImageIndex);
+    }
 
-  function showPrevImage() {
-    currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
-    showImage(currentImageIndex);
-  }
+    function showPrevImage() {
+      currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+      showImage(currentImageIndex);
+    }
 
-  workbenchGalleries.forEach(gallery => {
-    const galleryImages = Array.from(gallery.querySelectorAll(".workbench-img"));
+    workbenchGalleries.forEach(gallery => {
+      const galleryImages = Array.from(gallery.querySelectorAll(".workbench-img"));
 
-    galleryImages.forEach((img, index) => {
-      img.addEventListener("click", () => {
-        currentGalleryImages = galleryImages;
-        showImage(index);
+      galleryImages.forEach((img, index) => {
+        img.addEventListener("click", () => {
+          currentGalleryImages = galleryImages;
+          showImage(index);
+        });
       });
     });
-  });
 
-  lightboxNext.addEventListener("click", (event) => {
-    event.stopPropagation();
-    if (currentGalleryImages.length) showNextImage();
-  });
+    lightboxNext.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (currentGalleryImages.length) showNextImage();
+    });
 
-  lightboxPrev.addEventListener("click", (event) => {
-    event.stopPropagation();
-    if (currentGalleryImages.length) showPrevImage();
-  });
+    lightboxPrev.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (currentGalleryImages.length) showPrevImage();
+    });
 
-  lightboxImg.addEventListener("click", (event) => {
-    event.stopPropagation();
-  });
+    lightboxImg.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
 
-  lightbox.addEventListener("click", () => {
-    closeLightbox();
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (!lightbox.classList.contains("is-open")) return;
-
-    if (event.key === "Escape") {
+    lightbox.addEventListener("click", () => {
       closeLightbox();
-    } else if (event.key === "ArrowRight") {
-      showNextImage();
-    } else if (event.key === "ArrowLeft") {
-      showPrevImage();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox.classList.contains("is-open")) return;
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      } else if (event.key === "ArrowRight") {
+        showNextImage();
+      } else if (event.key === "ArrowLeft") {
+        showPrevImage();
+      }
+    });
+
+    lightbox.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightbox.addEventListener("touchend", (event) => {
+      touchEndX = event.changedTouches[0].screenX;
+      const swipeDistance = touchEndX - touchStartX;
+
+      if (Math.abs(swipeDistance) < 50 || !currentGalleryImages.length) return;
+
+      if (swipeDistance < 0) {
+        showNextImage();
+      } else {
+        showPrevImage();
+      }
+    }, { passive: true });
+  }
+
+
+  /* ---------------------------
+     Music Related
+  --------------------------- */
+
+  const modal = document.getElementById("wavesPlayerModal");
+
+  if (modal) {
+    const backdrop = modal.querySelector(".waves-player-backdrop");
+    const closeBtn = modal.querySelector(".waves-player-close");
+
+    const modalImage = document.getElementById("wavesModalImage");
+    const modalTitle = document.getElementById("wavesModalTitle");
+    const modalSubtitle = document.getElementById("wavesModalSubtitle");
+
+    const audio = document.getElementById("wavesModalAudio");
+    const source = document.getElementById("wavesModalSource");
+
+    const playBtn = modal.querySelector(".wyco-modal-play");
+    const playIcon = modal.querySelector(".wyco-modal-play-icon");
+    const muteBtn = modal.querySelector(".wyco-modal-mute");
+    const progress = modal.querySelector(".wyco-modal-progress");
+    const volume = modal.querySelector(".wyco-modal-volume");
+    const currentTimeEl = modal.querySelector(".wyco-modal-current");
+    const durationEl = modal.querySelector(".wyco-modal-duration");
+
+    function formatTime(time) {
+      if (isNaN(time)) return "0:00";
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time % 60).toString().padStart(2, "0");
+      return `${minutes}:${seconds}`;
     }
-  });
 
-  lightbox.addEventListener("touchstart", (event) => {
-    touchStartX = event.changedTouches[0].screenX;
-  }, { passive: true });
+    function updatePlayState() {
+      if (!audio || !playBtn || !playIcon) return;
 
-  lightbox.addEventListener("touchend", (event) => {
-    touchEndX = event.changedTouches[0].screenX;
-    const swipeDistance = touchEndX - touchStartX;
-
-    if (Math.abs(swipeDistance) < 50 || !currentGalleryImages.length) return;
-
-    if (swipeDistance < 0) {
-      showNextImage();
-    } else {
-      showPrevImage();
+      if (audio.paused) {
+        playIcon.textContent = "▶";
+        playBtn.setAttribute("aria-label", "Play");
+      } else {
+        playIcon.textContent = "❚❚";
+        playBtn.setAttribute("aria-label", "Pause");
+      }
     }
-  }, { passive: true });
-}
 
-  /*--------------- 
-      Music Related 
----------------*/
-const modal = document.getElementById("wavesPlayerModal");
+    function updateMuteState() {
+      if (!audio || !muteBtn) return;
 
-if (modal) {
-  const backdrop = modal.querySelector(".waves-player-backdrop");
-  const closeBtn = modal.querySelector(".waves-player-close");
-
-  const modalImage = document.getElementById("wavesModalImage");
-  const modalTitle = document.getElementById("wavesModalTitle");
-  const modalSubtitle = document.getElementById("wavesModalSubtitle");
-
-  const audio = document.getElementById("wavesModalAudio");
-  const source = document.getElementById("wavesModalSource");
-
-  const playBtn = modal.querySelector(".wyco-modal-play");
-  const playIcon = modal.querySelector(".wyco-modal-play-icon");
-  const muteBtn = modal.querySelector(".wyco-modal-mute");
-  const progress = modal.querySelector(".wyco-modal-progress");
-  const volume = modal.querySelector(".wyco-modal-volume");
-  const currentTimeEl = modal.querySelector(".wyco-modal-current");
-  const durationEl = modal.querySelector(".wyco-modal-duration");
-
-  function formatTime(time) {
-    if (isNaN(time)) return "0:00";
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60).toString().padStart(2, "0");
-    return `${minutes}:${seconds}`;
-  }
-
-  function updatePlayState() {
-    if (!audio || !playBtn || !playIcon) return;
-
-    if (audio.paused) {
-      playIcon.textContent = "▶";
-      playBtn.setAttribute("aria-label", "Play");
-    } else {
-      playIcon.textContent = "❚❚";
-      playBtn.setAttribute("aria-label", "Pause");
+      const muted = audio.muted || audio.volume === 0;
+      muteBtn.textContent = muted ? "🔇" : "🔊";
+      muteBtn.setAttribute("aria-label", muted ? "Unmute" : "Mute");
     }
-  }
 
-  function updateMuteState() {
-    if (!audio || !muteBtn) return;
+    function updateProgress() {
+      if (!audio || !progress || !currentTimeEl || !audio.duration) return;
 
-    const muted = audio.muted || audio.volume === 0;
-    muteBtn.textContent = muted ? "🔇" : "🔊";
-    muteBtn.setAttribute("aria-label", muted ? "Unmute" : "Mute");
-  }
+      progress.value = (audio.currentTime / audio.duration) * 100;
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+    }
 
-  function updateProgress() {
-    if (!audio || !progress || !currentTimeEl || !audio.duration) return;
+    function openPlayer(card) {
+      if (
+        !modalTitle || !modalSubtitle || !modalImage ||
+        !audio || !source || !currentTimeEl || !durationEl || !progress
+      ) return;
 
-    progress.value = (audio.currentTime / audio.duration) * 100;
-    currentTimeEl.textContent = formatTime(audio.currentTime);
-  }
+      const title = card.dataset.trackTitle || "Untitled Track";
+      const subtitle = card.dataset.trackSubtitle || "";
+      const image = card.dataset.trackImage || "";
+      const mp3 = card.dataset.trackMp3 || "";
 
-  function openPlayer(card) {
-    if (
-      !modalTitle || !modalSubtitle || !modalImage ||
-      !audio || !source || !currentTimeEl || !durationEl || !progress
-    ) return;
+      modalTitle.textContent = title;
+      modalSubtitle.textContent = subtitle;
+      modalImage.src = image;
+      modalImage.alt = `${title} cover art`;
 
-    const title = card.dataset.trackTitle || "Untitled Track";
-    const subtitle = card.dataset.trackSubtitle || "";
-    const image = card.dataset.trackImage || "";
-    const mp3 = card.dataset.trackMp3 || "";
+      audio.pause();
+      source.src = mp3;
+      audio.load();
 
-    modalTitle.textContent = title;
-    modalSubtitle.textContent = subtitle;
-    modalImage.src = image;
-    modalImage.alt = `${title} cover art`;
+      currentTimeEl.textContent = "0:00";
+      durationEl.textContent = "0:00";
+      progress.value = 0;
 
-    audio.pause();
-    source.src = mp3;
-    audio.load();
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+    }
 
-    currentTimeEl.textContent = "0:00";
-    durationEl.textContent = "0:00";
-    progress.value = 0;
+    function closePlayer() {
+      if (audio) audio.pause();
+      modal.hidden = true;
+      document.body.style.overflow = "";
+    }
 
-    modal.hidden = false;
-    document.body.style.overflow = "hidden";
-  }
+    document.addEventListener("click", (event) => {
+      const card = event.target.closest(".waves-track-card");
+      if (!card) return;
 
-  function closePlayer() {
-    if (audio) audio.pause();
-    modal.hidden = true;
-    document.body.style.overflow = "";
-  }
+      openPlayer(card);
+    });
 
-  document.querySelectorAll(".waves-track-card").forEach((card) => {
-    card.addEventListener("click", () => openPlayer(card));
+    document.addEventListener("keydown", (event) => {
+      const card = event.target.closest(".waves-track-card");
+      if (!card) return;
 
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
         openPlayer(card);
       }
     });
-  });
 
-  if (backdrop) {
-    backdrop.addEventListener("click", closePlayer);
-  }
-
-  if (closeBtn) {
-    closeBtn.addEventListener("click", closePlayer);
-  }
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !modal.hidden) {
-      closePlayer();
+    if (backdrop) {
+      backdrop.addEventListener("click", closePlayer);
     }
-  });
 
-  if (playBtn && audio) {
-    playBtn.addEventListener("click", async () => {
-      if (audio.paused) {
-        try {
-          await audio.play();
-        } catch (err) {
-          console.error("Playback failed:", err);
-        }
-      } else {
-        audio.pause();
+    if (closeBtn) {
+      closeBtn.addEventListener("click", closePlayer);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.hidden) {
+        closePlayer();
       }
     });
+
+    if (playBtn && audio) {
+      playBtn.addEventListener("click", async () => {
+        if (audio.paused) {
+          try {
+            await audio.play();
+          } catch (err) {
+            console.error("Playback failed:", err);
+          }
+        } else {
+          audio.pause();
+        }
+      });
+    }
+
+    if (muteBtn && audio) {
+      muteBtn.addEventListener("click", () => {
+        audio.muted = !audio.muted;
+        updateMuteState();
+      });
+    }
+
+    if (progress && audio) {
+      progress.addEventListener("input", () => {
+        if (!audio.duration) return;
+        audio.currentTime = (progress.value / 100) * audio.duration;
+      });
+    }
+
+    if (volume && audio) {
+      volume.addEventListener("input", () => {
+        audio.volume = parseFloat(volume.value);
+        audio.muted = audio.volume === 0;
+        updateMuteState();
+      });
+    }
+
+    if (audio) {
+      audio.addEventListener("loadedmetadata", () => {
+        if (durationEl) durationEl.textContent = formatTime(audio.duration);
+        if (volume) volume.value = audio.volume;
+        updateProgress();
+      });
+
+      audio.addEventListener("timeupdate", updateProgress);
+      audio.addEventListener("play", updatePlayState);
+      audio.addEventListener("pause", updatePlayState);
+      audio.addEventListener("volumechange", updateMuteState);
+
+      audio.addEventListener("ended", () => {
+        if (progress) progress.value = 0;
+        if (currentTimeEl) currentTimeEl.textContent = "0:00";
+        updatePlayState();
+      });
+    }
+
+    updatePlayState();
+    updateMuteState();
   }
 
-  if (muteBtn && audio) {
-    muteBtn.addEventListener("click", () => {
-      audio.muted = !audio.muted;
-      updateMuteState();
-    });
-  }
-
-  if (progress && audio) {
-    progress.addEventListener("input", () => {
-      if (!audio.duration) return;
-      audio.currentTime = (progress.value / 100) * audio.duration;
-    });
-  }
-
-  if (volume && audio) {
-    volume.addEventListener("input", () => {
-      audio.volume = parseFloat(volume.value);
-      audio.muted = audio.volume === 0;
-      updateMuteState();
-    });
-  }
-
-  if (audio) {
-    audio.addEventListener("loadedmetadata", () => {
-      if (durationEl) durationEl.textContent = formatTime(audio.duration);
-      if (volume) volume.value = audio.volume;
-      updateProgress();
-    });
-
-    audio.addEventListener("timeupdate", updateProgress);
-    audio.addEventListener("play", updatePlayState);
-    audio.addEventListener("pause", updatePlayState);
-    audio.addEventListener("volumechange", updateMuteState);
-
-    audio.addEventListener("ended", () => {
-      if (progress) progress.value = 0;
-      if (currentTimeEl) currentTimeEl.textContent = "0:00";
-      updatePlayState();
-    });
-  }
-
-  updatePlayState();
-  updateMuteState();
-}
 
   /* ---------------------------
      Initialize
@@ -870,6 +939,7 @@ if (modal) {
     renderLiveCardMeta();
     setupTimelineLoadMore();
     renderTimeline();
+    renderFeaturedMusic();
     setupNexusCarouselButtons();
     setupMediaCarouselButtons();
     setupCompletedCarousel();
