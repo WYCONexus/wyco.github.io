@@ -227,8 +227,8 @@ document.addEventListener('DOMContentLoaded', () => {
       .map((item, index) => {
         const html = buildTimelineItem(item);
         return html.replace(
-          'class="timeline-item"',
-          `class="timeline-item" style="animation-delay:${index * 0.05}s"`
+          'class="timeline-item',
+          `class="timeline-item" style="animation-delay:${index * 0.05}s`
         );
       })
       .join('');
@@ -266,9 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     rows.forEach((target) => {
       const sectionKey = target.dataset.wavesSection;
-      const data = Array.isArray(window.wavesData[sectionKey])
-        ? window.wycoData?.[sectionKey] || window.wavesData[sectionKey]
-        : [];
 
       const normalizedData = Array.isArray(window.wavesData[sectionKey])
         ? window.wavesData[sectionKey]
@@ -300,6 +297,8 @@ document.addEventListener('DOMContentLoaded', () => {
           data-track-mp3="${escapeHtml(item.mediaSrc || '')}"
           data-media-src="${escapeHtml(item.mediaSrc || '')}"
           data-media-type="${escapeHtml(item.mediaType || 'audio')}"
+          data-track-badge="${escapeHtml(item.badge || 'Media')}"
+          data-track-icon="${escapeHtml(item.mediaType === 'video' ? '▶' : item.mediaType === 'lyrics' ? '✎' : '✦')}"
           data-lyrics="${escapeHtml(item.lyricsText || item.lyrics || '')}"
           tabindex="0"
           aria-label="Open ${escapeHtml(item.title || 'Untitled Track')}"
@@ -310,7 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
               alt="${escapeHtml(item.title || 'Untitled Track')} cover art"
             >
             <span class="waves-track-badge">${escapeHtml(item.badge || 'Media')}</span>
-            <span class="waves-track-orb" aria-hidden="true">✦</span>
+            <span class="waves-track-orb" aria-hidden="true">
+              ${item.mediaType === 'video' ? '▶' : item.mediaType === 'lyrics' ? '✎' : '✦'}
+            </span>
 
             <div class="waves-track-body">
               <h3>${escapeHtml(item.title || 'Untitled Track')}</h3>
@@ -320,6 +321,158 @@ document.addEventListener('DOMContentLoaded', () => {
         </article>
       `).join('');
     });
+  }
+
+
+  /* ---------------------------
+     Section Library Modal
+  --------------------------- */
+
+  const sectionLibraryModal = document.getElementById('sectionLibraryModal');
+  const sectionLibraryTitle = document.getElementById('sectionLibraryTitle');
+  const sectionLibrarySubtitle = document.getElementById('sectionLibrarySubtitle');
+  const sectionLibraryList = document.getElementById('sectionLibraryList');
+  const sectionLibraryClose = document.getElementById('sectionLibraryClose');
+
+  function getWavesSectionItems(sectionKey) {
+    return Array.isArray(window.wavesData?.[sectionKey])
+      ? window.wavesData[sectionKey]
+      : [];
+  }
+
+  function getSectionLibraryIcon(item) {
+    if (item.mediaType === 'video') return '▶';
+    if (item.mediaType === 'lyrics') return '✎';
+    return '✦';
+  }
+
+  function buildSectionLibraryItem(item) {
+    const title = escapeHtml(item.title || 'Untitled Track');
+    const subtitle = escapeHtml(item.subtitle || '');
+    const image = escapeHtml(item.image || '/images/waves/wyco_gradient_diagonal.jpg');
+    const badge = escapeHtml(item.badge || 'Media');
+    const mediaType = escapeHtml(item.mediaType || 'audio');
+    const mediaSrc = escapeHtml(item.mediaSrc || '');
+    const lyrics = escapeHtml(item.lyricsText || item.lyrics || '');
+    const icon = escapeHtml(getSectionLibraryIcon(item));
+
+    return `
+      <article
+        class="section-library-item waves-track-card"
+        data-track-title="${title}"
+        data-track-subtitle="${subtitle}"
+        data-track-image="${image}"
+        data-track-mp3="${mediaSrc}"
+        data-media-src="${mediaSrc}"
+        data-media-type="${mediaType}"
+        data-track-badge="${badge}"
+        data-track-icon="${icon}"
+        data-lyrics="${lyrics}"
+        tabindex="0"
+        aria-label="Open ${title}"
+      >
+        <div class="section-library-item-media">
+          <img src="${image}" alt="${title} cover art">
+        </div>
+
+        <div class="section-library-item-copy">
+          <span class="section-library-item-badge">${badge}</span>
+          <h4 class="section-library-item-title">${title}</h4>
+          <p class="section-library-item-subtitle">${subtitle}</p>
+        </div>
+
+        <span class="section-library-item-arrow" aria-hidden="true">${icon}</span>
+      </article>
+    `;
+  }
+
+  function openSectionLibraryModal(panel) {
+    if (
+      !sectionLibraryModal ||
+      !sectionLibraryTitle ||
+      !sectionLibrarySubtitle ||
+      !sectionLibraryList ||
+      !panel
+    ) return;
+
+    const title = panel.dataset.libraryTitle || 'Library';
+    const subtitle = panel.dataset.librarySubtitle || 'Browse all items in this section.';
+    const source = panel.dataset.librarySource || '';
+    const items = getWavesSectionItems(source);
+
+    sectionLibraryTitle.textContent = title;
+    sectionLibrarySubtitle.textContent = subtitle;
+
+    if (!items.length) {
+      sectionLibraryList.innerHTML = `
+        <div class="section-library-empty">
+          No items have been added to this section yet.
+        </div>
+      `;
+    } else {
+      sectionLibraryList.innerHTML = items.map(buildSectionLibraryItem).join('');
+    }
+
+    sectionLibraryModal.classList.add('active');
+    sectionLibraryModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('section-library-open');
+  }
+
+  function closeSectionLibraryModal() {
+    if (!sectionLibraryModal) return;
+
+    sectionLibraryModal.classList.remove('active');
+    sectionLibraryModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('section-library-open');
+  }
+
+  function setupSectionLibraryTriggers() {
+    const triggers = document.querySelectorAll('.section-library-trigger');
+    if (!triggers.length) return;
+
+    triggers.forEach((panel) => {
+      if (panel.dataset.libraryBound === 'true') return;
+      panel.dataset.libraryBound = 'true';
+
+      panel.addEventListener('click', (event) => {
+        if (event.target.closest('.waves-track-card, .featured-music-arrow, a, button, input, video, audio')) {
+          return;
+        }
+
+        openSectionLibraryModal(panel);
+      });
+    });
+
+    const panelArrows = document.querySelectorAll('.featured-music-arrow');
+    panelArrows.forEach((arrow) => {
+      if (arrow.dataset.libraryArrowBound === 'true') return;
+      arrow.dataset.libraryArrowBound = 'true';
+
+      arrow.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const panel = arrow.closest('.section-library-trigger');
+        if (!panel) return;
+
+        openSectionLibraryModal(panel);
+      });
+    });
+
+    if (sectionLibraryClose && sectionLibraryClose.dataset.bound !== 'true') {
+      sectionLibraryClose.dataset.bound = 'true';
+      sectionLibraryClose.addEventListener('click', closeSectionLibraryModal);
+    }
+
+    if (sectionLibraryModal && sectionLibraryModal.dataset.bound !== 'true') {
+      sectionLibraryModal.dataset.bound = 'true';
+
+      sectionLibraryModal.addEventListener('click', (event) => {
+        if (event.target.matches('[data-close-library]')) {
+          closeSectionLibraryModal();
+        }
+      });
+    }
   }
 
 
@@ -854,6 +1007,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const image = card.dataset.trackImage || "";
       const mediaSrc = card.dataset.mediaSrc || card.dataset.trackMp3 || "";
 
+      closeSectionLibraryModal();
+      closeLyricsModal();
+
       showAudioMode();
       resetVideoPlayer();
 
@@ -885,6 +1041,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const image = card.dataset.trackImage || "";
       const mediaSrc = card.dataset.mediaSrc || "";
 
+      closeSectionLibraryModal();
+      closeLyricsModal();
+
       showVideoMode();
       resetAudioPlayer();
 
@@ -915,6 +1074,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const mediaType = card.dataset.mediaType || "audio";
 
       if (mediaType === "lyrics") {
+        closeSectionLibraryModal();
         openLyricsModal(
           card.dataset.trackTitle || "Untitled",
           card.dataset.trackSubtitle || "Lyrics",
@@ -942,6 +1102,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const mediaType = card.dataset.mediaType || "audio";
 
       if (mediaType === "lyrics") {
+        closeSectionLibraryModal();
         openLyricsModal(
           card.dataset.trackTitle || "Untitled",
           card.dataset.trackSubtitle || "Lyrics",
@@ -967,8 +1128,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !modal.hidden) {
-        closePlayer();
+      if (e.key === "Escape") {
+        if (!modal.hidden) {
+          closePlayer();
+          return;
+        }
+
+        if (sectionLibraryModal && sectionLibraryModal.classList.contains('active')) {
+          closeSectionLibraryModal();
+          return;
+        }
       }
     });
 
@@ -1053,6 +1222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupTimelineLoadMore();
     renderTimeline();
     renderWavesSections();
+    setupSectionLibraryTriggers();
     setupNexusCarouselButtons();
     setupMediaCarouselButtons();
     setupCompletedCarousel();
