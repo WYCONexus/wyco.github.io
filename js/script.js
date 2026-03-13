@@ -427,53 +427,89 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setupSectionLibraryTriggers() {
-    const triggers = document.querySelectorAll('.section-library-trigger');
-    if (!triggers.length) return;
+  const triggers = document.querySelectorAll('.section-library-trigger');
+  if (!triggers.length) return;
 
-    triggers.forEach((panel) => {
-      if (panel.dataset.libraryBound === 'true') return;
-      panel.dataset.libraryBound = 'true';
+  triggers.forEach((panel) => {
+    const headTrigger = panel.querySelector('.section-library-head-trigger');
+    if (!headTrigger) return;
 
-      panel.addEventListener('click', (event) => {
-        if (event.target.closest('.waves-track-card, .featured-music-arrow, a, button, input, video, audio')) {
-          return;
-        }
+    if (headTrigger.dataset.libraryBound === 'true') return;
+    headTrigger.dataset.libraryBound = 'true';
 
-        openSectionLibraryModal(panel);
-      });
+    let touchMoved = false;
+
+    headTrigger.addEventListener('touchstart', () => {
+      touchMoved = false;
+    }, { passive: true });
+
+    headTrigger.addEventListener('touchmove', () => {
+      touchMoved = true;
+    }, { passive: true });
+
+    headTrigger.addEventListener('touchend', (event) => {
+      if (touchMoved) return;
+      event.preventDefault();
+      openSectionLibraryModal(panel);
+    }, { passive: false });
+
+    headTrigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      openSectionLibraryModal(panel);
     });
 
-    const panelArrows = document.querySelectorAll('.featured-music-arrow');
-    panelArrows.forEach((arrow) => {
-      if (arrow.dataset.libraryArrowBound === 'true') return;
-      arrow.dataset.libraryArrowBound = 'true';
-
-      arrow.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        const panel = arrow.closest('.section-library-trigger');
-        if (!panel) return;
-
-        openSectionLibraryModal(panel);
-      });
+    headTrigger.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      openSectionLibraryModal(panel);
     });
+  });
 
-    if (sectionLibraryClose && sectionLibraryClose.dataset.bound !== 'true') {
-      sectionLibraryClose.dataset.bound = 'true';
-      sectionLibraryClose.addEventListener('click', closeSectionLibraryModal);
-    }
+  const panelArrows = document.querySelectorAll('.featured-music-arrow');
+  panelArrows.forEach((arrow) => {
+    if (arrow.dataset.libraryArrowBound === 'true') return;
+    arrow.dataset.libraryArrowBound = 'true';
 
-    if (sectionLibraryModal && sectionLibraryModal.dataset.bound !== 'true') {
-      sectionLibraryModal.dataset.bound = 'true';
+    const openFromArrow = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-      sectionLibraryModal.addEventListener('click', (event) => {
-        if (event.target.matches('[data-close-library]')) {
-          closeSectionLibraryModal();
-        }
-      });
-    }
+      const panel = arrow.closest('.section-library-trigger');
+      if (!panel) return;
+
+      openSectionLibraryModal(panel);
+    };
+
+    arrow.addEventListener('click', openFromArrow);
+    arrow.addEventListener('touchend', openFromArrow, { passive: false });
+  });
+
+  if (sectionLibraryClose && sectionLibraryClose.dataset.bound !== 'true') {
+    sectionLibraryClose.dataset.bound = 'true';
+    sectionLibraryClose.addEventListener('click', closeSectionLibraryModal);
+    sectionLibraryClose.addEventListener('touchend', (event) => {
+      event.preventDefault();
+      closeSectionLibraryModal();
+    }, { passive: false });
   }
+
+  if (sectionLibraryModal && sectionLibraryModal.dataset.bound !== 'true') {
+    sectionLibraryModal.dataset.bound = 'true';
+
+    sectionLibraryModal.addEventListener('click', (event) => {
+      if (event.target.matches('[data-close-library]')) {
+        closeSectionLibraryModal();
+      }
+    });
+
+    sectionLibraryModal.addEventListener('touchend', (event) => {
+      if (event.target.matches('[data-close-library]')) {
+        event.preventDefault();
+        closeSectionLibraryModal();
+      }
+    }, { passive: false });
+  }
+}
 
 
   /* ---------------------------

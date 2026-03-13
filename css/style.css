@@ -655,6 +655,16 @@ pre {
   border-bottom: 1px solid rgba(122, 162, 255, 0.12);
 }
 
+.section-library-head-trigger {
+  cursor: pointer;
+}
+
+.section-library-head-trigger:focus-visible {
+  outline: 2px solid rgba(69, 230, 216, 0.7);
+  outline-offset: 6px;
+  border-radius: 18px;
+}
+
 .section-library-head h3 {
   margin: 0 0 8px;
   font-size: clamp(1.5rem, 2.8vw, 2rem);
