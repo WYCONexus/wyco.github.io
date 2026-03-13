@@ -942,7 +942,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLiveCardMeta();
     setupTimelineLoadMore();
     renderTimeline();
-    renderFeaturedMusic();
+    renderWavesSections();
     setupNexusCarouselButtons();
     setupMediaCarouselButtons();
     setupCompletedCarousel();
