@@ -834,6 +834,24 @@ pre {
   object-fit: contain;
 }
 
+@media (max-width: 720px) {
+  .wyco-modal-video-player {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .wyco-modal-video {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+  }
+
+  .waves-player-info {
+    margin-bottom: 14px;
+  }
+}
+
 /* ---------------------------
    Shared Surface Styles
 --------------------------- */
