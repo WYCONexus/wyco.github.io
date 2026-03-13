@@ -465,25 +465,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const panelArrows = document.querySelectorAll('.featured-music-arrow');
-  panelArrows.forEach((arrow) => {
-    if (arrow.dataset.libraryArrowBound === 'true') return;
-    arrow.dataset.libraryArrowBound = 'true';
-
-    const openFromArrow = (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      const panel = arrow.closest('.section-library-trigger');
-      if (!panel) return;
-
-      openSectionLibraryModal(panel);
-    };
-
-    arrow.addEventListener('click', openFromArrow);
-    arrow.addEventListener('touchend', openFromArrow, { passive: false });
-  });
-
   if (sectionLibraryClose && sectionLibraryClose.dataset.bound !== 'true') {
     sectionLibraryClose.dataset.bound = 'true';
     sectionLibraryClose.addEventListener('click', closeSectionLibraryModal);

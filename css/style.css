@@ -431,7 +431,7 @@ pre {
   overflow-y: hidden;
   max-width: 100%;
   padding-bottom: 8px;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: none;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   scroll-behavior: smooth;
@@ -445,7 +445,6 @@ pre {
   flex: 0 0 205px;
   min-width: 205px;
   max-width: 205px;
-  scroll-snap-align: start;
 }
 
 .waves-track-card {
