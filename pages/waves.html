@@ -35,7 +35,7 @@
       </p>
     </section>
 
-    <!--FEATURED MUSIC-->
+    <!-- FEATURED MUSIC -->
     <section class="featured-music-section">
       <div class="featured-music-panel">
         <div class="featured-music-head">
@@ -55,11 +55,15 @@
           </button>
         </div>
 
-        <div class="waves-track-grid" id="featuredMusicRow" data-waves-section="featuredMusic"></div>
+        <div
+          class="waves-track-grid"
+          id="featuredMusicRow"
+          data-waves-section="featuredMusic"
+        ></div>
       </div>
     </section>
 
-    <!--SHORT INSTRUMENTALS-->
+    <!-- SHORT INSTRUMENTALS -->
     <section class="featured-music-section">
       <div class="featured-music-panel">
         <div class="featured-music-head">
@@ -79,11 +83,43 @@
           </button>
         </div>
 
-        <div class="waves-track-grid" id="shortInstrumentalRow" data-waves-section="shortInstrumental"></div>
+        <div
+          class="waves-track-grid"
+          id="shortInstrumentalRow"
+          data-waves-section="shortInstrumental"
+        ></div>
       </div>
     </section>
 
-    <!--LYRICS-->
+    <!-- VISUAL MEDIA -->
+    <section class="featured-music-section">
+      <div class="featured-music-panel">
+        <div class="featured-music-head">
+          <div>
+            <h2 class="featured-music-title">Visual Media</h2>
+            <p class="featured-music-subtitle">
+              Watch visualizers, music videos, clips, and other visual media directly on the site.
+            </p>
+          </div>
+
+          <button
+            class="featured-music-arrow"
+            type="button"
+            aria-label="Next tracks"
+          >
+            ›
+          </button>
+        </div>
+
+        <div
+          class="waves-track-grid"
+          id="visualMediaRow"
+          data-waves-section="visualMedia"
+        ></div>
+      </div>
+    </section>
+
+    <!-- LYRICS -->
     <section class="media-section glass panel">
       <div class="media-head">
         <div>
@@ -95,16 +131,17 @@
       <div class="media-carousel-shell">
         <button class="media-arrow media-arrow-left" type="button" aria-label="Scroll lyrics left" data-target="lyricsRow">‹</button>
 
-        <div class="waves-track-grid"
-              id="lyricsRow"
-             data-waves-section="lyrics">
-        </div>
+        <div
+          class="waves-track-grid"
+          id="lyricsRow"
+          data-waves-section="lyrics"
+        ></div>
 
         <button class="media-arrow media-arrow-right" type="button" aria-label="Scroll lyrics right" data-target="lyricsRow">›</button>
       </div>
     </section>
-    
-<!-- LYRICS USAGE NOTICE -->
+
+    <!-- LYRICS USAGE NOTICE -->
     <section class="section-block glass">
       <h2><span class="gradient-text">Lyrics Usage Notice</span></h2>
       <p>
@@ -115,7 +152,7 @@
     </section>
   </main>
 
-  <!--LYRICS MODAL-->
+  <!-- LYRICS MODAL -->
   <div class="lyrics-modal" id="lyricsModal" aria-hidden="true">
     <div class="lyrics-modal-panel">
       <div class="lyrics-modal-head">
@@ -136,6 +173,7 @@
   --------------->
   <div id="site-footer"></div>
 
+  <!-- WAVES PLAYER MODAL -->
   <div class="waves-player-modal" id="wavesPlayerModal" hidden>
     <div class="waves-player-backdrop"></div>
 
@@ -152,7 +190,8 @@
         <p id="wavesModalSubtitle">Track subtitle</p>
       </div>
 
-      <div class="wyco-modal-audio-player">
+      <!-- AUDIO PLAYER -->
+      <div class="wyco-modal-audio-player" id="wavesAudioPlayerShell">
         <audio id="wavesModalAudio" class="wyco-modal-audio" preload="metadata">
           <source id="wavesModalSource" src="" type="audio/mpeg">
         </audio>
@@ -193,6 +232,19 @@
             >
           </div>
         </div>
+      </div>
+
+      <!-- VIDEO PLAYER -->
+      <div class="wyco-modal-video-player" id="wavesVideoPlayerShell" hidden>
+        <video
+          id="wavesModalVideo"
+          class="wyco-modal-video"
+          controls
+          playsinline
+          preload="metadata"
+        >
+          <source id="wavesModalVideoSource" src="" type="video/mp4">
+        </video>
       </div>
     </div>
   </div>
