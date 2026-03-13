@@ -1,0 +1,81 @@
+/* ---------------------------
+   Hub Live Cards
+--------------------------- */
+
+.live-card {
+  position: relative;
+  min-height: 190px;
+  min-width: 0;
+  padding-top: 40px;
+  overflow: hidden;
+}
+
+.live-card h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.live-card p {
+  margin: 0;
+  max-width: 36ch;
+  color: var(--text);
+  line-height: 1.4;
+  font-size: 0.98rem;
+}
+
+.live-card .icon {
+  margin-bottom: 18px;
+}
+
+.card-live-meta {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  max-width: 44%;
+  text-align: right;
+  z-index: 2;
+}
+
+.live-meta-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 4px 0;
+  color: rgba(201, 214, 244, 0.88);
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-shadow: 0 0 14px rgba(111,137,255,0.12);
+}
+
+/* Custom emoji support */
+.meta-emoji {
+  width: 48px;
+  height: 48px;
+  margin-right: 6px;
+  vertical-align: -2px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+.live-meta-line strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.live-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 88% 14%, rgba(69,230,216,0.08), transparent 18%),
+    radial-gradient(circle at 78% 20%, rgba(199,93,255,0.08), transparent 20%);
+  pointer-events: none;
+}

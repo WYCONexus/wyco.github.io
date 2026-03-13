@@ -1,7 +1,45 @@
-.site-footer { padding: 0 0 32px; }
+/* ---------------------------
+   Footer
+--------------------------- */
+
+.site-footer {
+  padding: 0 0 32px;
+}
+
 .footer-grid {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
   gap: 18px;
   padding: 22px;
+}
+
+.footer-brand {
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.footer-pill {
+  font-size: 0.85rem;
+  padding: 7px 12px;
+  color: var(--muted);
+  transition: 0.25s ease;
+}
+
+.footer-pill:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.08);
 }

@@ -1,6 +1,150 @@
-@media (max-width: 900px) {
-  .footer-grid { grid-template-columns: 1fr; }
+/* ---------------------------
+   Responsive
+--------------------------- */
+
+@media (max-width: 1180px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-grid {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+  }
 }
+
+@media (max-width: 900px) {
+  .hero,
+  .content-grid,
+  .cards-3,
+  .footer-grid,
+  .section-head {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .section-heading,
+  .completed-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .completed-note {
+    max-width: none;
+    text-align: left;
+  }
+
+  .project-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .completed-card {
+    flex: 0 0 280px;
+    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
+    min-height: 180px;
+  }
+
+  .completed-viewport::before,
+  .completed-viewport::after {
+    width: 28px;
+  }
+}
+
 @media (max-width: 720px) {
-  .nav-wrap { flex-wrap: wrap; }
+  .nav-wrap {
+    border-radius: 28px;
+    flex-wrap: wrap;
+  }
+
+  .main-nav {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .main-nav.open {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .hero-grid,
+  .cards-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-copy,
+  .feature-card,
+  .panel,
+  .page-hero,
+  .section-block,
+  .project-card,
+  .footer-grid {
+    padding: 20px;
+  }
+
+  .policy-card {
+    padding: 22px;
+  }
+
+  .live-card {
+    min-height: 185px;
+    padding-top: 24px;
+    padding-right: 132px;
+    padding-bottom: 24px;
+  }
+
+  .card-live-meta {
+    position: absolute;
+    top: 24px;
+    right: 16px;
+    left: auto;
+    bottom: auto;
+    width: 112px;
+    max-width: 112px;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .live-meta-line {
+    justify-content: flex-end;
+    font-size: 0.72rem;
+  }
+
+  .timeline-line {
+    left: 34px;
+  }
+
+  .timeline-item {
+    grid-template-columns: 52px 1fr;
+    gap: 14px;
+  }
+
+  .timeline-empty {
+    padding-left: 52px;
+  }
+
+  .timeline-actions {
+    padding-left: 52px;
+  }
+
+  .timeline-card {
+    padding: 16px;
+  }
 }

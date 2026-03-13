@@ -1,6 +1,0 @@
-.timeline-items { display: grid; gap: 18px; }
-.timeline-card {
-  padding: 18px;
-  border-radius: 22px;
-  background: rgba(12, 18, 36, 0.66);
-}

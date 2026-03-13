@@ -1,0 +1,21 @@
+/* ---------------------------
+   Generic Project Cards
+--------------------------- */
+
+.project-list {
+  display: grid;
+  gap: 16px;
+}
+
+.project-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.project-card.archived {
+  align-items: center;
+  display: none;
+  opacity: 0.50;
+}
