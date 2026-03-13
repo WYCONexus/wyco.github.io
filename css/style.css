@@ -470,7 +470,6 @@ pre {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: saturate(1.02) contrast(1.02);
 }
 
 .waves-track-thumb::after {
@@ -525,7 +524,7 @@ pre {
 .waves-track-body h3 {
   margin: 0 0 6px;
   color: #f0f4ff;
-  font-size: 1.08rem;
+  font-size: 1rem;
   font-weight: 800;
   line-height: 1.2;
 }
