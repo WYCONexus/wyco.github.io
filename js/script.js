@@ -1571,6 +1571,71 @@ document.addEventListener('DOMContentLoaded', () => {
     updateMuteState();
   }
 
+  /* ---------------------------
+     Projects Page Data Rendering
+  --------------------------- */
+
+  function initProjectsPage() {
+
+  if (!window.projectsData) return;
+
+  const ongoingContainer = document.getElementById("projects-ongoing");
+  const completedContainer = document.getElementById("projects-completed");
+
+  if (ongoingContainer) {
+
+    projectsData.ongoing.forEach(project => {
+
+      const card = document.createElement("article");
+      card.className = "glass project-card";
+
+      card.innerHTML = `
+        <div class="project-card-copy">
+          <span class="project-tag ${project.tagClass}">
+            ${project.tag}
+          </span>
+          <h3>${project.title}</h3>
+          <p>${project.description}</p>
+        </div>
+        <div class="progress-pill ${project.progressClass}">
+          <span>${project.progressText}</span>
+        </div>
+      `;
+
+      ongoingContainer.appendChild(card);
+
+    });
+
+  }
+
+  if (completedContainer) {
+
+    projectsData.completed.forEach(project => {
+
+      const card = document.createElement("article");
+      card.className = "glass completed-card";
+
+      card.innerHTML = `
+        <div class="completed-card-copy">
+          <span class="project-tag ${project.tagClass}">
+            ${project.tag}
+          </span>
+          <h2>${project.title}</h2>
+          <p>${project.description}</p>
+        </div>
+        <div class="progress-pill archived-pill">
+          <span>Completed</span>
+        </div>
+      `;
+
+      completedContainer.appendChild(card);
+
+    });
+
+  }
+
+}
+
 
   /* ---------------------------
      Initialize
@@ -1591,6 +1656,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMediaCarouselButtons();
     setupCompletedCarousel();
     loadGitHubRepos();
+    initProjectsPage();
   }
 
   initSite();
