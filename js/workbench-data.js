@@ -35,8 +35,6 @@ window.WYCO_WORKBENCH_DATA = {
   ]
 };
 
-
-
 (function () {
   const pageKey = document.body?.dataset?.page;
   if (pageKey !== 'workbench') return;
@@ -66,6 +64,7 @@ window.WYCO_WORKBENCH_DATA = {
   let currentSectionImages = [];
   let currentIndex = 0;
   let suppressNextPopstate = false;
+  let lightboxSource = 'page';
 
   function getModalElements() {
     return {
@@ -121,7 +120,7 @@ window.WYCO_WORKBENCH_DATA = {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'workbench-preview-trigger';
-    button.setAttribute('aria-label', `Open ${sectionMeta[sectionKey].title} gallery`);
+    button.setAttribute('aria-label', `Open ${item.title || item.alt || 'gallery image'}`);
     button.style.display = 'block';
     button.style.width = '100%';
     button.style.padding = '0';
@@ -153,14 +152,17 @@ window.WYCO_WORKBENCH_DATA = {
 
       const data = getData();
       const items = Array.isArray(data[sectionKey]) ? data[sectionKey] : [];
-      const clickedIndex = items.findIndex((entry) => entry.src === item.src && entry.title === item.title);
+      const clickedIndex = items.findIndex(
+        (entry) => entry.src === item.src && entry.title === item.title
+      );
 
       currentSectionKey = sectionKey;
       currentSectionImages = items;
       currentIndex = clickedIndex >= 0 ? clickedIndex : 0;
+      lightboxSource = 'page';
 
       openLightbox(currentIndex, true);
-  });
+    });
 
     figure.appendChild(button);
     figure.appendChild(caption);
@@ -297,7 +299,16 @@ window.WYCO_WORKBENCH_DATA = {
     currentIndex = index;
     updateLightbox();
 
-    hideModalVisualState();
+    if (lightboxSource === 'modal') {
+      hideModalVisualState();
+    } else {
+      const { modal } = getModalElements();
+      if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        clearModalVisualOverrides();
+      }
+    }
 
     lightbox.classList.add('is-open');
     lightbox.setAttribute('aria-hidden', 'false');
@@ -307,7 +318,8 @@ window.WYCO_WORKBENCH_DATA = {
         {
           wycoWorkbench: 'lightbox',
           section: currentSectionKey,
-          index: currentIndex
+          index: currentIndex,
+          source: lightboxSource
         },
         '',
         ''
@@ -324,9 +336,14 @@ window.WYCO_WORKBENCH_DATA = {
     lightbox.classList.remove('is-open');
     lightbox.setAttribute('aria-hidden', 'true');
 
-    if (currentSectionKey) {
+    if (lightboxSource === 'modal') {
       showModalVisualState();
     } else {
+      const { modal } = getModalElements();
+      if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
       clearModalVisualOverrides();
     }
 
@@ -379,7 +396,11 @@ window.WYCO_WORKBENCH_DATA = {
       <div class="section-library-item-arrow" aria-hidden="true">&#10095;</div>
     `;
 
-    button.addEventListener('click', () => openLightbox(index, true));
+    button.addEventListener('click', () => {
+      lightboxSource = 'modal';
+      openLightbox(index, true);
+    });
+
     return button;
   }
 
@@ -469,18 +490,30 @@ window.WYCO_WORKBENCH_DATA = {
       currentSectionKey = null;
       currentSectionImages = [];
       currentIndex = 0;
+      lightboxSource = 'page';
       updateBodyScrollState();
       return;
     }
 
     if (state.wycoWorkbench === 'modal' && state.section) {
+      lightboxSource = 'modal';
       openSectionModal(state.section, false);
       return;
     }
 
     if (state.wycoWorkbench === 'lightbox' && state.section) {
-      openSectionModal(state.section, false);
+      const data = getData();
+      const items = Array.isArray(data[state.section]) ? data[state.section] : [];
+
+      currentSectionKey = state.section;
+      currentSectionImages = items;
       currentIndex = typeof state.index === 'number' ? state.index : 0;
+      lightboxSource = state.source === 'modal' ? 'modal' : 'page';
+
+      if (lightboxSource === 'modal') {
+        openSectionModal(state.section, false);
+      }
+
       openLightbox(currentIndex, false);
       return;
     }
