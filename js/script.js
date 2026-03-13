@@ -339,6 +339,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const sectionLibrarySubtitle = document.getElementById('sectionLibrarySubtitle');
   const sectionLibraryList = document.getElementById('sectionLibraryList');
   const sectionLibraryClose = document.getElementById('sectionLibraryClose');
+  const sectionLibrarySearch = document.getElementById('sectionLibrarySearch');
+
+  let currentSectionLibraryItems = [];
 
   function getWavesSectionItems(sectionKey) {
     return Array.isArray(window.wavesData?.[sectionKey])
@@ -392,6 +395,21 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  function renderSectionLibraryItems(items) {
+    if (!sectionLibraryList) return;
+
+    if (!items.length) {
+      sectionLibraryList.innerHTML = `
+        <div class="section-library-empty">
+          No matching items found.
+        </div>
+      `;
+      return;
+    }
+
+    sectionLibraryList.innerHTML = items.map(buildSectionLibraryItem).join('');
+  }
+
   function openSectionLibraryModal(panel) {
     if (
       !sectionLibraryModal ||
@@ -406,8 +424,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const source = panel.dataset.librarySource || '';
     const items = getWavesSectionItems(source);
 
+    currentSectionLibraryItems = items;
+
     sectionLibraryTitle.textContent = title;
     sectionLibrarySubtitle.textContent = subtitle;
+
+    if (sectionLibrarySearch) {
+      sectionLibrarySearch.value = '';
+    }
 
     if (!items.length) {
       sectionLibraryList.innerHTML = `
@@ -416,12 +440,16 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
     } else {
-      sectionLibraryList.innerHTML = items.map(buildSectionLibraryItem).join('');
+      renderSectionLibraryItems(items);
     }
 
     sectionLibraryModal.classList.add('active');
     sectionLibraryModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('section-library-open');
+
+    if (sectionLibrarySearch) {
+      setTimeout(() => sectionLibrarySearch.focus(), 0);
+    }
   }
 
   function closeSectionLibraryModal() {
@@ -430,6 +458,42 @@ document.addEventListener('DOMContentLoaded', () => {
     sectionLibraryModal.classList.remove('active');
     sectionLibraryModal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('section-library-open');
+    currentSectionLibraryItems = [];
+
+    if (sectionLibrarySearch) {
+      sectionLibrarySearch.value = '';
+    }
+  }
+
+  function setupSectionLibrarySearch() {
+    if (!sectionLibrarySearch) return;
+    if (sectionLibrarySearch.dataset.bound === 'true') return;
+    sectionLibrarySearch.dataset.bound = 'true';
+
+    sectionLibrarySearch.addEventListener('input', () => {
+      const query = sectionLibrarySearch.value.trim().toLowerCase();
+
+      if (!query) {
+        renderSectionLibraryItems(currentSectionLibraryItems);
+        return;
+      }
+
+      const filtered = currentSectionLibraryItems.filter((item) => {
+        const title = String(item.title || '').toLowerCase();
+        const subtitle = String(item.subtitle || '').toLowerCase();
+        const badge = String(item.badge || '').toLowerCase();
+        const album = String(item.album || '').toLowerCase();
+
+        return (
+          title.includes(query) ||
+          subtitle.includes(query) ||
+          badge.includes(query) ||
+          album.includes(query)
+        );
+      });
+
+      renderSectionLibraryItems(filtered);
+    });
   }
 
   function setupSectionLibraryTriggers() {
@@ -710,93 +774,88 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ---------------------------
-   Waves / Whimsy Carousel Controls
---------------------------- */
+     Waves / Whimsy Carousel Controls
+  --------------------------- */
 
-function updateMediaCarouselButtons(rowId) {
-  const row = document.getElementById(rowId);
-  if (!row) return;
+  function updateMediaCarouselButtons(rowId) {
+    const row = document.getElementById(rowId);
+    if (!row) return;
 
-  const leftButton = document.querySelector(`.media-arrow-left[data-target="${rowId}"]`);
-  const rightButton = document.querySelector(`.media-arrow-right[data-target="${rowId}"]`);
-  if (!leftButton || !rightButton) return;
+    const leftButton = document.querySelector(`.media-arrow-left[data-target="${rowId}"]`);
+    const rightButton = document.querySelector(`.media-arrow-right[data-target="${rowId}"]`);
+    if (!leftButton || !rightButton) return;
 
-  const maxScrollLeft = Math.max(0, row.scrollWidth - row.clientWidth);
-  const currentScroll = Math.round(row.scrollLeft);
+    const maxScrollLeft = Math.max(0, row.scrollWidth - row.clientWidth);
+    const currentScroll = Math.round(row.scrollLeft);
 
-  leftButton.disabled = currentScroll <= 2;
-  rightButton.disabled = currentScroll >= maxScrollLeft - 2;
-}
+    leftButton.disabled = currentScroll <= 2;
+    rightButton.disabled = currentScroll >= maxScrollLeft - 2;
+  }
 
-function setupMediaCarouselButtons() {
-  const mediaArrowButtons = document.querySelectorAll('.media-arrow');
+  function setupMediaCarouselButtons() {
+    const mediaArrowButtons = document.querySelectorAll('.media-arrow');
 
-  mediaArrowButtons.forEach((button) => {
-    if (button.dataset.bound === 'true') return;
-    button.dataset.bound = 'true';
+    mediaArrowButtons.forEach((button) => {
+      if (button.dataset.bound === 'true') return;
+      button.dataset.bound = 'true';
 
-    button.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
-      const rowId = button.dataset.target;
-      const row = document.getElementById(rowId);
-      if (!row) return;
+        const rowId = button.dataset.target;
+        const row = document.getElementById(rowId);
+        if (!row) return;
 
-      const amount = getScrollAmount(row, '.media-card, .lyrics-card, .waves-track-card');
-      const direction = button.classList.contains('media-arrow-left') ? -1 : 1;
+        const amount = getScrollAmount(row, '.media-card, .lyrics-card, .waves-track-card');
+        const direction = button.classList.contains('media-arrow-left') ? -1 : 1;
 
-      row.scrollLeft += amount * direction;
-    });
-  });
-
-  const featuredArrowButtons = document.querySelectorAll('.featured-music-arrow');
-
-  featuredArrowButtons.forEach((button) => {
-    if (button.dataset.bound === 'true') return;
-    button.dataset.bound = 'true';
-
-    button.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      const panel = button.closest('.featured-music-panel');
-      const row = panel ? panel.querySelector('.waves-track-grid') : null;
-      if (!row) return;
-
-      const firstCard = row.querySelector('.waves-track-card');
-      if (!firstCard) return;
-
-      const rowStyles = window.getComputedStyle(row);
-      const gap = parseInt(rowStyles.columnGap || rowStyles.gap || 18, 10) || 18;
-      const amount = firstCard.offsetWidth + gap;
-      const direction = button.classList.contains('arrow-left') ? -1 : 1;
-
-      row.scrollBy({
-        left: amount * direction,
-        behavior: 'smooth'
+        row.scrollLeft += amount * direction;
       });
     });
-  });
 
-  const rows = document.querySelectorAll('.media-row, .waves-track-grid');
+    const featuredArrowButtons = document.querySelectorAll('.featured-music-arrow');
 
-  rows.forEach((row) => {
-    row.addEventListener('scroll', () => {
-      if (row.id) updateMediaCarouselButtons(row.id);
+    featuredArrowButtons.forEach((button) => {
+      if (button.dataset.bound === 'true') return;
+      button.dataset.bound = 'true';
+
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const panel = button.closest('.featured-music-panel');
+        const row = panel ? panel.querySelector('.waves-track-grid') : null;
+        if (!row) return;
+
+        const amount = row.clientWidth * 0.9;
+        const direction = button.classList.contains('arrow-left') ? -1 : 1;
+
+        row.scrollBy({
+          left: amount * direction,
+          behavior: 'smooth'
+        });
+      });
     });
-  });
 
-  window.addEventListener('resize', () => {
+    const rows = document.querySelectorAll('.media-row, .waves-track-grid');
+
+    rows.forEach((row) => {
+      row.addEventListener('scroll', () => {
+        if (row.id) updateMediaCarouselButtons(row.id);
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      rows.forEach((row) => {
+        if (row.id) updateMediaCarouselButtons(row.id);
+      });
+    });
+
     rows.forEach((row) => {
       if (row.id) updateMediaCarouselButtons(row.id);
     });
-  });
-
-  rows.forEach((row) => {
-    if (row.id) updateMediaCarouselButtons(row.id);
-  });
-}
+  }
 
 
   /* ---------------------------
@@ -1299,6 +1358,7 @@ function setupMediaCarouselButtons() {
     renderTimeline();
     renderWavesSections();
     setupSectionLibraryTriggers();
+    setupSectionLibrarySearch();
     setupNexusCarouselButtons();
     setupMediaCarouselButtons();
     setupCompletedCarousel();

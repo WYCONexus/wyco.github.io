@@ -28,6 +28,7 @@ window.wavesData = {
     {
       title: "Peace",
       subtitle: "Short · Sapphire Kindness",
+      album: "Sapphire Kindness",
       badge: "Short Instrumental",
       image: "/assets/waves/sapphireKindness/mp3-peace.jpg",
       mediaSrc: "/assets/waves/sapphireKindness/peace.mp3",
@@ -36,6 +37,7 @@ window.wavesData = {
     {
       title: "Sole Addiction",
       subtitle: "Short · Sapphire Kindness",
+      album: "Sapphire Kindness",
       badge: "Short Instrumental",
       image: "/assets/waves/sapphireKindness/mp3-sole-addiction.jpg",
       mediaSrc: "/assets/waves/sapphireKindness/sole-addiction.mp3",
@@ -44,6 +46,7 @@ window.wavesData = {
     {
       title: "Bounce",
       subtitle: "Short · Silent Killer",
+      album: "Silent Killer",
       badge: "Short Instrumental",
       image: "/assets/waves/silentKiller/mp3-bounce.jpg",
       mediaSrc: "/assets/waves/silentKiller/bounce.mp3",
@@ -52,6 +55,7 @@ window.wavesData = {
     {
       title: "Home Alone",
       subtitle: "Short · Silent Killer",
+      album: "Silent Killer",
       badge: "Short Instrumental",
       image: "/assets/waves/silentKiller/mp3-home-alone.jpg",
       mediaSrc: "/assets/waves/silentKiller/home-alone.mp3",
@@ -60,6 +64,7 @@ window.wavesData = {
     {
       title: "Jungle Jam",
       subtitle: "Short · Silent Killer",
+      album: "Silent Killer",
       badge: "Short Instrumental",
       image: "/assets/waves/silentKiller/mp3-jungle-jam.jpg",
       mediaSrc: "/assets/waves/silentKiller/jungle-jam.mp3",
@@ -68,6 +73,7 @@ window.wavesData = {
     {
       title: "Progression",
       subtitle: "Short · Silent Killer",
+      album: "Silent Killer",
       badge: "Short Instrumental",
       image: "/assets/waves/silentKiller/mp3-progression.jpg",
       mediaSrc: "/assets/waves/silentKiller/progression.mp3",
@@ -76,6 +82,7 @@ window.wavesData = {
     {
       title: "Ride",
       subtitle: "Short · Silent Killer",
+      album: "Silent Killer",
       badge: "Short Instrumental",
       image: "/assets/waves/silentKiller/mp3-ride.jpg",
       mediaSrc: "/assets/waves/silentKiller/ride.mp3",
@@ -84,6 +91,7 @@ window.wavesData = {
     {
       title: "Stand Down",
       subtitle: "Short · Silent Killer",
+      album: "Silent Killer",
       badge: "Short Instrumental",
       image: "/assets/waves/silentKiller/mp3-stand-down.jpg",
       mediaSrc: "/assets/waves/silentKiller/stand-down.mp3",
