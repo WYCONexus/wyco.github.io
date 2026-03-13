@@ -41,6 +41,18 @@ window.wavesData = {
       lyrics: "Your lyrics text goes here...",
       mediaType: "lyrics"
     }
+  ],
+
+  /*VISUAL MEDIA*/
+  visualMedia: [
+    {
+      title: "Sun Kissed Visual",
+      subtitle: "Visual · WYCO Waves",
+      badge: "Video",
+      image: "/images/waves/wyco_gradient_diagonal.jpg",
+      mediaType: "video",
+      mediaSrc: "/video/sun-kissed.mp4"
+    }
   ]
 
   
