@@ -683,9 +683,11 @@ if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption &
 }
 
   /*--------------- 
-        Music Related 
-  ---------------*/
-  const modal = document.getElementById("wavesPlayerModal");
+      Music Related 
+---------------*/
+const modal = document.getElementById("wavesPlayerModal");
+
+if (modal) {
   const backdrop = modal.querySelector(".waves-player-backdrop");
   const closeBtn = modal.querySelector(".waves-player-close");
 
@@ -712,6 +714,8 @@ if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption &
   }
 
   function updatePlayState() {
+    if (!audio || !playBtn || !playIcon) return;
+
     if (audio.paused) {
       playIcon.textContent = "▶";
       playBtn.setAttribute("aria-label", "Play");
@@ -722,18 +726,26 @@ if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption &
   }
 
   function updateMuteState() {
+    if (!audio || !muteBtn) return;
+
     const muted = audio.muted || audio.volume === 0;
     muteBtn.textContent = muted ? "🔇" : "🔊";
     muteBtn.setAttribute("aria-label", muted ? "Unmute" : "Mute");
   }
 
   function updateProgress() {
-    if (!audio.duration) return;
+    if (!audio || !progress || !currentTimeEl || !audio.duration) return;
+
     progress.value = (audio.currentTime / audio.duration) * 100;
     currentTimeEl.textContent = formatTime(audio.currentTime);
   }
 
   function openPlayer(card) {
+    if (
+      !modalTitle || !modalSubtitle || !modalImage ||
+      !audio || !source || !currentTimeEl || !durationEl || !progress
+    ) return;
+
     const title = card.dataset.trackTitle || "Untitled Track";
     const subtitle = card.dataset.trackSubtitle || "";
     const image = card.dataset.trackImage || "";
@@ -757,7 +769,7 @@ if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption &
   }
 
   function closePlayer() {
-    audio.pause();
+    if (audio) audio.pause();
     modal.hidden = true;
     document.body.style.overflow = "";
   }
@@ -773,8 +785,13 @@ if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption &
     });
   });
 
-  backdrop.addEventListener("click", closePlayer);
-  closeBtn.addEventListener("click", closePlayer);
+  if (backdrop) {
+    backdrop.addEventListener("click", closePlayer);
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closePlayer);
+  }
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !modal.hidden) {
@@ -782,53 +799,64 @@ if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption &
     }
   });
 
-  playBtn.addEventListener("click", async () => {
-    if (audio.paused) {
-      try {
-        await audio.play();
-      } catch (err) {
-        console.error("Playback failed:", err);
+  if (playBtn && audio) {
+    playBtn.addEventListener("click", async () => {
+      if (audio.paused) {
+        try {
+          await audio.play();
+        } catch (err) {
+          console.error("Playback failed:", err);
+        }
+      } else {
+        audio.pause();
       }
-    } else {
-      audio.pause();
-    }
-  });
+    });
+  }
 
-  muteBtn.addEventListener("click", () => {
-    audio.muted = !audio.muted;
-    updateMuteState();
-  });
+  if (muteBtn && audio) {
+    muteBtn.addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      updateMuteState();
+    });
+  }
 
-  progress.addEventListener("input", () => {
-    if (!audio.duration) return;
-    audio.currentTime = (progress.value / 100) * audio.duration;
-  });
+  if (progress && audio) {
+    progress.addEventListener("input", () => {
+      if (!audio.duration) return;
+      audio.currentTime = (progress.value / 100) * audio.duration;
+    });
+  }
 
-  volume.addEventListener("input", () => {
-    audio.volume = parseFloat(volume.value);
-    audio.muted = audio.volume === 0;
-    updateMuteState();
-  });
+  if (volume && audio) {
+    volume.addEventListener("input", () => {
+      audio.volume = parseFloat(volume.value);
+      audio.muted = audio.volume === 0;
+      updateMuteState();
+    });
+  }
 
-  audio.addEventListener("loadedmetadata", () => {
-    durationEl.textContent = formatTime(audio.duration);
-    volume.value = audio.volume;
-    updateProgress();
-  });
+  if (audio) {
+    audio.addEventListener("loadedmetadata", () => {
+      if (durationEl) durationEl.textContent = formatTime(audio.duration);
+      if (volume) volume.value = audio.volume;
+      updateProgress();
+    });
 
-  audio.addEventListener("timeupdate", updateProgress);
-  audio.addEventListener("play", updatePlayState);
-  audio.addEventListener("pause", updatePlayState);
-  audio.addEventListener("volumechange", updateMuteState);
+    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("play", updatePlayState);
+    audio.addEventListener("pause", updatePlayState);
+    audio.addEventListener("volumechange", updateMuteState);
 
-  audio.addEventListener("ended", () => {
-    progress.value = 0;
-    currentTimeEl.textContent = "0:00";
-    updatePlayState();
-  });
+    audio.addEventListener("ended", () => {
+      if (progress) progress.value = 0;
+      if (currentTimeEl) currentTimeEl.textContent = "0:00";
+      updatePlayState();
+    });
+  }
 
   updatePlayState();
   updateMuteState();
+}
 
   /* ---------------------------
      Initialize
