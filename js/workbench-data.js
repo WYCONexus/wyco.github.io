@@ -35,6 +35,8 @@ window.WYCO_WORKBENCH_DATA = {
   ]
 };
 
+
+
 (function () {
   const pageKey = document.body?.dataset?.page;
   if (pageKey !== 'workbench') return;

@@ -15,8 +15,8 @@ window.projectsData = {
       tagClass: "tag-waves",
       title: "WYCO Waves Restructuring",
       description: "Song concepts, lyric curation, visual direction, and media rollout planning.",
-      progressClass: "progress-20",
-      progressText: "Planning"
+      progressClass: "progress-60",
+      progressText: "Building"
     },
 
     {
@@ -24,31 +24,38 @@ window.projectsData = {
       tagClass: "tag-nexus",
       title: "WYCO Nexus Restructuring",
       description: "Bots, utility systems, and experimental software planning.",
-      progressClass: "progress-20",
-      progressText: "Planning"
+      progressClass: "progress-40",
+      progressText: "In Progress"
     }
   ],
 
   completed: [
     {
+      tag: "WYCO Workbench",
+      tagClass: "tag-workbench",
+      title: "WYCO Workbench Branch Addition",
+      /*description: "Creative writing, illustration, painting, and imaginative worldbuilding."*/
+    },
+
+    {
       tag: "WYCO Hub",
       tagClass: "tag-core",
-      title: "Timeline Addition",
-      description: "Addition of Timeline on homepage to display active work."
+      title: "Hub Timeline Addition",
+      /*description: "Addition of Timeline on homepage to display active work."*/
     },
 
     {
       tag: "WYCO Whimsy",
       tagClass: "tag-waves",
-      title: "WYCO Whimsy Addition",
-      description: "Creative writing, illustration, painting, and imaginative worldbuilding."
+      title: "WYCO Whimsy Branch Addition",
+      /*description: "Creative writing, illustration, painting, and imaginative worldbuilding."*/
     },
 
     {
       tag: "WYCO Workbench",
       tagClass: "tag-workbench",
-      title: "WYCO Repairs Site",
-      description: "Static site foundation, branding, structure, and future hosting setup."
+      title: "WYCO Repairs External Site",
+      /*description: "Static site foundation, branding, structure, and future hosting setup."*/
     }
   ]
 
