@@ -105,10 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getDefaultMediaImage() {
     if (currentPageName === 'whimsy') {
-      return '/images/waves/wyco_gradient_diagonal.jpg';
+      return '/assets/icons/default-background.jpg';
     }
 
-    return '/images/waves/wyco_gradient_diagonal.jpg';
+    return '/assets/icons/default-background.jpg';
   }
 
   function getDefaultEmptyBadge() {
@@ -740,7 +740,7 @@ document.addEventListener('DOMContentLoaded', () => {
         aria-label="Open ${repoName} repository"
       >
         <div class="section-card-media nexus-card-media">
-          <img src="/images/waves/wyco_gradient_diagonal.jpg" alt="${repoName} artwork">
+          <img src="/assets/icons/default-background.jpg" alt="${repoName} artwork">
           <span class="section-card-badge nexus-badge">Repo</span>
          <span class="nexus-card-icon">⌘</span>
         </div>

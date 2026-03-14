@@ -5,7 +5,7 @@ window.projectsData = {
       tag: "WYCO",
       tagClass: "tag-core",
       title: "WYCO Hub Site",
-      description: "Main hub structure, visual direction, and branch routing for the WYCO ecosystem. Static site foundation, branding, structure, and future hosting setup.",
+      description: "Establishing the ecosystem’s structure, visual direction, branding, branch routing, and foundational setup for future hosting",
       progressClass: "progress-80",
       progressText: "Refining"
     },
@@ -15,15 +15,15 @@ window.projectsData = {
       tagClass: "tag-waves",
       title: "WYCO Waves Restructuring",
       description: "Song concepts, lyric curation, visual direction, and media rollout planning.",
-      progressClass: "progress-60",
-      progressText: "Building"
+      progressClass: "progress-40",
+      progressText: "In Progress"
     },
 
     {
       tag: "WYCO Nexus",
       tagClass: "tag-nexus",
       title: "WYCO Nexus Restructuring",
-      description: "Bots, utility systems, and experimental software planning.",
+      description: "Bots, apps, web development, utility systems, and experimental software planning.",
       progressClass: "progress-40",
       progressText: "In Progress"
     }

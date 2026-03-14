@@ -17,7 +17,7 @@ window.wavesData = {
       title: "Blown Fuse",
       subtitle: "Lyrics · WYCO Waves",
       badge: "Lyrics",
-      image: "/images/waves/wyco_gradient_diagonal.jpg",
+      image: "/assets/icons/default-background.jpg",
       lyrics: "Your lyrics text goes here...",
       mediaType: "lyrics"
     }*/
@@ -275,7 +275,7 @@ window.wavesData = {
       title: "Sun Kissed Visual",
       subtitle: "Visual · WYCO Waves",
       badge: "Video",
-      image: "/images/waves/wyco_gradient_diagonal.jpg",
+      image: "/assets/icons/default-background.jpg",
       mediaType: "video",
       mediaSrc: "/video/sun-kissed.mp4"
     }*/
