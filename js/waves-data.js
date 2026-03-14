@@ -1,14 +1,14 @@
 window.wavesData = {
   /*<!--FEATURED MUSIC-->*/
   featuredMusic: [
-    /*{
-      title: "Blown Fuse",
-      subtitle: "Single · WYCO Waves",
+    {
+      title: "Feelin Myself",
+      subtitle: "Clip · WYCO Waves",
       badge: "Music",
-      image: "/images/waves/wyco_gradient_diagonal.jpg",
-      mediaSrc: "/audio/blown-fuse.mp3",
+      image: "/assets/waves/clips/mp3-feelin-myself.jpg",
+      mediaSrc: "/assets/waves/clips/feelin-myself.mp3",
       mediaType: "audio"
-    }*/
+    }
   ],
 
   /* LYRICS */
