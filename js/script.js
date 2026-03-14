@@ -1589,12 +1589,12 @@ document.addEventListener('DOMContentLoaded', () => {
       card.className = "glass project-card";
 
       card.innerHTML = `
-       <div class="project-card-copy">
+        <div class="project-card-copy">
           <span class="project-tag ${project.tagClass}">
             ${project.tag}
           </span>
           <h3>${project.title}</h3>
-          ${project.description.trim() ? `<p>${project.description}</p>` : ''}
+          ${project.description?.trim() ? `<p>${project.description}</p>` : ''}
         </div>
         <div class="progress-pill ${project.progressClass}">
           <span>${project.progressText}</span>
@@ -1608,6 +1608,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (completedContainer) {
     const loopMarker = completedContainer.querySelector(".completed-loop-marker");
 
+    completedContainer.querySelectorAll(".completed-card:not(.completed-loop-marker)").forEach(card => {
+      card.remove();
+    });
+
     projectsData.completed.forEach(project => {
       const card = document.createElement("article");
       card.className = "glass completed-card";
@@ -1618,7 +1622,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ${project.tag}
           </span>
           <h2>${project.title}</h2>
-          ${project.description.trim() ? `<p>${project.description}</p>` : ''}
+          ${project.description?.trim() ? `<p>${project.description}</p>` : ''}
         </div>
         <div class="progress-pill archived-pill">
           <span>Completed</span>
