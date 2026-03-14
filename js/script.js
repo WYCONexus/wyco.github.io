@@ -260,20 +260,21 @@ document.addEventListener('DOMContentLoaded', () => {
       : [];
   }
 
-  function buildTimelineItem(item) {
+  function buildTimelineItem(item, index = 0) {
     const branch = escapeHtml(item.branch || 'WYCO');
     const title = escapeHtml(item.title || 'Update');
     const description = escapeHtml(item.description || '');
     const displayDate = escapeHtml(formatDisplayDate(item.date || ''));
     const branchClass = item.branchClass ? ` ${escapeHtml(item.branchClass)}` : '';
+    const animationDelay = `${index * 0.05}s`;
 
     return `
-      <article class="timeline-item${branchClass}">
+      <article class="timeline-item${branchClass}" style="animation-delay:${animationDelay}">
         <div class="timeline-marker" aria-hidden="true"></div>
         <div class="timeline-card">
           <div class="timeline-top">
             <div class="timeline-branch">
-              <span class="timeline-branch-badge${branchClass}">${branch}</span>
+              <span class="timeline-branch-badge">${branch}</span>
             </div>
             <span class="timeline-date">${displayDate}</span>
           </div>
@@ -322,13 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const visibleItems = timelineData.slice(0, timelineVisibleCount);
 
     timelineItems.innerHTML = visibleItems
-      .map((item, index) => {
-        const html = buildTimelineItem(item);
-        return html.replace(
-          'class="timeline-item',
-          `class="timeline-item" style="animation-delay:${index * 0.05}s`
-        );
-      })
+      .map((item, index) => buildTimelineItem(item, index))
       .join('');
 
     updateTimelineButton(timelineData.length);
@@ -1576,67 +1571,67 @@ document.addEventListener('DOMContentLoaded', () => {
   --------------------------- */
 
   function initProjectsPage() {
-  if (!window.projectsData) return;
+    if (!window.projectsData) return;
 
-  const ongoingContainer = document.getElementById("projects-ongoing");
-  const completedContainer = document.getElementById("projects-completed");
+    const ongoingContainer = document.getElementById("projects-ongoing");
+    const completedContainer = document.getElementById("projects-completed");
 
-  if (ongoingContainer) {
-    ongoingContainer.innerHTML = "";
+    if (ongoingContainer) {
+      ongoingContainer.innerHTML = "";
 
-    projectsData.ongoing.forEach(project => {
-      const card = document.createElement("article");
-      card.className = "glass project-card";
+      projectsData.ongoing.forEach(project => {
+        const card = document.createElement("article");
+        card.className = "glass project-card";
 
-      card.innerHTML = `
-        <div class="project-card-copy">
-          <span class="project-tag ${project.tagClass}">
-            ${project.tag}
-          </span>
-          <h3>${project.title}</h3>
-          ${project.description?.trim() ? `<p>${project.description}</p>` : ''}
-        </div>
-        <div class="progress-pill ${project.progressClass}">
-          <span>${project.progressText}</span>
-        </div>
-      `;
+        card.innerHTML = `
+          <div class="project-card-copy">
+            <span class="project-tag ${project.tagClass}">
+              ${project.tag}
+            </span>
+            <h3>${project.title}</h3>
+            ${project.description?.trim() ? `<p>${project.description}</p>` : ''}
+          </div>
+          <div class="progress-pill ${project.progressClass}">
+            <span>${project.progressText}</span>
+          </div>
+        `;
 
-      ongoingContainer.appendChild(card);
-    });
+        ongoingContainer.appendChild(card);
+      });
+    }
+
+    if (completedContainer) {
+      const loopMarker = completedContainer.querySelector(".completed-loop-marker");
+
+      completedContainer.querySelectorAll(".completed-card:not(.completed-loop-marker)").forEach(card => {
+        card.remove();
+      });
+
+      projectsData.completed.forEach(project => {
+        const card = document.createElement("article");
+        card.className = "glass completed-card";
+
+        card.innerHTML = `
+          <div class="completed-card-copy">
+            <span class="project-tag ${project.tagClass}">
+              ${project.tag}
+            </span>
+            <h2>${project.title}</h2>
+            ${project.description?.trim() ? `<p>${project.description}</p>` : ''}
+          </div>
+          <div class="progress-pill archived-pill">
+            <span>Completed</span>
+          </div>
+        `;
+
+        if (loopMarker) {
+          completedContainer.insertBefore(card, loopMarker);
+        } else {
+          completedContainer.appendChild(card);
+        }
+      });
+    }
   }
-
-  if (completedContainer) {
-    const loopMarker = completedContainer.querySelector(".completed-loop-marker");
-
-    completedContainer.querySelectorAll(".completed-card:not(.completed-loop-marker)").forEach(card => {
-      card.remove();
-    });
-
-    projectsData.completed.forEach(project => {
-      const card = document.createElement("article");
-      card.className = "glass completed-card";
-
-      card.innerHTML = `
-        <div class="completed-card-copy">
-          <span class="project-tag ${project.tagClass}">
-            ${project.tag}
-          </span>
-          <h2>${project.title}</h2>
-          ${project.description?.trim() ? `<p>${project.description}</p>` : ''}
-        </div>
-        <div class="progress-pill archived-pill">
-          <span>Completed</span>
-        </div>
-      `;
-
-      if (loopMarker) {
-        completedContainer.insertBefore(card, loopMarker);
-      } else {
-        completedContainer.appendChild(card);
-      }
-    });
-  }
-}
 
 
   /* ---------------------------
