@@ -13,7 +13,7 @@ window.wycoData = {
   cards: {
     waves: {
       meta: [
-        '📦 0'
+        '📦 27'
       ]
     },
     whimsy: {
@@ -34,7 +34,7 @@ window.wycoData = {
     projects: {
       meta: [
         "📦 3 Active",
-        "📦 2 Archived"
+        "📦 4 Archived"
       ]
     }
   },
