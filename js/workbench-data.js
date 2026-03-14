@@ -1,12 +1,28 @@
 window.WYCO_WORKBENCH_DATA = {
   repairs: [
-    /*{
-      title: 'Repair Project 01',
-      src: '/assets/icons/default-background.jpg',
-      alt: 'Repair Project 01',
-      caption: 'Repair Project 01',
-      subtitle: 'Before-and-after fixes, practical improvements, and functional restorations.'
-    }*/
+    {
+      title: 'Commercial Sink Restoration',
+      src: '/assets/workbench/commercial-sink-restoration.jpg',
+      alt: 'Commercial Sink Restoration',
+      caption: 'Commercial Sink Restoration',
+      subtitle: 'Surface rust was polished from the underside of the commercial stainless sink, restoring the metal to a clean, corrosion-free finish.'
+    },
+
+    {
+      title: 'Grease Dumpster Restoration',
+      src: '/assets/workbench/grease-dumpster-restoration.jpg',
+      alt: 'Grease Dumpster Restoration',
+      caption: 'Grease Dumpster Restoration',
+      subtitle: 'Built-up grease and debris were removed from the commercial grease dumpster, restoring proper drainage and sanitary condition.'
+    },
+
+    {
+      title: 'Ventilation System Restoration',
+      src: '/assets/workbench/ventilation-system-restoration.jpg',
+      alt: 'Ventilation System Restoration',
+      caption: 'Ventilation System Restoration',
+      subtitle: 'The commercial ventilation system was disassembled, cleaned, and reassembled, restoring proper airflow and functionality.'
+    }
   ],
   furniture: [
     /*{
