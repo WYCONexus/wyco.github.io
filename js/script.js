@@ -1576,16 +1576,15 @@ document.addEventListener('DOMContentLoaded', () => {
   --------------------------- */
 
   function initProjectsPage() {
-
   if (!window.projectsData) return;
 
   const ongoingContainer = document.getElementById("projects-ongoing");
   const completedContainer = document.getElementById("projects-completed");
 
   if (ongoingContainer) {
+    ongoingContainer.innerHTML = "";
 
     projectsData.ongoing.forEach(project => {
-
       const card = document.createElement("article");
       card.className = "glass project-card";
 
@@ -1603,15 +1602,13 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       ongoingContainer.appendChild(card);
-
     });
-
   }
 
   if (completedContainer) {
+    const loopMarker = completedContainer.querySelector(".completed-loop-marker");
 
     projectsData.completed.forEach(project => {
-
       const card = document.createElement("article");
       card.className = "glass completed-card";
 
@@ -1628,12 +1625,13 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
 
-      completedContainer.appendChild(card);
-
+      if (loopMarker) {
+        completedContainer.insertBefore(card, loopMarker);
+      } else {
+        completedContainer.appendChild(card);
+      }
     });
-
   }
-
 }
 
 
@@ -1654,9 +1652,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSectionLibrarySearch();
     setupNexusCarouselButtons();
     setupMediaCarouselButtons();
+    initProjectsPage();
     setupCompletedCarousel();
     loadGitHubRepos();
-    initProjectsPage();
   }
 
   initSite();
