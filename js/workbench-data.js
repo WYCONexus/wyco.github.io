@@ -1,6 +1,38 @@
 window.WYCO_WORKBENCH_DATA = {
   repairs: [
     {
+      title: 'Laundry Line Rebuild',
+      src: '/assets/workbench/laundry-line-rebuild.jpg',
+      alt: 'Laundry Line Rebuild',
+      caption: 'Laundry Line Rebuild',
+      subtitle: 'Corroded, leaking shutoff was removed and replaced with a fully rebuilt water supply line system.'
+    },
+
+    {
+      title: 'Room Flooring Upgrade',
+      src: '/assets/workbench/bedroom-revinyl.jpg',
+      alt: 'Room Flooring Upgrade',
+      caption: 'Room Flooring Upgrade',
+      subtitle: 'Carpet and tack strips were removed, foundation cracks patched, and the space finished with new sheet vinyl flooring.'
+    },
+
+    {
+      title: 'Bathroom Floor Restoration',
+      src: '/assets/workbench/bathroom-revinyl.jpg',
+      alt: 'Bathroom Floor Restoration',
+      caption: 'Bathroom Floor Restoration',
+      subtitle: 'Flooring was removed, the subfloor re-leveled with new gypcrete, and finished with vinyl flooring and cove base.'
+    },
+
+    {
+      title: 'Custom Irrigation Box Lid Install',
+      src: '/assets/workbench/box-cover.jpg',
+      alt: 'Custom Irrigation Box Lid Install',
+      caption: 'Custom Irrigation Box Lid Install',
+      subtitle: 'A new lid was fabricated for a previously open utility box and finished in green for protection and a clean, finished appearance.'
+    },
+
+    {
       title: 'Commercial Sink Restoration',
       src: '/assets/workbench/commercial-sink-restoration.jpg',
       alt: 'Commercial Sink Restoration',
