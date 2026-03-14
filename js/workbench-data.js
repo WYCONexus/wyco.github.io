@@ -1,37 +1,30 @@
 window.WYCO_WORKBENCH_DATA = {
   repairs: [
-    {
+    /*{
       title: 'Repair Project 01',
       src: '/images/waves/wyco_gradient_diagonal.jpg',
       alt: 'Repair Project 01',
       caption: 'Repair Project 01',
       subtitle: 'Before-and-after fixes, practical improvements, and functional restorations.'
-    },
-    {
-      title: 'Repair Project 02',
-      src: '/images/waves/wyco_gradient_diagonal.jpg',
-      alt: 'Repair Project 02',
-      caption: 'Repair Project 02',
-      subtitle: 'A second repair example for the Workbench section.'
-    }
+    }*/
   ],
   furniture: [
-    {
+    /*{
       title: 'Furniture Project 01',
       src: '/images/waves/wyco_gradient_diagonal.jpg',
       alt: 'Furniture Project 01',
       caption: 'Furniture Project 01',
       subtitle: 'Restored, refreshed, reworked, or given a second life.'
-    }
+    }*/
   ],
   builds: [
-    {
+    /*{
       title: 'Build Project 01',
       src: '/images/waves/wyco_gradient_diagonal.jpg',
       alt: 'Build Project 01',
       caption: 'Build Project 01',
       subtitle: 'Custom pieces, practical builds, prototypes, and ideas in physical form.'
-    }
+    }*/
   ]
 };
 
