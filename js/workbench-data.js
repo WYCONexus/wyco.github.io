@@ -145,7 +145,7 @@ window.workbenchData = {
   }
 
   function getData() {
-    return window.WYCO_WORKBENCH_DATA || {
+    return window.workbenchData || {
       repairs: [],
       furniture: [],
       builds: []
