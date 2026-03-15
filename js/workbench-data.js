@@ -1,4 +1,4 @@
-window.WYCO_WORKBENCH_DATA = {
+window.workbenchData = {
   repairs: [
     {
       title: 'Laundry Line Rebuild',
