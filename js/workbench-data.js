@@ -1,61 +1,103 @@
 window.workbenchData = {
   repairs: [
     {
-      title: 'Laundry Line Rebuild',
-      src: '/assets/workbench/laundry-line-rebuild.jpg',
-      alt: 'Laundry Line Rebuild',
-      caption: 'Laundry Line Rebuild',
-      subtitle: 'Corroded, leaking shutoff was removed and replaced with a fully rebuilt water supply line system.'
+      title: 'Electrical Projects',
+      subtitle: 'Electrical improvement work.',
+      coverImage: '/assets/workbench/sectionCoverart/elec-coverart.jpg',
+      images: [
+        {
+          src: '',
+          alt: '',
+          caption: ''
+        }
+      ]
     },
 
     {
-      title: 'Room Flooring Upgrade',
-      src: '/assets/workbench/bedroom-revinyl.jpg',
-      alt: 'Room Flooring Upgrade',
-      caption: 'Room Flooring Upgrade',
-      subtitle: 'Carpet and tack strips were removed, foundation cracks patched, and the space finished with new sheet vinyl flooring.'
+      title: 'Flooring Projects',
+      subtitle: 'Flooring replacement and restoration work across multiple residential spaces.',
+      coverImage: '/assets/workbench/sectionCoverart/floor-coverart.jpg',
+      images: [
+        {
+          src: '/assets/workbench/room-flooring-upgrade.jpg',
+          alt: 'Room flooring upgrade',
+          caption: 'Room Flooring Upgrade'
+        },
+        {
+          src: '/assets/workbench/apartment-flooring-updates/bathroom-floor-restoration.jpg',
+          alt: 'Bathroom floor restoration',
+          caption: 'Bathroom Floor Restoration'
+        }
+      ]
     },
 
     {
-      title: 'Bathroom Floor Restoration',
-      src: '/assets/workbench/bathroom-revinyl.jpg',
-      alt: 'Bathroom Floor Restoration',
-      caption: 'Bathroom Floor Restoration',
-      subtitle: 'Flooring was removed, the subfloor re-leveled with new gypcrete, and finished with vinyl flooring and cove base.'
+      title: 'Painting/Drywall Projects',
+      subtitle: 'Painting and drywall work across multiple residential spaces.',
+      coverImage: '/assets/workbench/sectionCoverart/wall-coverart.jpg',
+      images: [
+        {
+          src: '',
+          alt: '',
+          caption: ''
+        }
+      ]
     },
 
     {
-      title: 'Custom Irrigation Box Lid Install',
-      src: '/assets/workbench/box-cover.jpg',
-      alt: 'Custom Irrigation Box Lid Install',
-      caption: 'Custom Irrigation Box Lid Install',
-      subtitle: 'A new lid was fabricated for a previously open utility box and finished in green for protection and a clean, finished appearance.'
+      title: 'Plumbing Projects',
+      subtitle: 'Plumbing improvement work.',
+      coverImage: '/assets/workbench/sectionCoverart/plumb-coverart.jpg',
+      images: [
+        {
+          src: '/assets/workbench/utility-and-plumbing-updates/laundry-line-rebuild.jpg',
+          alt: 'Laundry line rebuild',
+          caption: 'Laundry Line Rebuild'
+        }
+      ]
     },
 
     {
-      title: 'Commercial Sink Restoration',
-      src: '/assets/workbench/commercial-sink-restoration.jpg',
-      alt: 'Commercial Sink Restoration',
-      caption: 'Commercial Sink Restoration',
-      subtitle: 'Surface rust was polished from the underside of the commercial stainless sink, restoring the metal to a clean, corrosion-free finish.'
+      title: 'Restoration Projects',
+      subtitle: 'Restoration work across multiple projects.',
+      coverImage: '/assets/workbench/sectionCoverart/resto-coverart.jpg',
+      images: [
+        {
+          src: '/assets/workbench/commercial-sink-restoration.jpg',
+          alt: 'Commercial sink restoration',
+          caption: 'Commercial Sink Restoration'
+        },
+        {
+          src: '/assets/workbench/grease-dumpster-restoration.jpg',
+          alt: 'Grease dumpster restoration',
+          caption: 'Grease Dumpster Restoration'
+        },
+        {
+          src: '/assets/workbench/ventilation-system-restoration.jpg',
+          alt: 'Ventilation system restoration',
+          caption: 'Ventilation System Restoration'
+        }
+      ]
     },
 
     {
-      title: 'Grease Dumpster Restoration',
-      src: '/assets/workbench/grease-dumpster-restoration.jpg',
-      alt: 'Grease Dumpster Restoration',
-      caption: 'Grease Dumpster Restoration',
-      subtitle: 'Built-up grease and debris were removed from the commercial grease dumpster, restoring proper drainage and sanitary condition.'
-    },
-
-    {
-      title: 'Ventilation System Restoration',
-      src: '/assets/workbench/ventilation-system-restoration.jpg',
-      alt: 'Ventilation System Restoration',
-      caption: 'Ventilation System Restoration',
-      subtitle: 'The commercial ventilation system was disassembled, cleaned, and reassembled, restoring proper airflow and functionality.'
+      title: 'Utility Projects',
+      subtitle: 'Utility improvement work.',
+      coverImage: '/assets/workbench/sectionCoverart/util-coverart.jpg',
+      images: [
+        {
+          src: '/assets/workbench/utility-and-plumbing-updates/box-cover.jpg',
+          alt: 'Custom irrigation box lid install',
+          caption: 'Custom Irrigation Box Lid Install'
+        }
+      ]
     }
+
   ],
+
+
+
+
   furniture: [
     /*{
       title: 'Furniture Project 01',
@@ -144,6 +186,7 @@ window.workbenchData = {
     };
   }
 
+  /*get-WORKBENCH-DATA*/
   function getData() {
     return window.workbenchData || {
       repairs: [],
