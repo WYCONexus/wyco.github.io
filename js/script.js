@@ -159,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
   --------------------------- */
 
   let closeSectionLibraryFromHistory = null;
+  let closeWorkbenchSectionFromHistory = null;
   let closeLyricsFromHistory = null;
   let closePlayerFromHistory = null;
   let closeLightboxFromHistory = null;
@@ -189,10 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function hasBlockingOverlayOpen() {
-    return !!document.querySelector(
-      '#sectionLibraryModal.active, #lyricsModal.active, #lightbox.is-open, #wavesPlayerModal:not([hidden])'
-    );
-  }
+  return !!document.querySelector(
+    '#sectionLibraryModal.active, #workbench-section-modal.active, #lyricsModal.active, #lightbox.is-open, #wavesPlayerModal:not([hidden])'
+  );
+}
 
   function updateBodyScrollLock() {
     document.body.style.overflow = hasBlockingOverlayOpen() ? 'hidden' : '';
@@ -201,20 +202,26 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('popstate', () => {
     const playerModal = document.getElementById('wavesPlayerModal');
     if (playerModal && !playerModal.hidden && typeof closePlayerFromHistory === 'function') {
-      closePlayerFromHistory();
-      return;
-    }
+     closePlayerFromHistory();
+     return;
+   }
 
-    const lyricsModalEl = document.getElementById('lyricsModal');
-    if (lyricsModalEl && lyricsModalEl.classList.contains('active') && typeof closeLyricsFromHistory === 'function') {
-      closeLyricsFromHistory();
-      return;
-    }
+   const lyricsModalEl = document.getElementById('lyricsModal');
+   if (lyricsModalEl && lyricsModalEl.classList.contains('active') && typeof closeLyricsFromHistory === 'function') {
+     closeLyricsFromHistory();
+     return;
+   }
 
-    const sectionLibraryModalEl = document.getElementById('sectionLibraryModal');
+   const sectionLibraryModalEl = document.getElementById('sectionLibraryModal');
     if (sectionLibraryModalEl && sectionLibraryModalEl.classList.contains('active') && typeof closeSectionLibraryFromHistory === 'function') {
-      closeSectionLibraryFromHistory();
-      return;
+     closeSectionLibraryFromHistory();
+     return;
+   }
+
+    const workbenchModalEl = document.getElementById('workbench-section-modal');
+    if (workbenchModalEl && workbenchModalEl.classList.contains('active') && typeof closeWorkbenchSectionFromHistory === 'function') {
+     closeWorkbenchSectionFromHistory();
+     return;
     }
 
     const lightboxEl = document.getElementById('lightbox');
@@ -1104,81 +1111,432 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-
-  /* ---------------------------
-     Workbench Image Lightbox
+    /* ---------------------------
+     Workbench Sections + Modal + Lightbox
   --------------------------- */
+
+  function getWorkbenchData() {
+    return window.workbenchData || {};
+  }
+
+  function getWorkbenchSectionItems(sectionKey) {
+    const data = getWorkbenchData();
+    return Array.isArray(data?.[sectionKey]) ? data[sectionKey] : [];
+  }
+
+  function normalizeWorkbenchImage(image, fallbackTitle = 'Workbench project') {
+    if (!image) {
+      return {
+        src: getDefaultMediaImage(),
+        alt: fallbackTitle,
+        caption: fallbackTitle
+      };
+    }
+
+    if (typeof image === 'string') {
+      return {
+        src: image,
+        alt: fallbackTitle,
+        caption: fallbackTitle
+      };
+    }
+
+    const src = image.src || image.image || image.url || getDefaultMediaImage();
+    const alt = image.alt || image.caption || image.title || fallbackTitle;
+    const caption = image.caption || image.alt || image.title || fallbackTitle;
+
+    return { src, alt, caption };
+  }
+
+  function normalizeWorkbenchProject(project = {}) {
+    const title = project.title || 'Untitled Project';
+    const subtitle =
+      project.subtitle ||
+      project.description ||
+      project.text ||
+      '';
+
+    const rawImages = Array.isArray(project.images)
+      ? project.images
+      : Array.isArray(project.gallery)
+        ? project.gallery
+        : [];
+
+    const images = rawImages.map((image) => normalizeWorkbenchImage(image, title));
+    const coverImage = normalizeWorkbenchImage(
+      project.coverImage || project.cover || rawImages[0] || getDefaultMediaImage(),
+      title
+    );
+
+    return {
+      title,
+      subtitle,
+      badge: project.badge || `Images: ${images.length || 0}`,
+      images,
+      coverImage
+    };
+  }
+
+  function renderWorkbenchSectionPreviews() {
+    const previewTargets = document.querySelectorAll('[data-workbench-gallery]');
+    if (!previewTargets.length) return;
+
+    previewTargets.forEach((target) => {
+      const sectionKey = target.dataset.workbenchGallery;
+      const items = getWorkbenchSectionItems(sectionKey).map(normalizeWorkbenchProject);
+
+      if (!items.length) {
+        target.innerHTML = `
+          <div class="workbench-preview-card workbench-preview-card-empty">
+            <p>No projects added yet.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const projectCount = items.length;
+      const label = projectCount === 1 ? 'project' : 'projects';
+
+      target.innerHTML = `
+        <div class="workbench-preview-card">
+          <div class="workbench-preview-copy">
+            <span class="workbench-preview-pill">View Projects</span>
+            <h3>${projectCount} ${label} available</h3>
+            <p>Open this section to browse the full list and search projects.</p>
+          </div>
+          <span class="workbench-preview-arrow" aria-hidden="true">↗</span>
+        </div>
+      `;
+    });
+  }
+
+  const workbenchSectionModal = document.getElementById('workbench-section-modal');
+  const workbenchDialogTitle = document.getElementById('workbench-dialog-title');
+  const workbenchDialogDescription = document.getElementById('workbench-dialog-description');
+  const workbenchDialogList = document.getElementById('workbench-dialog-list');
+  const workbenchDialogSearch = document.getElementById('workbench-dialog-search');
+  const workbenchDialogClose = document.getElementById('workbench-dialog-close');
+
+  let currentWorkbenchSectionItems = [];
+  let currentWorkbenchSectionMeta = null;
+
+  function buildWorkbenchLibraryItem(project, index) {
+    const imageCount = project.images.length;
+    const imageLabel = imageCount === 1 ? 'image' : 'images';
+
+    return `
+      <article
+        class="section-library-item workbench-library-item"
+        data-workbench-project-index="${index}"
+        tabindex="0"
+        aria-label="Open ${escapeHtml(project.title)} project images"
+      >
+        <div class="section-library-item-media">
+          <img src="${escapeHtml(project.coverImage.src)}" alt="${escapeHtml(project.coverImage.alt)}">
+        </div>
+
+        <div class="section-library-item-copy">
+          <span class="section-library-item-badge">${escapeHtml(imageCount)} ${imageLabel}</span>
+          <h4 class="section-library-item-title">${escapeHtml(project.title)}</h4>
+          <p class="section-library-item-subtitle">${escapeHtml(project.subtitle || 'Open this project to view its images.')}</p>
+        </div>
+
+        <span class="section-library-item-arrow" aria-hidden="true">↗</span>
+      </article>
+    `;
+  }
+
+  function renderWorkbenchModalItems(items) {
+    if (!workbenchDialogList) return;
+
+    if (!items.length) {
+      workbenchDialogList.innerHTML = `
+        <div class="section-library-empty">
+          No matching projects found.
+        </div>
+      `;
+      return;
+    }
+
+    workbenchDialogList.innerHTML = items
+      .map((item, index) => buildWorkbenchLibraryItem(item, index))
+      .join('');
+  }
+
+  function openWorkbenchSectionModal(sectionPanel) {
+    if (
+      !workbenchSectionModal ||
+      !workbenchDialogTitle ||
+      !workbenchDialogDescription ||
+      !workbenchDialogList ||
+      !sectionPanel
+    ) return;
+
+    const sectionKey = sectionPanel.dataset.workbenchSection || '';
+    const heading = sectionPanel.querySelector('h2')?.textContent?.trim() || 'Workbench Section';
+    const description = sectionPanel.querySelector('.muted')?.textContent?.trim() || 'Browse this section.';
+
+    const items = getWorkbenchSectionItems(sectionKey).map(normalizeWorkbenchProject);
+
+    currentWorkbenchSectionMeta = { sectionKey, heading, description };
+    currentWorkbenchSectionItems = items;
+
+    workbenchDialogTitle.textContent = heading;
+    workbenchDialogDescription.textContent = description;
+
+    if (workbenchDialogSearch) {
+      workbenchDialogSearch.value = '';
+    }
+
+    if (!items.length) {
+      workbenchDialogList.innerHTML = `
+        <div class="section-library-empty">
+          No projects have been added to this section yet.
+        </div>
+      `;
+    } else {
+      renderWorkbenchModalItems(items);
+    }
+
+    workbenchSectionModal.classList.add('active');
+    workbenchSectionModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('section-library-open');
+    updateBodyScrollLock();
+    pushOverlayHistory('workbench-section', sectionKey);
+
+    if (workbenchDialogSearch) {
+      setTimeout(() => workbenchDialogSearch.focus(), 0);
+    }
+  }
+
+  function closeWorkbenchSectionModal(fromPopState = false, preserveHistory = false) {
+    if (!workbenchSectionModal) return;
+
+    workbenchSectionModal.classList.remove('active');
+    workbenchSectionModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('section-library-open');
+
+    currentWorkbenchSectionItems = [];
+    currentWorkbenchSectionMeta = null;
+
+    if (workbenchDialogSearch) {
+      workbenchDialogSearch.value = '';
+    }
+
+    updateBodyScrollLock();
+
+    if (!fromPopState && !preserveHistory) {
+      clearOverlayHistory();
+    }
+  }
+
+  closeWorkbenchSectionFromHistory = () => closeWorkbenchSectionModal(true);
+
+  function setupWorkbenchSectionSearch() {
+    if (!workbenchDialogSearch) return;
+    if (workbenchDialogSearch.dataset.bound === 'true') return;
+    workbenchDialogSearch.dataset.bound = 'true';
+
+    workbenchDialogSearch.addEventListener('input', () => {
+      const query = workbenchDialogSearch.value.trim().toLowerCase();
+
+      if (!query) {
+        renderWorkbenchModalItems(currentWorkbenchSectionItems);
+        return;
+      }
+
+      const filtered = currentWorkbenchSectionItems.filter((project) => {
+        const title = String(project.title || '').toLowerCase();
+        const subtitle = String(project.subtitle || '').toLowerCase();
+        const imageText = project.images
+          .map((image) => `${image.alt || ''} ${image.caption || ''}`.toLowerCase())
+          .join(' ');
+
+        return (
+          title.includes(query) ||
+          subtitle.includes(query) ||
+          imageText.includes(query)
+        );
+      });
+
+      renderWorkbenchModalItems(filtered);
+    });
+  }
+
+  function setupWorkbenchSectionTriggers() {
+    const triggers = document.querySelectorAll('[data-workbench-section].section-library-head-trigger');
+    if (!triggers.length) return;
+
+    triggers.forEach((panel) => {
+      if (panel.dataset.workbenchBound === 'true') return;
+      panel.dataset.workbenchBound = 'true';
+
+      let touchMoved = false;
+
+      panel.addEventListener('touchstart', () => {
+        touchMoved = false;
+      }, { passive: true });
+
+      panel.addEventListener('touchmove', () => {
+        touchMoved = true;
+      }, { passive: true });
+
+      panel.addEventListener('touchend', (event) => {
+        if (touchMoved) return;
+        if (isInteractiveElement(event.target)) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        openWorkbenchSectionModal(panel);
+      }, { passive: false });
+
+      panel.addEventListener('click', (event) => {
+        if (isInteractiveElement(event.target)) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        openWorkbenchSectionModal(panel);
+      });
+
+      panel.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        if (isInteractiveElement(event.target)) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        openWorkbenchSectionModal(panel);
+      });
+    });
+
+    if (workbenchDialogClose && workbenchDialogClose.dataset.bound !== 'true') {
+      workbenchDialogClose.dataset.bound = 'true';
+      workbenchDialogClose.addEventListener('click', () => closeWorkbenchSectionModal());
+    }
+
+    if (workbenchSectionModal && workbenchSectionModal.dataset.bound !== 'true') {
+      workbenchSectionModal.dataset.bound = 'true';
+
+      const backdrop = workbenchSectionModal.querySelector('.section-library-backdrop');
+      if (backdrop) {
+        backdrop.addEventListener('click', () => closeWorkbenchSectionModal());
+      }
+
+      workbenchSectionModal.addEventListener('click', (event) => {
+        const item = event.target.closest('[data-workbench-project-index]');
+        if (!item) return;
+
+        const index = Number(item.dataset.workbenchProjectIndex);
+        const project = currentWorkbenchSectionItems[index];
+        if (!project || !project.images.length) return;
+
+        openWorkbenchLightbox(project.images, 0, project.title);
+      });
+
+      workbenchSectionModal.addEventListener('keydown', (event) => {
+        const item = event.target.closest('[data-workbench-project-index]');
+        if (!item) return;
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+
+        event.preventDefault();
+
+        const index = Number(item.dataset.workbenchProjectIndex);
+        const project = currentWorkbenchSectionItems[index];
+        if (!project || !project.images.length) return;
+
+        openWorkbenchLightbox(project.images, 0, project.title);
+      });
+    }
+  }
 
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
   const lightboxPrev = document.getElementById("lightbox-prev");
   const lightboxNext = document.getElementById("lightbox-next");
   const lightboxCaption = document.getElementById("lightbox-caption");
-  const workbenchGalleries = Array.from(document.querySelectorAll(".workbench-gallery"));
 
-  if (lightbox && lightboxImg && lightboxPrev && lightboxNext && lightboxCaption && workbenchGalleries.length) {
-    let currentGalleryImages = [];
-    let currentImageIndex = 0;
-    let touchStartX = 0;
-    let touchEndX = 0;
+  let currentLightboxImages = [];
+  let currentLightboxIndex = 0;
+  let currentLightboxLabel = '';
+  let lightboxTouchStartX = 0;
 
-    function showImage(index) {
-      currentImageIndex = index;
-      const img = currentGalleryImages[currentImageIndex];
+  function showWorkbenchLightboxImage(index) {
+    if (!lightbox || !lightboxImg || !lightboxCaption || !currentLightboxImages.length) return;
 
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt || "";
-      lightboxCaption.textContent = img.alt || "";
-      lightbox.classList.add("is-open");
-      lightbox.setAttribute("aria-hidden", "false");
-      updateBodyScrollLock();
-      pushOverlayHistory('lightbox', String(index));
-    }
+    currentLightboxIndex = index;
+    const image = currentLightboxImages[currentLightboxIndex];
 
-    function closeLightbox(fromPopState = false) {
-      lightbox.classList.remove("is-open");
-      lightbox.setAttribute("aria-hidden", "true");
+    lightboxImg.src = image.src;
+    lightboxImg.alt = image.alt || '';
+    lightboxCaption.textContent = image.caption || image.alt || currentLightboxLabel || '';
+  }
+
+  function openWorkbenchLightbox(images, startIndex = 0, label = '') {
+    if (!lightbox || !lightboxImg || !lightboxPrev || !lightboxNext || !lightboxCaption) return;
+    if (!Array.isArray(images) || !images.length) return;
+
+    currentLightboxImages = images.map((image) => normalizeWorkbenchImage(image, label || 'Workbench image'));
+    currentLightboxLabel = label || '';
+    showWorkbenchLightboxImage(startIndex);
+
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    updateBodyScrollLock();
+    pushOverlayHistory('lightbox', String(startIndex));
+  }
+
+  function closeWorkbenchLightbox(fromPopState = false, preserveHistory = false) {
+    if (!lightbox) return;
+
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+
+    if (lightboxImg) {
       lightboxImg.src = "";
       lightboxImg.alt = "";
+    }
+
+    if (lightboxCaption) {
       lightboxCaption.textContent = "";
-      updateBodyScrollLock();
-
-      if (!fromPopState) {
-        clearOverlayHistory();
-      }
     }
 
-    closeLightboxFromHistory = () => closeLightbox(true);
+    currentLightboxImages = [];
+    currentLightboxIndex = 0;
+    currentLightboxLabel = '';
 
-    function showNextImage() {
-      currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
-      showImage(currentImageIndex);
+    updateBodyScrollLock();
+
+    if (!fromPopState && !preserveHistory) {
+      clearOverlayHistory();
     }
+  }
 
-    function showPrevImage() {
-      currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
-      showImage(currentImageIndex);
-    }
+  closeLightboxFromHistory = () => closeWorkbenchLightbox(true);
 
-    workbenchGalleries.forEach(gallery => {
-      const galleryImages = Array.from(gallery.querySelectorAll(".workbench-img"));
+  function showWorkbenchNextImage() {
+    if (!currentLightboxImages.length) return;
+    currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxImages.length;
+    showWorkbenchLightboxImage(currentLightboxIndex);
+  }
 
-      galleryImages.forEach((img, index) => {
-        img.addEventListener("click", () => {
-          currentGalleryImages = galleryImages;
-          showImage(index);
-        });
-      });
-    });
+  function showWorkbenchPrevImage() {
+    if (!currentLightboxImages.length) return;
+    currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length;
+    showWorkbenchLightboxImage(currentLightboxIndex);
+  }
+
+  function setupWorkbenchLightbox() {
+    if (!lightbox || !lightboxImg || !lightboxPrev || !lightboxNext || !lightboxCaption) return;
+    if (lightbox.dataset.bound === 'true') return;
+    lightbox.dataset.bound = 'true';
 
     lightboxNext.addEventListener("click", (event) => {
       event.stopPropagation();
-      if (currentGalleryImages.length) showNextImage();
+      showWorkbenchNextImage();
     });
 
     lightboxPrev.addEventListener("click", (event) => {
       event.stopPropagation();
-      if (currentGalleryImages.length) showPrevImage();
+      showWorkbenchPrevImage();
     });
 
     lightboxImg.addEventListener("click", (event) => {
@@ -1186,39 +1544,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     lightbox.addEventListener("click", () => {
-      closeLightbox();
+      closeWorkbenchLightbox();
     });
 
     document.addEventListener("keydown", (event) => {
       if (!lightbox.classList.contains("is-open")) return;
 
       if (event.key === "Escape") {
-        closeLightbox();
+        closeWorkbenchLightbox();
       } else if (event.key === "ArrowRight") {
-        showNextImage();
+        showWorkbenchNextImage();
       } else if (event.key === "ArrowLeft") {
-        showPrevImage();
+        showWorkbenchPrevImage();
       }
     });
 
     lightbox.addEventListener("touchstart", (event) => {
-      touchStartX = event.changedTouches[0].screenX;
+      lightboxTouchStartX = event.changedTouches[0].screenX;
     }, { passive: true });
 
     lightbox.addEventListener("touchend", (event) => {
-      touchEndX = event.changedTouches[0].screenX;
-      const swipeDistance = touchEndX - touchStartX;
+      const touchEndX = event.changedTouches[0].screenX;
+      const swipeDistance = touchEndX - lightboxTouchStartX;
 
-      if (Math.abs(swipeDistance) < 50 || !currentGalleryImages.length) return;
+      if (Math.abs(swipeDistance) < 50 || !currentLightboxImages.length) return;
 
       if (swipeDistance < 0) {
-        showNextImage();
+        showWorkbenchNextImage();
       } else {
-        showPrevImage();
+        showWorkbenchPrevImage();
       }
     }, { passive: true });
   }
-
 
   /* ---------------------------
      Waves / Whimsy Media Modal
@@ -1638,23 +1995,27 @@ document.addEventListener('DOMContentLoaded', () => {
      Initialize
   --------------------------- */
 
-  async function initSite() {
-    await loadIncludes();
+    async function initSite() {
+      await loadIncludes();
 
-    setupLegalLinks();
-    setupLegalBackButton();
-    renderLiveCardMeta();
-    setupTimelineLoadMore();
-    renderTimeline();
-    renderMediaSections();
-    setupSectionLibraryTriggers();
-    setupSectionLibrarySearch();
-    setupNexusCarouselButtons();
-    setupMediaCarouselButtons();
-    initProjectsPage();
-    setupCompletedCarousel();
-    loadGitHubRepos();
-  }
+      setupLegalLinks();
+      setupLegalBackButton();
+      renderLiveCardMeta();
+      setupTimelineLoadMore();
+      renderTimeline();
+      renderMediaSections();
+      renderWorkbenchSectionPreviews();
+      setupWorkbenchSectionTriggers();
+      setupWorkbenchSectionSearch();
+      setupWorkbenchLightbox();
+      setupSectionLibraryTriggers();
+      setupSectionLibrarySearch();
+      setupNexusCarouselButtons();
+      setupMediaCarouselButtons();
+      initProjectsPage();
+      setupCompletedCarousel();
+      loadGitHubRepos();
+    }
 
   initSite();
 

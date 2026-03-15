@@ -495,6 +495,113 @@ body[data-page="workbench"] .workbench-scroll-row .panel:focus-within {
     0 0 24px rgba(255,181,90,0.10);
 }
 
+.workbench-section-preview {
+  margin-top: 18px;
+}
+
+.workbench-preview-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 96px;
+  padding: 18px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(122, 162, 255, 0.14);
+  background:
+    linear-gradient(135deg, rgba(255,181,90,0.08), rgba(160,120,255,0.08)),
+    rgba(12, 18, 36, 0.66);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.section-library-head-trigger:hover .workbench-preview-card,
+.section-library-head-trigger:focus-visible .workbench-preview-card {
+  transform: translateY(-2px);
+  border-color: rgba(255,181,90,0.28);
+  box-shadow:
+    0 22px 48px rgba(0, 0, 0, 0.24),
+    0 0 24px rgba(255,181,90,0.08);
+}
+
+.workbench-preview-copy {
+  min-width: 0;
+}
+
+.workbench-preview-copy h3 {
+  margin: 0 0 6px;
+  font-size: 1.04rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #f5f8ff;
+}
+
+.workbench-preview-copy p {
+  margin: 0;
+  color: #c9d6f4;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.workbench-preview-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(10, 18, 40, 0.78);
+  border: 1px solid rgba(255,181,90,0.22);
+  color: #fff4e6;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(8px);
+}
+
+.workbench-preview-arrow {
+  flex: 0 0 auto;
+  color: #dbe5ff;
+  font-size: 1.35rem;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.workbench-preview-card-empty {
+  justify-content: flex-start;
+}
+
+.workbench-preview-card-empty p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.workbench-library-item .section-library-item-badge {
+  background: rgba(10, 18, 40, 0.78);
+  border: 1px solid rgba(255,181,90,0.22);
+  color: #fff4e6;
+}
+
+@media (max-width: 720px) {
+  .workbench-preview-card {
+    padding: 16px;
+    min-height: 88px;
+  }
+
+  .workbench-preview-copy h3 {
+    font-size: 0.98rem;
+  }
+
+  .workbench-preview-copy p {
+    font-size: 0.86rem;
+  }
+
+  .workbench-preview-arrow {
+    font-size: 1.1rem;
+  }
+}
+
 /* ---------------------------
    Lightbox (image popup)
 --------------------------- */

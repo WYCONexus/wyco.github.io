@@ -45,9 +45,9 @@
       <p class="muted">Before-and-after fixes, practical improvements, and functional restorations.</p>
       <div
         id="workbench-repair-gallery"
-        class="workbench-scroll-row workbench-gallery"
+        class="workbench-section-preview"
         data-workbench-gallery="repairs"
-        aria-label="Repair transformations preview gallery"
+        aria-label="Repair transformations section preview"
       ></div>
     </section>
 
@@ -63,9 +63,9 @@
       <p class="muted">Pieces restored, refreshed, reworked, or given a second life.</p>
       <div
         id="workbench-furniture-gallery"
-        class="workbench-scroll-row workbench-gallery"
+        class="workbench-section-preview"
         data-workbench-gallery="furniture"
-        aria-label="Furniture and refurbishing preview gallery"
+        aria-label="Furniture and refurbishing section preview"
       ></div>
     </section>
 
@@ -81,9 +81,9 @@
       <p class="muted">Custom pieces, practical builds, prototypes, and workbench ideas in physical form.</p>
       <div
         id="workbench-builds-gallery"
-        class="workbench-scroll-row workbench-gallery"
+        class="workbench-section-preview"
         data-workbench-gallery="builds"
-        aria-label="Builds and experiments preview gallery"
+        aria-label="Builds and experiments section preview"
       ></div>
     </section>
 
@@ -91,7 +91,6 @@
       <div style="height: 1px; width: 100%; background: linear-gradient(90deg, rgba(111,137,255,0.08), rgba(69,230,216,0.7), rgba(199,93,255,0.7), rgba(111,137,255,0.08));"></div>
     </section>
 
-    <!-- WYCO Repairs Section -->
     <section class="page-hero glass">
       <p class="eyebrow">WYCO Repairs</p>
       <h1><span class="gradient-text">The Fix For What Matters</span></h1>
@@ -137,6 +136,16 @@
         <p class="eyebrow" id="workbench-dialog-eyebrow">WYCO Workbench</p>
         <h3 id="workbench-dialog-title">Section Gallery</h3>
         <p id="workbench-dialog-description">Browse this section.</p>
+
+        <div class="section-library-search-wrap">
+          <input
+            type="search"
+            id="workbench-dialog-search"
+            class="section-library-search"
+            placeholder="Search projects..."
+            aria-label="Search workbench projects"
+          />
+        </div>
       </div>
 
       <div class="section-library-body">
