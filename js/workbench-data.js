@@ -5,11 +5,11 @@ window.workbenchData = {
       subtitle: 'Electrical improvement work.',
       coverImage: '/assets/workbench/sectionCoverart/elec-coverart.jpg',
       images: [
-        {
+        /*{
           src: '',
           alt: '',
           caption: ''
-        }
+        }*/
       ]
     },
 
@@ -36,11 +36,11 @@ window.workbenchData = {
       subtitle: 'Painting and drywall work across multiple residential spaces.',
       coverImage: '/assets/workbench/sectionCoverart/wall-coverart.jpg',
       images: [
-        {
+        /*{
           src: '',
           alt: '',
           caption: ''
-        }
+        }*/
       ]
     },
 
