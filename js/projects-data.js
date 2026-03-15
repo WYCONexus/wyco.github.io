@@ -31,13 +31,6 @@ window.projectsData = {
 
   completed: [
     {
-      tag: "WYCO Workbench",
-      tagClass: "tag-workbench",
-      title: "WYCO Workbench Branch Addition",
-      /*description: "Creative writing, illustration, painting, and imaginative worldbuilding."*/
-    },
-
-    {
       tag: "WYCO Hub",
       tagClass: "tag-core",
       title: "Hub Timeline Addition",
@@ -56,7 +49,14 @@ window.projectsData = {
       tagClass: "tag-workbench",
       title: "WYCO Repairs External Site",
       /*description: "Static site foundation, branding, structure, and future hosting setup."*/
-    }
+    },
+
+    {
+      tag: "WYCO Workbench",
+      tagClass: "tag-workbench",
+      title: "WYCO Workbench Branch Addition",
+      /*description: "Creative writing, illustration, painting, and imaginative worldbuilding."*/
+    },
   ]
 
 };
