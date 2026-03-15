@@ -28,7 +28,7 @@ window.wycoData = {
     },
     workbench: {
       meta: [
-        "📦 3"
+        "📦 7"
       ]
     },
     projects: {
